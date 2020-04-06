@@ -34,11 +34,11 @@ const userSchema = new mongoose.Schema({
  * 
  */
 
-   destination:{
-       type:PointSchema,
-       index:'2dshepre'
-       //required:true
-   },
+//    destination:{
+//        type:PointSchema,
+//        index:'2dshepre'
+//        //required:true
+//    },
    salt:String,
    birthDate:{
        type:Date,
