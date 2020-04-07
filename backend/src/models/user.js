@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const crypto = require('crypto')
-const uuidv1 = require('uuid/v1')
+const uuidv1 = require('uuidv1')
 
-date = new Date()
+const date = new Date()
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -34,23 +34,16 @@ const userSchema = new mongoose.Schema({
  * 
  */
 
-//    destination:{
-//        type:PointSchema,
-//        index:'2dshepre'
-//        //required:true
-//    },
    salt:String,
    birthDate:{
        type:Date,
        min:'1900-01-01',
-    //    max: "'"+ date.getFullYear() +"-" + date.getMonth() + "-" + date.getDay()+ "'",
-       max:'2020-01-01',
+       max: "'"+date.getFullYear() +"-" + date.getMonth() + "-" + date.getDay()+ "'",
        required:true
    },
    disciplines:{
        type:[String],
-       default:undefined,
-       
+       default:undefined
 
    }
 
@@ -65,7 +58,7 @@ userSchema.virtual('password')
         this.hashed_password = this.encryptPassword(password)
     })
     .get(function () {
-        return this.passwordbirth
+        return this.password
     })
 
 userSchema.methods = {

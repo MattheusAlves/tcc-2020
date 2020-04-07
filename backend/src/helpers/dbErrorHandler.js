@@ -27,7 +27,7 @@ exports.errorHandler = error => {
  
     if (error.code) {
         switch (error.code) {
-            case 11000:
+            case 11000: error.message
             case 11001:
                 message = uniqueMessage(error);
                 break;
@@ -40,6 +40,8 @@ exports.errorHandler = error => {
                 message = error.errorors[errorName].message;
         }
     }
- 
+    if(message === ""){
+        return error.message
+    }
     return message;
 };
