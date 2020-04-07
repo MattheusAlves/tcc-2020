@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const crypto = require('crypto')
 const uuidv1 = require('uuid/v1')
 
-
+date = new Date()
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -43,11 +43,14 @@ const userSchema = new mongoose.Schema({
    birthDate:{
        type:Date,
        min:'1900-01-01',
-       max: "'"+Date.getFullYear +"-" + Date.getMonth() + "-" + Date.getDay()+ "'"
+    //    max: "'"+ date.getFullYear() +"-" + date.getMonth() + "-" + date.getDay()+ "'",
+       max:'2020-01-01',
+       required:true
    },
    disciplines:{
        type:[String],
-       default:undefined
+       default:undefined,
+       
 
    }
 
@@ -62,7 +65,7 @@ userSchema.virtual('password')
         this.hashed_password = this.encryptPassword(password)
     })
     .get(function () {
-        return this.password
+        return this.passwordbirth
     })
 
 userSchema.methods = {
