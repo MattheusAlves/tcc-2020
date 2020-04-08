@@ -20,8 +20,8 @@ exports.updateDiscipline = async (req, res) => {
                 error: 'User not found'
             })
         }
-        console.log(req.disciplines)
-        console.log(req)
+        
+        
         user.disciplines = req.body.disciplines
         user.save((err, user) => {
             if (err || !user) {

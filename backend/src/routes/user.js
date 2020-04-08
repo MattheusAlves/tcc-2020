@@ -13,7 +13,7 @@ router.get('/secret/:userId',requireSignin,isAuth,   (req,res) => {
         user:req.profile
     })
 })
-router.post('/update/disciplines/:userId',/**add requiresignin and isauth */  updateDiscipline)
+router.post('/update/disciplines/:userId',requireSignin,isAuth,  updateDiscipline)
 
 router.param('userId', userById)
 

@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressValidator = require('express-validator')
+const cors = require('cors')
 require('dotenv').config()
 
 //import routes
@@ -25,6 +26,8 @@ app.use(morgan('dev')) //middleware for log requests and error to the console
 app.use(bodyParser.json()) //middleware for json body
 app.use(cookieParser()) //middleware por cookie parse
 app.use(expressValidator()) 
+app.use(cors())
+
 
 //routes middleware
 app.use('/api', authRoutes)
