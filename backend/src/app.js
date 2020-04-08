@@ -10,6 +10,7 @@ require('dotenv').config()
 //import routes
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
+const teacherRoutes = require('./routes/teacher')
 
 //app
 const app = express()
@@ -32,6 +33,7 @@ app.use(cors())
 //routes middleware
 app.use('/api', authRoutes)
 app.use('/api', userRoutes)
+app.use('/api',teacherRoutes)
 
 
 const port = process.env.PORT || 8000 //choice env.PORT or 8000

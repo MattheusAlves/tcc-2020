@@ -1,7 +1,7 @@
 const User = require('../models/user')
 
 exports.userById = async (req, res, next, id) => {
-  await User.findById(id).exec((err, user) => {
+    await User.findById(id).exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: 'User not found'
@@ -20,9 +20,8 @@ exports.updateDiscipline = async (req, res) => {
                 error: 'User not found'
             })
         }
-        
-        
-        user.disciplines = req.body.disciplines
+
+        user.disciplines = req.body.disciplines.split(',').map(discipline => discipline.trim())
         user.save((err, user) => {
             if (err || !user) {
                 return res.status(400).json({ err: "Cannot update user" })
