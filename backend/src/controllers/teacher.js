@@ -9,7 +9,7 @@ exports.createTeacher = async (req, res) => {
     try {
 
         if (!studyFields) {
-            return res.status(400).json({ message: "Undefined fields os study" })
+            return res.status(400).json({ message: "Undefined fields for study" })
         }
 
         const teacher = await new Teacher({ cpf, rank, studyFields, user: req.profile._id })
@@ -26,4 +26,25 @@ exports.createTeacher = async (req, res) => {
 
 
 
+}
+/**
+ * Atualiza disciplinas de aulas do professor
+ * Haverá uma forma de buscar todos as disciplinas disponíveis no frontend
+ */
+exports.updateStudyFields = async (req,res) => {
+    const studyFields = req.body.disciplines.split(',').map(field => field.trim())
+    if (!studyFields) {
+        return res.status(400).json({ message: "Undefined fields for study" })
+    }
+    await Teacher.findOne({user:req.profile._id},(err,teacher) => {
+        teacher.disciplines.push(req.disciplines)
+        teacher.save((err,teacher) => {
+            if(err || !teacher){
+                return res.status(200).json({err})
+            }
+            return res.status(200).json({
+                teacher
+            })
+        })
+    })
 }
