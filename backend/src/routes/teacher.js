@@ -3,11 +3,12 @@ const router = express.Router();
 
 const {
     createTeacher,
-    updateStudyFields,
-    createStudyFields
+       
 } = require('../controllers/teacher')
 const {
-    disciplineById
+    disciplineById,
+    createDiscipline,
+    updateStudyFields,
 } = require('../controllers/discipline')
 
 const {
@@ -18,10 +19,10 @@ const {
 const {userById} = require("../controllers/user");
 
 router.post('/teacher/create/:userId',requireSignin,isAuth, createTeacher)
-router.post('/teacher/update/disciplines/:disciplineId/:userId',requireSignin,isAuth, updateStudyFields)
-router.post('/teacher/create/disciplines/:userId',requireSignin,isAuth,/**addisTeacher */ createStudyFields)
+router.post('/teacher/update/disciplines/:userId/:disciplineId/',requireSignin,isAuth, updateStudyFields)
+router.post('/teacher/create/disciplines/:userId',requireSignin,isAuth,/**addisTeacher */ createDiscipline)
 
 
-router.param('userId',userById)
 router.param('disciplineId', disciplineById)
+router.param('userId',userById)
 module.exports = router

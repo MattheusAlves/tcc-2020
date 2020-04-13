@@ -2,23 +2,23 @@ const express = require("express");
 const router = express.Router();
 
 const {
-      requireSignin,
-      isAuth,
- } = require("../controllers/auth");
- const {
-     disciplineById
- } = require('../controllers/discipline')
+    requireSignin,
+    isAuth,
+} = require("../controllers/auth");
+const {
+    disciplineById, updateDiscipline
+} = require('../controllers/discipline')
 
-const {userById,updateDiscipline} = require("../controllers/user");
+const { userById } = require("../controllers/user");
 
-router.get('/secret/:userId',requireSignin,isAuth,   (req,res) => {
+router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
     res.json({
-        user:req.profile
+        user: req.profile
     })
 })
-router.post('/update/disciplines/:userId/:disciplineId',requireSignin,isAuth,  updateDiscipline)
+router.post('/update/disciplines/:userId/:disciplineId', requireSignin, isAuth, updateDiscipline)
 
 router.param('userId', userById)
-router.param('disciplineId',disciplineById)
+router.param('disciplineId', disciplineById)
 
 module.exports = router;
