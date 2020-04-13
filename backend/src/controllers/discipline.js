@@ -1,20 +1,3 @@
-const Discipline = require("../models/discipline");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const disciplineBusiness = require("../business/disciplineBusiness");
 
-
-exports.disciplineById =  (req,res,next,id) => {
-    Discipline.findById(id).exec((err, discipline) => {
-        if(err || !discipline){
-            return res.status(400).json({
-                error:"Discipline not found"
-            })
-        }
-        req.discipline = discipline
-        next()
-    })
-
-
-}
-/**
- * method for list all disciplines
- */
+exports.disciplineById = disciplineBusiness.disciplineById
