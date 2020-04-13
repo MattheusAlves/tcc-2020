@@ -1,4 +1,5 @@
 const Teacher = require("../models/teacher");
+const Discipline = require("../models/discipline");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 
@@ -75,6 +76,20 @@ exports.updateStudyFields = async (req, res) => {
       return res.status(200).json({
         teacher,
       });
+    });
+  });
+};
+
+exports.removeStudyFields = async (req, res) => {};
+
+exports.createStudyFields = async (req, res) => {
+  const discipline = new Discipline(req.body);
+  await discipline.save((err, discipline) => {
+    if (err || !discipline) {
+      return res.status(400).json(errorHandler(err));
+    }
+    return res.status(200).json({
+      discipline,
     });
   });
 };
