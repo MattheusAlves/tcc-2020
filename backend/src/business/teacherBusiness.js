@@ -94,8 +94,56 @@ module.exports.createStudyFields = async (req, res) => {
 };
 
 module.exports.oneMoreStudent = async (req, res) => {
-  const teacher  = new Teacher();
-    teacher.rank +=5;
-    teacher.student++;
-    return res.status(200).json({ rank:teacher.rank, students: teacher.student  });
+  let teacher = new Teacher();
+  // teste mockado
+  /*
+  teacher.student = 4
+  teacher.rank = 1
+  */
+
+  teacher.student++
+  teacher.rank += (0.2 * teacher.student)
+  return res.status(200).json({ rank: teacher.rank, students: teacher.student });
+};
+
+module.exports.oneLessStudent = async (req, res) => {
+  let teacher = new Teacher();
+  // teste mockado
+  /*
+  teacher.student = 5
+  teacher.rank = 1
+  */
+  if (teacher.student > 0) {
+    teacher.student--
+    teacher.rank -= 0.2
+    return res.status(200).json({ rank: teacher.rank, students: teacher.student });
+  } else {
+    return res.status(200).json({ message: "Não há estudante linkado com esse professor." });
   }
+};
+
+module.exports.evaluationTeacher = async (req, res) => {
+  let teacher = new Teacher();
+  const { evaluation } = req.body;
+  //test mockado below
+  //teacher.rank = 10
+  
+  if (!evaluation) {
+    return res.status(400).json({ message: "Undefined field for evaluation" });
+  } else {
+    if (evaluation < 0 || evaluation > 10)
+      return res.status(400).json({ message: "Evaluation out of range 0 - 10" });
+    else {
+      const evaluationFinal = evaluation / 2
+      teacher.evaluation = evaluationFinal
+      teacher.rank += evaluationFinal
+      return res.status(200).json({ evaluationFinal: teacher.evaluation ,rank:teacher.rank });
+    }
+  }
+}
+
+
+
+
+
+

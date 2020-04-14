@@ -29,6 +29,12 @@ const teacherSchema = new mongoose.Schema(
     student:{
       type:Number,
       default: 0
+    },
+    evaluation:{
+      type:Number,
+      min:0,
+      max:10,
+      default: 0
     }
   },
   { timestamps: true }
