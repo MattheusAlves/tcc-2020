@@ -17,7 +17,8 @@ const teacherSchema = new mongoose.Schema(
      * Localização
      */
     studyFields: {
-      type: [mongoose.Schema.Types.ObjectId],
+      //type: [mongoose.Schema.Types.ObjectId],
+      type: [String],
       ref: "Discipline",
       default: undefined,
     },
@@ -25,6 +26,10 @@ const teacherSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    student:{
+      type:Number,
+      default: 0
+    }
   },
   { timestamps: true }
 );
