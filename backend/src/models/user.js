@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuidv1 = require("uuidv1");
-
+const { ObjectId } = mongoose.Schema;
 const date = new Date();
 const userSchema = new mongoose.Schema(
   {
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     disciplines: {
-      type:[mongoose.Schema.Types.ObjectId],
+      type:[ObjectId],
       ref: "Discipline",
       default: undefined,
     },

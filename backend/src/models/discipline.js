@@ -11,13 +11,14 @@ const disciplineSchema = new mongoose.Schema({
         required:true,
         uppercase:true,
         trim:true,
+        unique:true
     },
-    relatedDisciplines:{
-        type:[mongoose.Schema.Types.ObjectId],
+    relatedDisciplines:[{
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Discipline',
         default:undefined
 
-    }
+    }]
 
 
 

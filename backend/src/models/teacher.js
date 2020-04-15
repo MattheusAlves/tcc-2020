@@ -16,14 +16,17 @@ const teacherSchema = new mongoose.Schema(
     /**
      * Localização
      */
-    studyFields: {
-      type: [mongoose.Schema.Types.ObjectId],
+    studyFields: [{
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Discipline",
       default: undefined,
-    },
+      unique:true,
+      
+    }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      unique:true
     },
   },
   { timestamps: true }
