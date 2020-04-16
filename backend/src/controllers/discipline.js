@@ -85,7 +85,8 @@ exports.updateStudyFields = async (req, res) => {
         for (let j = 0; j < studyFields.length; j++) {
             for (let i = 0; i < teacher.studyFields.length; i++) {
                 if (studyFields[j] == teacher.studyFields[i]) {
-                    studyFields.splice(j - 1, 1)
+                    //Remove the first element if j = 0
+                    j === 0 ? studyFields.shift() :  studyFields.splice(j - 1, 1)
                 }
             }
         }

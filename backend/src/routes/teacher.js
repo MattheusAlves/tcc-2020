@@ -19,7 +19,7 @@ const {
 const {userById} = require("../controllers/user");
 
 router.post('/teacher/create/:userId',requireSignin,isAuth, createTeacher)
-router.post('/teacher/update/disciplines/:userId/:disciplineId/',requireSignin,isAuth, updateStudyFields)
+router.post('/teacher/update/disciplines/:userId',requireSignin,isAuth, updateStudyFields)
 router.post('/teacher/create/disciplines/:userId',requireSignin,isAuth,/**addisTeacher */ createDiscipline)
 
 
