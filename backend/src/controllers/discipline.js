@@ -15,10 +15,30 @@ exports.disciplineById = (req, res, next, id) => {
   });
 };
 
+exports.list = async (req, res) => {
+  Discipline.find()
+    .sort("disciplineName")
+    .exec((err, disciplines) => {
+      if (err || !disciplines) {
+        return res.status(400).json({ error: errorHandler(err) });
+      }
+      return res.status(200).json({ disciplines });
+    });
+};
 /**
  * method for list all disciplines
  */
-exports.removeStudyFields = async (req, res) => {};
+exports.remove = async (req, res) => {
+  let discipline = req.discipline;
+  discipline.remove((err, deletedDiscipline) => {
+    if (err) {
+      res.status(400).json({ error: errorHandler(err) });
+    }
+    res
+      .status(200)
+      .json({ deletedDiscipline, message: "Discipline deleted succesfully" });
+  });
+};
 
 exports.createDiscipline = async (req, res) => {
   const discipline = new Discipline(req.body);
