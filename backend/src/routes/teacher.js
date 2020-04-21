@@ -1,31 +1,19 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const { createTeacher, updateStudyFields } = require("../controllers/teacher");
-const {
-  disciplineById,
-  createDiscipline,
-} = require("../controllers/discipline");
+const { createTeacher, updateTeacher } = require('../controllers/teacher')
 
-const { requireSignin, isAuth } = require("../controllers/auth");
+const { requireSignin, isAuth } = require('../controllers/auth')
 
-const { userById } = require("../controllers/user");
+const { userById } = require('../controllers/user')
 
-router.post("/teacher/create/:userId", requireSignin, isAuth, createTeacher);
+router.post('/teacher/create/:userId', requireSignin, isAuth, createTeacher)
 router.post(
-  "/teacher/update/disciplines/:userId",
+  '/teacher/update/disciplines/:userId',
   requireSignin,
   isAuth,
-  updateStudyFields
-);
+  updateTeacher
+)
 
-router.post(
-  "/teacher/create/disciplines/:userId",
-  requireSignin,
-  isAuth,
-  /**addisTeacher */ createDiscipline
-);
-
-router.param("disciplineId", disciplineById);
-router.param("userId", userById);
-module.exports = router;
+router.param('userId', userById)
+module.exports = router

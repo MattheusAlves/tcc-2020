@@ -1,27 +1,25 @@
 const mongoose = require('mongoose')
 
 /**
- * 
+ *
  */
 const disciplineSchema = new mongoose.Schema({
-    disciplineName:{
-        type:String,
-        min:4,
-        max:32,
-        required:true,
-        uppercase:true,
-        trim:true,
-        unique:true
-    },
-    relatedDisciplines:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Discipline',
-        default:undefined
+  disciplineName: {
+    type: String,
+    min: 4,
+    max: 32,
+    required: true,
+    uppercase: true,
+    trim: true,
+    unique: true
+  },
+  relatedDisciplines: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Discipline',
+    default: undefined
 
-    }]
+  }]
 
+}, { timestamps: true })
 
-
-},{timestamps:true})
-
-module.exports = mongoose.model("Discipline", disciplineSchema)
+module.exports = mongoose.model('Discipline', disciplineSchema)
