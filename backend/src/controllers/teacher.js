@@ -3,7 +3,7 @@ const _ = require("lodash");
 
 const Teacher = require("../models/teacher");
 
-exports.createTeacher = async (req, res) => {
+exports.create = async (req, res) => {
   const { cpf, rank } = req.body;
   // Transforma as disciplinas em um array, remove os espaços e capitaliza a primeira letra
   const studyFields = await req.body.studyFields
@@ -44,7 +44,7 @@ exports.createTeacher = async (req, res) => {
  *
  */
 
-exports.updateTeacher = async (req, res) => {
+exports.update = async (req, res) => {
   // Transforma as disciplinas em um array, remove os espaços e capitaliza a primeira letra
   let studyFields;
   if (req.body.studyFields) {
