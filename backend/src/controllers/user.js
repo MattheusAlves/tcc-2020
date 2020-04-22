@@ -10,6 +10,7 @@ exports.userById = async (req, res, next, id) => {
         error: user
       })
     }
+   
     req.profile = user
     next()
   })
