@@ -1,29 +1,30 @@
-const mongoose = require("mongoose");
-const crypto = require("crypto");
-const uuidv1 = require("uuidv1");
+const mongoose = require('mongoose')
+const crypto = require('crypto')
+const uuidv1 = require('uuidv1')
 
-const date = new Date();
+const date = new Date()
+
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       trim: true,
       required: true,
-      maxlength: 32,
+      maxlength: 32
     },
     email: {
       type: String,
       trim: true,
       required: true,
-      unique: 32,
+      unique: 32
     },
     hashed_password: {
       type: String,
-      required: true,
+      required: true
     },
     photo: {
       data: Buffer,
-      contentType: String,
+      contentType: String
     },
     //    location:{
     //        type:PointSchema,
@@ -38,46 +39,49 @@ const userSchema = new mongoose.Schema(
     salt: String,
     birthDate: {
       type: Date,
-      min: "1900-01-01",
-      max:`'${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}'`, 
-      required: true,
+      min: '1900-01-01',
+      max: `'${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}'`,
+      required: true
     },
-    disciplines: {
-      type:[mongoose.Schema.Types.ObjectId],
-      ref: "Discipline",
-      default: undefined,
-    },
+    disciplines: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Discipline',
+        default: undefined,
+        trim:true
+      }
+    ]
   },
   { timestamps: true }
-);
+)
 
-//virtual field
+// virtual field
 userSchema
-  .virtual("password")
+  .virtual('password')
   .set(function (password) {
-    this._password = password;
-    this.salt = uuidv1();
-    this.hashed_password = this.encryptPassword(password);
+    this._password = password
+    this.salt = uuidv1()
+    this.hashed_password = this.encryptPassword(password)
   })
   .get(function () {
-    return this.password;
-  });
+    return this.password
+  })
 
 userSchema.methods = {
   authenticate: function (plainText) {
-    return this.encryptPassword(plainText) === this.hashed_password;
+    return this.encryptPassword(plainText) === this.hashed_password
   },
 
   encryptPassword: function (password) {
-    if (!password) return "";
+    if (!password) return ''
     try {
       return crypto
-        .createHmac("sha1", this.salt)
+        .createHmac('sha1', this.salt)
         .update(password)
-        .digest("hex");
+        .digest('hex')
     } catch (err) {
-      return "";
+      return ''
     }
-  },
-};
-module.exports = mongoose.model("User", userSchema);
+  }
+}
+module.exports = mongoose.model('User', userSchema)

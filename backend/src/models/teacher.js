@@ -1,30 +1,32 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const teacherSchema = new mongoose.Schema(
   {
     cpf: {
       type: Number,
       requrired: true,
-      unique: 11,
+      unique: 11
     },
     rank: {
       type: Number,
       min: 0,
       max: 10,
-      default: 0,
+      default: 0
     },
     /**
      * Localização
      */
-    studyFields: {
-      //type: [mongoose.Schema.Types.ObjectId],
-      type: [String],
-      ref: "Discipline",
+    studyFields: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Discipline',
       default: undefined,
-    },
+      unique: true
+
+    }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      unique: true
     },
     student:{
       type:Number,
@@ -38,6 +40,6 @@ const teacherSchema = new mongoose.Schema(
     }
   },
   { timestamps: true }
-);
+)
 
-module.exports = mongoose.model("Teacher", teacherSchema);
+module.exports = mongoose.model('Teacher', teacherSchema)
