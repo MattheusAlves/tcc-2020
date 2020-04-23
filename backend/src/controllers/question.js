@@ -39,7 +39,8 @@ exports.questionById = async (req, res, next, id) => {
 }
 
 exports.list = async (req, res) => {
-    await Question.find().sort('title').exec((err, questions) => {
+    console.log('teste')
+    await Question.find().sort({ 'createdAt': 'desc' }).exec((err, questions) => {
         if (err || !questions)
             return res.status(400).json({
                 error: errorHandler(err)
@@ -58,7 +59,7 @@ exports.response = async (req, res) => {
         if (err || !response) {
             return res.status(400).json({ error: errorHandler(err) })
         }
-        
+
         Question.findById(req.question._id).exec((err, question) => {
             question.response = [...question.response, response._id]
             question.populate('response').execPopulate()
@@ -69,11 +70,25 @@ exports.response = async (req, res) => {
                     })
                 }
                 return res.status(200).json({
-                    response, Questao: question
+                    Answer: response, Questao: question
                 })
             })
         })
 
+    })
+
+}
+exports.asnwersQuantity = async (req, res) => {
+    console.log(req.question._id)
+    await Question.findById(req.question._id).exec((err, question) => {
+        if (err || !question) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        }
+        return res.status(200).json({
+            asnwersQuantity: question.response.length
+        })
     })
 
 }
