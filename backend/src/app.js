@@ -34,6 +34,7 @@ app.use(cors())
 app.use('/api', authRoutes)
 app.use('/api', userRoutes)
 app.use('/api', teacherRoutes)
+//app.use('/api', disciplineRoutes)
 app.use('/api', questionRoutes)
 
 const port = process.env.PORT || 8000 // choice env.PORT or 8000

@@ -16,17 +16,22 @@ const {
     disciplineById
 } = require('../controllers/discipline')
 
+/*
 router.post('/teacher/create/:userId',requireSignin,isAuth, create)
+*/
 router.post('/teacher/create/disciplines/:userId',requireSignin,isAuth,/**addisTeacher */ createStudyFields)
 router.post('/teacher/oneMoreStudent/:userId', requireSignin,isAuth, oneMoreStudent)
 router.post('/teacher/oneLessStudent/:userId', requireSignin,isAuth, oneLessStudent)
 router.post('/teacher/avaliationTeacher/:userId', requireSignin,isAuth, evaluationTeacher)
+
+/*
 router.post(
     '/teacher/update/disciplines/:userId',
     requireSignin,
     isAuth,
     update
   )
+  */
 
 router.param('userId',userById)
 router.param('disciplineId', disciplineById)

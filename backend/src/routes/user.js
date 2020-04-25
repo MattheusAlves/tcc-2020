@@ -12,13 +12,14 @@ router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
   })
 })
 
+/*
 router.post(
   '/update/disciplines/:userId',
   requireSignin,
   isAuth,
   update
 )
-
+*/
 router.param('userId', userById)
 router.param('disciplineId', disciplineById)
 
