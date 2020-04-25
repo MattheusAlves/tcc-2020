@@ -12,6 +12,7 @@ const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const teacherRoutes = require('./routes/teacher')
 const questionRoutes = require('./routes/question')
+const disciplineRoutes = require('./routes/discipline')
 
 // app
 const app = express()
@@ -34,7 +35,7 @@ app.use(cors())
 app.use('/api', authRoutes)
 app.use('/api', userRoutes)
 app.use('/api', teacherRoutes)
-//app.use('/api', disciplineRoutes)
+app.use('/api', disciplineRoutes)
 app.use('/api', questionRoutes)
 
 const port = process.env.PORT || 8000 // choice env.PORT or 8000
