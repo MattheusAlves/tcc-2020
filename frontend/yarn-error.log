@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-safe-area-context
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-safe-area-context@
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files (x86)\Nmap;C:\Program Files\Nmap;C:\Users\Administrador\AppData\Local\Yarn\bin;C:\Users\Administrador\AppData\Roaming\npm
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files (x86)\Nmap;C:\Program Files\Nmap;C:\Users\Administrador\AppData\Local\Yarn\bin;C:\Users\Administrador\AppData\Roaming\npm;C:\Users\matheusad\AppData\Local\Programs\Git\cmd
 
 Yarn version: 
   1.19.0
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\matheusad\Documents\react-native\TCC\tcc-2020\frontend\node_modules\cosmiconfig\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\matheusad\Documents\react-native\TCC\tcc-2020\frontend\node_modules\xcode\node_modules\.bin'
 
 npm manifest: 
   {
