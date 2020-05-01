@@ -1,11 +1,18 @@
-import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper'
-import AppNavigator from './src/navigation'
+import React from "react";
+import { StatusBar } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+import Routes from "./src/navigation/routes";
+
+import commonStyles from './src/commonStyles'
 
 export default function App() {
   return (
-    <PaperProvider>
-      <AppNavigator />
-    </PaperProvider>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor={commonStyles.colors.statusBar} />
+
+      <PaperProvider>
+        <Routes />
+      </PaperProvider>
+    </>
   );
 }
