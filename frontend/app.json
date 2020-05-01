@@ -1,26 +1,20 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "name": "SIAP",
+    "slug": "SIAP",
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }

@@ -11,8 +11,10 @@ import {
 
 import commonStyles from "../commonStyles";
 
-export default function Auth() {
+export default function Login({navigation}) {
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     Animated.spring(offset.y, {
@@ -37,7 +39,8 @@ export default function Auth() {
           placeholder="Seu melhor e-mail"
           keyboardType="email-address"
           autoCorrect={false}
-          onChangeText={() => {}}
+          value={email}
+          onChangeText={(email) => setEmail(email)}
         />
         <TextInput
           style={styles.input}
@@ -46,12 +49,13 @@ export default function Auth() {
           textContentType="password"
           secureTextEntry={true}
           autoCompleteType="password"
-          onChangeText={() => {}}
+          value={password}
+          onChangeText={(password) => setPassword(password)}
         />
         <TouchableOpacity style={styles.btnSubmit}>
           <Text style={styles.submitText}>Acessar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRegister}>
+        <TouchableOpacity style={styles.btnRegister} onPress={() => navigation.navigate('Register')}>
           <Text style={styles.registerText}>Criar conta gratuíta</Text>
         </TouchableOpacity>
       </Animated.View>
@@ -60,6 +64,8 @@ export default function Auth() {
 }
 
 const styles = StyleSheet.create({
+  
+ 
   background: {
     flex: 1,
     alignItems: "center",
@@ -67,8 +73,9 @@ const styles = StyleSheet.create({
     backgroundColor: commonStyles.colors.authBody,
   },
   containerLogo: {
-    flex: 1,
+    flex:1,
     justifyContent: "center",
+       
   },
   container: {
     flex: 1,
