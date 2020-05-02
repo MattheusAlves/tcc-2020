@@ -4,6 +4,7 @@ export default {
     color: "#222",
     borderRadius: 7,
     padding: 10,
+    elevation: 1,
   },
   label: {},
   button: {

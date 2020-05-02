@@ -34,7 +34,7 @@ export default function Register() {
             transform: [{ translateX: offset.x }],
           },
         ]}>
-        <Text>TESTE!</Text>
+        
         <TextInput
           style={[styles.input,styles.inputName]}
           placeholder="Nome"
@@ -83,12 +83,12 @@ export default function Register() {
 const styles = StyleSheet.create({
   input: {
     ...commonStyles.input,
-    borderRadius:2,
+    borderRadius:4,
     width: "90%",
     marginBottom: 13,
     fontSize: 17,
     borderBottomRightRadius: 12,
-    borderTopRightRadius: 2,
+    borderTopRightRadius: 4,
   },
   inputName:{
     marginBottom:18
