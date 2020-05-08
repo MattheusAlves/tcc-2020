@@ -10,7 +10,7 @@ import {
   Alert,
   AsyncStorage,
 } from "react-native";
-
+import { Icon } from "react-native-elements";
 //import axios config
 import api from "../services/api";
 
@@ -30,10 +30,10 @@ export default function Login({ navigation }) {
   const _hideDialog = () => setDialogState(false);
 
   async function handleSubmit() {
-    if(!email || !password){
-      setDialogMessage('Digite usuário e senha')
-      setDialogState(true)
-      return 0
+    if (!email || !password) {
+      setDialogMessage("Digite usuário e senha");
+      setDialogState(true);
+      return 0;
     }
     console.log("Email:", email, " Senha:", password);
     const response = await api
@@ -79,6 +79,8 @@ export default function Login({ navigation }) {
             },
           ]}
         >
+          <View style={styles.section}>
+          <Icon style={styles.icon} name="at" type="material-community" color="black" />
           <TextInput
             style={styles.input}
             placeholder="Seu melhor e-mail"
@@ -87,6 +89,9 @@ export default function Login({ navigation }) {
             value={email}
             onChangeText={(email) => setEmail(email)}
           />
+          </View>
+          <View style={styles.section}>
+          <Icon style={styles.icon} name="lock-question" type="material-community" color="black" />
           <TextInput
             style={styles.input}
             placeholder="Senha"
@@ -97,6 +102,7 @@ export default function Login({ navigation }) {
             value={password}
             onChangeText={(password) => setPassword(password)}
           />
+          </View>
           <TouchableOpacity style={styles.btnSubmit} onPress={handleSubmit}>
             <Text style={styles.submitText}>Acessar</Text>
           </TouchableOpacity>
@@ -127,6 +133,7 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     flex: 1,
+    backgroundColor:'red',
     justifyContent: "center",
   },
   container: {
@@ -134,15 +141,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // justifyContent: "center",
     width: "90%",
-    paddingBottom: 50,
   },
   input: {
     ...commonStyles.input,
-    width: "90%",
-    marginBottom: 15,
+    width: "86%",
     fontSize: 17,
+    borderLeftWidth:0,
+    borderLeftColor:'#fff',
+    borderBottomLeftRadius:0,
+    borderTopLeftRadius:0,
+    height:50
   },
   btnSubmit: {
+    marginTop:10,
     ...commonStyles.button,
   },
   submitText: {
@@ -155,5 +166,26 @@ const styles = StyleSheet.create({
   },
   registerText: {
     color: commonStyles.colors.mainText,
+  },
+  section:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'gray',
+    borderWidth: .4,
+    borderColor: '#000',
+    height: 51,
+    borderRadius: 5 ,
+    marginBottom: 8
+    
+  },
+  icon: {
+    // backgroundColor:'blue',
+    padding: 0,
+    margin: 5,
+    height: 25,
+    width: 32,
+    resizeMode : 'stretch',
+    alignItems: 'center'
   },
 });

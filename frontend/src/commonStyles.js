@@ -2,7 +2,7 @@ export default {
   input: {
     backgroundColor: "#FFF",
     color: "#222",
-    borderRadius: 7,
+    borderRadius: 5,
     padding: 10,
     elevation: 1,
   },
