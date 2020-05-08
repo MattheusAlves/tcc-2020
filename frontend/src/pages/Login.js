@@ -10,12 +10,12 @@ import {
   Alert,
   AsyncStorage,
 } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon, Avatar } from "react-native-elements";
+
 //import axios config
 import api from "../services/api";
 
 import commonStyles from "../commonStyles";
-
 import DialogComponent from "../components/Dialog";
 
 export default function Login({ navigation }) {
@@ -70,7 +70,12 @@ export default function Login({ navigation }) {
   return (
     <>
       <KeyboardAvoidingView style={styles.background}>
-        <View style={styles.containerLogo}></View>
+        <View style={styles.containerLogo}><Avatar
+          rounded
+          icon={{ name: 'user', type: 'font-awesome' }}
+          // activeOpacity={0.7}
+          // containerStyle={{ flex: 2, marginLeft: 20, marginTop: 115 }}
+        /></View>
         <Animated.View
           style={[
             styles.container,
@@ -80,28 +85,28 @@ export default function Login({ navigation }) {
           ]}
         >
           <View style={styles.section}>
-          <Icon style={styles.icon} name="at" type="material-community" color="black" />
-          <TextInput
-            style={styles.input}
-            placeholder="Seu melhor e-mail"
-            keyboardType="email-address"
-            autoCorrect={false}
-            value={email}
-            onChangeText={(email) => setEmail(email)}
-          />
+            <Icon style={styles.icon} name="at" type="material-community" color="black" />
+            <TextInput
+              style={styles.input}
+              placeholder="Seu melhor e-mail"
+              keyboardType="email-address"
+              autoCorrect={false}
+              value={email}
+              onChangeText={(email) => setEmail(email)}
+            />
           </View>
           <View style={styles.section}>
-          <Icon style={styles.icon} name="lock-question" type="material-community" color="black" />
-          <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            autoCorrect={false}
-            textContentType="password"
-            secureTextEntry={true}
-            autoCompleteType="password"
-            value={password}
-            onChangeText={(password) => setPassword(password)}
-          />
+            <Icon style={styles.icon} name="lock-question" type="material-community" color="black" />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              autoCorrect={false}
+              textContentType="password"
+              secureTextEntry={true}
+              autoCompleteType="password"
+              value={password}
+              onChangeText={(password) => setPassword(password)}
+            />
           </View>
           <TouchableOpacity style={styles.btnSubmit} onPress={handleSubmit}>
             <Text style={styles.submitText}>Acessar</Text>
@@ -133,7 +138,7 @@ const styles = StyleSheet.create({
   },
   containerLogo: {
     flex: 1,
-    backgroundColor:'red',
+    // backgroundColor: 'red',
     justifyContent: "center",
   },
   container: {
@@ -146,14 +151,14 @@ const styles = StyleSheet.create({
     ...commonStyles.input,
     width: "86%",
     fontSize: 17,
-    borderLeftWidth:0,
-    borderLeftColor:'#fff',
-    borderBottomLeftRadius:0,
-    borderTopLeftRadius:0,
-    height:50
+    borderLeftWidth: 0,
+    borderLeftColor: '#fff',
+    borderBottomLeftRadius: 0,
+    borderTopLeftRadius: 0,
+    height: 50
   },
   btnSubmit: {
-    marginTop:10,
+    marginTop: 10,
     ...commonStyles.button,
   },
   submitText: {
@@ -167,17 +172,17 @@ const styles = StyleSheet.create({
   registerText: {
     color: commonStyles.colors.mainText,
   },
-  section:{
+  section: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'gray',
     borderWidth: .4,
     borderColor: '#000',
-    height: 51,
-    borderRadius: 5 ,
+    height: 53,
+    borderRadius: 5,
     marginBottom: 8
-    
+
   },
   icon: {
     // backgroundColor:'blue',
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     margin: 5,
     height: 25,
     width: 32,
-    resizeMode : 'stretch',
+    resizeMode: 'stretch',
     alignItems: 'center'
   },
 });
