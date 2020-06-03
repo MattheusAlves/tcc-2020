@@ -9,14 +9,16 @@ import {
   Animated,
   Alert,
   AsyncStorage,
+  ImageBackground,
+  Dimensions,
 } from "react-native";
 import { Icon, Avatar } from "react-native-elements";
 
-//import axios config
-import api from "../services/api";
 
+import * as auth from '../../services/auth'
 import commonStyles from "../commonStyles";
 import DialogComponent from "../components/Dialog";
+const studyImg = require("../../assets/images/studyBackground.jpeg");
 
 export default function Login({ navigation }) {
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
@@ -33,15 +35,9 @@ export default function Login({ navigation }) {
     if (!email || !password) {
       setDialogMessage("Digite usuário e senha");
       setDialogState(true);
-      return 0;
+      return 0
     }
-    console.log("Email:", email, " Senha:", password);
-    const response = await api
-      .post("/signin", {
-        email,
-        password,
-      })
-
+     auth.Signin()
       .then((response) => {
         console.log("data", response.data);
         const { token } = response.data;
@@ -68,14 +64,20 @@ export default function Login({ navigation }) {
   }, []);
 
   return (
-    <>
+    <ImageBackground
+      style={styles.backgroundImage}
+      source={require("../../assets/images/studyBackground.jpeg")}
+    >
       <KeyboardAvoidingView style={styles.background}>
-        <View style={styles.containerLogo}><Avatar
-          rounded
-          icon={{ name: 'user', type: 'font-awesome' }}
-          // activeOpacity={0.7}
-          // containerStyle={{ flex: 2, marginLeft: 20, marginTop: 115 }}
-        /></View>
+        <View style={styles.containerLogo}>
+          <Avatar
+            size="xlarge"
+            icon={{ name: "user", type: "font-awesome" }}
+            // overlayContainerStyle={{backgroundColor: 'blue'}}
+            activeOpacity={0.7}
+            containerStyle={{ flex: 1 }}
+          />
+        </View>
         <Animated.View
           style={[
             styles.container,
@@ -85,7 +87,12 @@ export default function Login({ navigation }) {
           ]}
         >
           <View style={styles.section}>
-            <Icon style={styles.icon} name="at" type="material-community" color="black" />
+            <Icon
+              style={styles.icon}
+              name="at"
+              type="material-community"
+              color="black"
+            />
             <TextInput
               style={styles.input}
               placeholder="Seu melhor e-mail"
@@ -96,7 +103,12 @@ export default function Login({ navigation }) {
             />
           </View>
           <View style={styles.section}>
-            <Icon style={styles.icon} name="lock-question" type="material-community" color="black" />
+            <Icon
+              style={styles.icon}
+              name="lock-question"
+              type="material-community"
+              color="black"
+            />
             <TextInput
               style={styles.input}
               placeholder="Senha"
@@ -115,7 +127,7 @@ export default function Login({ navigation }) {
             style={styles.btnRegister}
             onPress={() => navigation.navigate("Register")}
           >
-            <Text style={styles.registerText}>Criar conta gratuíta</Text>
+            <Text style={styles.registerText}>Criar conta gratuita</Text>
           </TouchableOpacity>
         </Animated.View>
       </KeyboardAvoidingView>
@@ -125,16 +137,27 @@ export default function Login({ navigation }) {
         dialogState={dialogState}
         onDismiss={() => _hideDialog()}
       />
-    </>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    height: Dimensions.get("screen").height,
+    width: "100%",
+    // height: '100%',
+    backgroundColor: "blue",
+    // flexDirection: 'column',
+    // backgroundColor: "transparent",
+    // justifyContent: 'flex-start',
+    resizeMode: "contain",
+  },
   background: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: commonStyles.colors.authBody,
+    // backgroundColor: commonStyles.colors.authBody,
   },
   containerLogo: {
     flex: 1,
@@ -152,10 +175,10 @@ const styles = StyleSheet.create({
     width: "86%",
     fontSize: 17,
     borderLeftWidth: 0,
-    borderLeftColor: '#fff',
+    borderLeftColor: "#fff",
     borderBottomLeftRadius: 0,
     borderTopLeftRadius: 0,
-    height: 50
+    height: 50,
   },
   btnSubmit: {
     marginTop: 10,
@@ -173,16 +196,15 @@ const styles = StyleSheet.create({
     color: commonStyles.colors.mainText,
   },
   section: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'gray',
-    borderWidth: .4,
-    borderColor: '#000',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "lightgray",
+    borderWidth: 0.4,
+    borderColor: "#000",
     height: 53,
     borderRadius: 5,
-    marginBottom: 8
-
+    marginBottom: 8,
   },
   icon: {
     // backgroundColor:'blue',
@@ -190,7 +212,7 @@ const styles = StyleSheet.create({
     margin: 5,
     height: 25,
     width: 32,
-    resizeMode: 'stretch',
-    alignItems: 'center'
+    resizeMode: "stretch",
+    alignItems: "center",
   },
 });

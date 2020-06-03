@@ -5,7 +5,7 @@ export default {
     borderRadius: 5,
     padding: 10,
     elevation: 1,
-    outline:'none'
+    
   },
   label: {},
   button: {
