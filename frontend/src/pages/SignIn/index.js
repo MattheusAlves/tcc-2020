@@ -15,9 +15,9 @@ import {
 import { Icon, Avatar } from "react-native-elements";
 
 
-import * as auth from '../../services/auth'
-import commonStyles from "../commonStyles";
-import DialogComponent from "../components/Dialog";
+import {signIn} from '../../services/auth'
+import commonStyles from "../../commonStyles";
+import DialogComponent from "../../components/Dialog";
 const studyImg = require("../../assets/images/studyBackground.jpeg");
 
 export default function Login({ navigation }) {
@@ -37,7 +37,7 @@ export default function Login({ navigation }) {
       setDialogState(true);
       return 0
     }
-     auth.Signin()
+     signIn()
       .then((response) => {
         console.log("data", response.data);
         const { token } = response.data;

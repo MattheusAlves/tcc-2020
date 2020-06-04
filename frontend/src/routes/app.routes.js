@@ -5,10 +5,10 @@ import Main from "../pages/Main";
 
 const AppStack = createStackNavigator();
 
-const AppRoutes = () => {
+const AppRoutes = () => (
   <AppStack.Navigator>
     <AppStack.Screen name="Main" component={Main}/>
   </AppStack.Navigator>
-};
+);
 
 export default AppRoutes;

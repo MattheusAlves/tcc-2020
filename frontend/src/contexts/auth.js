@@ -1,17 +1,17 @@
-import { createContext,useState } from "react";
-import * as auth from '../services/auth'
-AuthContextData = {
-    signed: Boolean,
-    user: Object,
-    signIn()
+import React,{ createContext,useState } from 'react';
+import {signIn} from '../services/auth'
+const  AuthContextData = {
+    signed: false,
+   
+    
 }
 
 const AuthContext = createContext(AuthContextData);
 
-export const AuthProvider = ({ children }) => {]
-    const [user,setUser] = useState()
-     async function signIn(){
-        const response = await auth.signIn()
+export const AuthProvider = ({ children }) => {
+    const [user,setUser] = useState('')
+     async function sign(){
+        const response = await signIn()
        
         setUser(response.user)
     }
