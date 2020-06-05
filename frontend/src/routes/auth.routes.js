@@ -1,14 +1,14 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Login from "../pages/Signin";
+import Login from "../pages/SignIn";
 
 
 const AuthStack = createStackNavigator();
 
 const AuthRoutes = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen name="SignIn" component={Login}/>
+  <AuthStack.Navigator headerMode='none'>
+    <AuthStack.Screen name="SignIn" component={Login} />
   </AuthStack.Navigator>
 )
 

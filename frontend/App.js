@@ -1,4 +1,5 @@
-import React from "react";
+import React,{} from "react";
+import {Text} from 'react-native'
 import { StatusBar } from "react-native";
 import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from "react-native-paper";
@@ -11,6 +12,7 @@ import Routes from "./src/routes/index";
 
 export default function App() {
   return (
+    <>
     <NavigationContainer>
       <AuthProvider>
         <StatusBar
@@ -22,5 +24,6 @@ export default function App() {
         </PaperProvider>
       </AuthProvider>
     </NavigationContainer>
+    </>
   );
 }

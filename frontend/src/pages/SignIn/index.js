@@ -5,20 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  StyleSheet,
   Animated,
-  Alert,
   AsyncStorage,
   ImageBackground,
-  Dimensions,
 } from "react-native";
 import { Icon, Avatar } from "react-native-elements";
 
-
-import {signIn} from '../../services/auth'
-import commonStyles from "../../commonStyles";
+import AuthContext from '../../contexts/auth'
+import { signIn } from '../../services/auth'
+import { styles } from './style'
 import DialogComponent from "../../components/Dialog";
-const studyImg = require("../../assets/images/studyBackground.jpeg");
 
 export default function Login({ navigation }) {
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
@@ -31,13 +27,15 @@ export default function Login({ navigation }) {
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
 
+  const { signed } = useContext(AuthContext);
+
   async function handleSubmit() {
     if (!email || !password) {
       setDialogMessage("Digite usuário e senha");
       setDialogState(true);
       return 0
     }
-     signIn()
+    signIn(email, password)
       .then((response) => {
         console.log("data", response.data);
         const { token } = response.data;
@@ -47,9 +45,7 @@ export default function Login({ navigation }) {
         AsyncStorage.setItem("name", name);
       })
       .catch((err) => {
-        // alert(err.response.data.err);
         console.log("teste");
-
         setDialogMessage(err.response.data.err);
         setDialogState(true);
       });
@@ -115,7 +111,6 @@ export default function Login({ navigation }) {
               autoCorrect={false}
               textContentType="password"
               secureTextEntry={true}
-              autoCompleteType="password"
               value={password}
               onChangeText={(password) => setPassword(password)}
             />
@@ -141,78 +136,4 @@ export default function Login({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    height: Dimensions.get("screen").height,
-    width: "100%",
-    // height: '100%',
-    backgroundColor: "blue",
-    // flexDirection: 'column',
-    // backgroundColor: "transparent",
-    // justifyContent: 'flex-start',
-    resizeMode: "contain",
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: commonStyles.colors.authBody,
-  },
-  containerLogo: {
-    flex: 1,
-    // backgroundColor: 'red',
-    justifyContent: "center",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    // justifyContent: "center",
-    width: "90%",
-  },
-  input: {
-    ...commonStyles.input,
-    width: "86%",
-    fontSize: 17,
-    borderLeftWidth: 0,
-    borderLeftColor: "#fff",
-    borderBottomLeftRadius: 0,
-    borderTopLeftRadius: 0,
-    height: 50,
-  },
-  btnSubmit: {
-    marginTop: 10,
-    ...commonStyles.button,
-  },
-  submitText: {
-    fontWeight: "bold",
-    color: commonStyles.colors.mainText,
-    fontSize: 18,
-  },
-  btnRegister: {
-    marginTop: 10,
-  },
-  registerText: {
-    color: commonStyles.colors.mainText,
-  },
-  section: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "lightgray",
-    borderWidth: 0.4,
-    borderColor: "#000",
-    height: 53,
-    borderRadius: 5,
-    marginBottom: 8,
-  },
-  icon: {
-    // backgroundColor:'blue',
-    padding: 0,
-    margin: 5,
-    height: 25,
-    width: 32,
-    resizeMode: "stretch",
-    alignItems: "center",
-  },
-});
+
