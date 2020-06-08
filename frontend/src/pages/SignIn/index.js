@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { Icon, Avatar } from "react-native-elements";
 
-import AuthContext from '../../contexts/auth'
-import { signIn } from '../../services/auth'
+import { useAuth } from '../../contexts/auth'
 import { styles } from './style'
 import DialogComponent from "../../components/Dialog";
 
@@ -27,7 +26,7 @@ export default function Login({ navigation }) {
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
 
-  const { signed } = useContext(AuthContext);
+  const { sign } = useAuth()
 
   async function handleSubmit() {
     if (!email || !password) {
@@ -35,22 +34,10 @@ export default function Login({ navigation }) {
       setDialogState(true);
       return 0
     }
-    signIn(email, password)
-      .then((response) => {
-        console.log("data", response.data);
-        const { token } = response.data;
-        const { _id, name } = response.data.user;
-        AsyncStorage.setItem("user", _id);
-        AsyncStorage.setItem("token", token);
-        AsyncStorage.setItem("name", name);
-      })
-      .catch((err) => {
-        console.log("teste");
-        setDialogMessage(err.response.data.err);
-        setDialogState(true);
-      });
-  }
+    sign(email, password) == "networkError"
 
+
+  }
   useEffect(() => {
     Animated.spring(offset.y, {
       toValue: 0,

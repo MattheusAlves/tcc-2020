@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
         margin: 5,
         height: 25,
         width: 32,
-        resizeMode: "stretch",
+        // resizeMode: "stretch",
         alignItems: "center",
     },
 });
