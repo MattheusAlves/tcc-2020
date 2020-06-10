@@ -10,9 +10,9 @@ import {
   ImageBackground,
 } from "react-native";
 import { Icon, Avatar } from "react-native-elements";
-
-import { useAuth } from '../../contexts/auth'
-import { styles } from './style'
+import api from "../../services/api";
+import { useAuth } from "../../contexts/auth";
+import { styles } from "./style";
 import DialogComponent from "../../components/Dialog";
 
 export default function Login({ navigation }) {
@@ -26,18 +26,17 @@ export default function Login({ navigation }) {
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
 
-  const { sign } = useAuth()
+  const { sign } = useAuth();
 
   async function handleSubmit() {
     if (!email || !password) {
       setDialogMessage("Digite usuário e senha");
       setDialogState(true);
-      return 0
+      return 0;
     }
-    sign(email, password) == "networkError"
-
-
+    sign(email, password);
   }
+
   useEffect(() => {
     Animated.spring(offset.y, {
       toValue: 0,
@@ -122,5 +121,3 @@ export default function Login({ navigation }) {
     </ImageBackground>
   );
 }
-
-

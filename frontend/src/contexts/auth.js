@@ -1,66 +1,69 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import AsyncStorage from '@react-native-community/async-storage'
+import React, { createContext, useState, useEffect, useContext } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
 
-import { signIn } from '../services/auth'
-import api from '../services/api'
+import { signIn } from "../services/auth";
+import api from "../services/api";
 
 const AuthContextData = {
   signed: false,
-  user: '',
+  user: "",
   loading: false,
   sign: () => this(),
-  signOut: () => this()
-
-}
+  signOut: () => this(),
+};
 
 const AuthContext = createContext(AuthContextData);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStorageData() {
-
-      const storagedUser = await AsyncStorage.setItem('@SMSEAuth:user')
-      const storagedToken = await AsyncStorage.setItem('@SMSEAuth:token')
+      const storagedUser = await AsyncStorage.removeItem("@SMSEAuth:user");
+      const storagedToken = await AsyncStorage.removeItem("@SMSEAuth:token");
 
       if (storagedUser && storagedToken) {
-        api.defaults.headers['Authorization'] = `Bearer ${response.token}`
+        api.defaults.headers["Authorization"] = `Bearer ${response.token}`;
 
-        setUser(JSON.parse(storagedUser))
+        setUser(JSON.parse(storagedUser));
       }
-      setLoading(false)
+      setLoading(false);
     }
-    loadStorageData()
-  }, [])
+    loadStorageData();
+  }, []);
 
   async function sign(email, password) {
-    const response = await signIn(email, password)
-    if (response.user && response.token) {
-      console.log(response)
-      setUser(response.user)
+    console.log("Email and passowrd from auth context", email, password);
+    const response = await signIn(email, password);
+    console.log("response:", response);
+    if (response && response.user) {
+      console.log(response);
+      setUser(response.user);
 
-      api.defaults.headers['Authorization'] = `Bearer ${response.token}`
-      await AsyncStorage.setItem('@SMSEAuth:user', JSON.stringify(response.user))
-      await AsyncStorage.setItem('@SMSEAuth:token', response.token)
-    }
+      api.defaults.headers["Authorization"] = `Bearer ${response.token}`;
+      await AsyncStorage.setItem("@SMSEAuth:user", JSON.stringify(response.user));
+      await AsyncStorage.setItem("@SMSEAuth:token", response.token);
+      
+    } else console.log("Network error");
   }
   async function signOut() {
     AsyncStorage.clear().then(() => {
-      setUser(null)
-    })
+      setUser(null);
+    });
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, loading, sign, signOut }}>
+    <AuthContext.Provider
+      value={{ signed: !!user, user, loading, sign, signOut }}
+    >
       {children}
     </AuthContext.Provider>
-  )
+  );
 };
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
 
-  return context
+  return context;
 }
