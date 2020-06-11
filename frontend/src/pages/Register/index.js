@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
   Animated,
+  ImageBackground
 } from "react-native";
 
-import commonStyles from "../commonStyles";
+import {styles} from  './style'
+
+
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -27,6 +29,10 @@ export default function Register() {
   }, []);
 
   return (
+    <ImageBackground
+      style={styles.backgroundImage}
+      source={require("../../assets/images/studyBackground.jpeg")}
+    >
     <KeyboardAvoidingView style={styles.background}>
       <Animated.View style={[
           styles.container,
@@ -77,40 +83,8 @@ export default function Register() {
         </TouchableOpacity>
       </Animated.View>
     </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
-  input: {
-    ...commonStyles.input,
-    borderRadius:4,
-    width: "90%",
-    marginBottom: 13,
-    fontSize: 17,
-    borderBottomRightRadius: 12,
-    borderTopRightRadius: 4,
-  },
-  inputName:{
-    marginBottom:18
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: commonStyles.colors.authBody,
-  },
-  container: {
-    alignItems: "center",
-    width: "90%",
-  },
-  btn: {},
-  registerText: {
-    fontWeight: "bold",
-    color: commonStyles.colors.mainText,
-    fontSize: 18,
-  },
-  btn: {
-    ...commonStyles.button,
-    marginTop: 15,
-  },
-});
+

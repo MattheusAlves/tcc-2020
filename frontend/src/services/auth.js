@@ -8,6 +8,7 @@ export function signIn(email, password) {
   }).then(function (response) {
     return response
   }).catch(function (error) {
+    console.log('false')
     return false
   })
 }

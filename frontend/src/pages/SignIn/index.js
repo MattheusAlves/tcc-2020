@@ -16,6 +16,7 @@ import { styles } from './style'
 import DialogComponent from "../../components/Dialog";
 
 export default function Login({ navigation }) {
+  console.log('renderizou novamente')
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
 
   const [email, setEmail] = useState("");
@@ -29,13 +30,13 @@ export default function Login({ navigation }) {
   const { sign } = useAuth()
 
   async function handleSubmit() {
+
     if (!email || !password) {
       setDialogMessage("Digite usuário e senha");
       setDialogState(true);
       return 0
     }
-    sign(email, password) == "networkError"
-
+    sign(email, password)
 
   }
   useEffect(() => {
@@ -107,7 +108,8 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnRegister}
-            onPress={() => navigation.navigate("Register")}
+            onPress={() =>               
+             navigation.navigate("Register")}
           >
             <Text style={styles.registerText}>Criar conta gratuita</Text>
           </TouchableOpacity>

@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
 
   async function sign(email, password) {
     const response = await signIn(email, password)
-    if (response.user && response.token) {
+    setUser('logado')
+    if (response && response.user && response.token) {
       console.log(response)
       setUser(response.user)
 
