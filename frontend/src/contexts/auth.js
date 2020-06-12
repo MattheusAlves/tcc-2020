@@ -36,7 +36,8 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   async function sign(email, password) {
-    const response = await signIn(email, password)
+   // const response = await signIn(email, password)
+    let response = undefined
     setUser('logado')
     if (response && response.user && response.token) {
       console.log(response)
