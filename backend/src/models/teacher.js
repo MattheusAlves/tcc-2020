@@ -20,8 +20,7 @@ const teacherSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Discipline',
       default: undefined,
-      unique: true
-
+      
     }],
     user: {
       type: mongoose.Schema.Types.ObjectId,

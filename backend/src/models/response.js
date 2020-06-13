@@ -10,7 +10,7 @@ const responseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    
+    //adicionar propriedades "like" e "deslikes"
 
 },{timestamps:true})
 

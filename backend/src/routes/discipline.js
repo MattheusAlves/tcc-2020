@@ -12,8 +12,8 @@ const {
 
 router.post(
   '/disciplines/create/:userId',
-  requireSignin,
-  isAuth,
+  // requireSignin,
+  // isAuth,
   /** addisTeacher */ create
 )
 router.get('/disciplines/list', requireSignin, isAuth, list)

@@ -53,7 +53,9 @@ exports.list = async (req, res) => {
 }
 
 exports.response = async (req, res) => {
+    console.log(req.profile)
     req.body.user = req.profile._id
+    console.log(req.question)
     response = new Response(req.body)
     await response.save((err, response) => {
         if (err || !response) {
@@ -70,7 +72,7 @@ exports.response = async (req, res) => {
                     })
                 }
                 return res.status(200).json({
-                    Answer: response, Questao: question
+                    Questao: question, Answer: response 
                 })
             })
         })
