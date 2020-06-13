@@ -34,12 +34,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   async function sign(email, password) {
-    console.log("Email and passowrd from auth context", email, password);
-    const response = await signIn(email, password);
-    console.log("response:", response);
-    if (response && response.user) {
-      console.log(response);
-      setUser(response.user);
+   // const response = await signIn(email, password)
+    let response = undefined
+    setUser('logado')
+    if (response && response.user && response.token) {
+      console.log(response)
+      setUser(response.user)
 
       api.defaults.headers["Authorization"] = `Bearer ${response.token}`;
       await AsyncStorage.setItem("@SMSEAuth:user", JSON.stringify(response.user));

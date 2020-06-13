@@ -16,7 +16,7 @@ import AppRoutes from './app.routes'
         )
       }
 
-    return signed ? <AppRoutes/> : <AuthRoutes/>
+    return signed ? <AppRoutes/> : <AppRoutes/>
     
 }
 

@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "SIAP",
-    "slug": "SIAP",
+    "name": "Sistema Mobile de Suporte Estudantil",
+    "slug": "SMSE",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/images/studyBackground.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
