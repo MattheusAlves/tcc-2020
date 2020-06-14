@@ -15,6 +15,13 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.mitnick.smse",
+      "config": {
+        "googleMaps": { "apiKey": "AIzaSyDe0Htj8IH7y9wJjPNtZUd97WjO6U-fLn0"}   
+     },
+      "versionCode": 1
+      },
     "ios": {
       "supportsTablet": true
     }

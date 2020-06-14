@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -12,12 +11,12 @@ const MainRoutes = () => (
     tabBarIcon: ({ focused, color, size }) => {
       let iconName
       if (route.name === 'Mapa') {
-        iconName = focused ? 'map-search' : 'map-search-outline'
+        iconName = focused ? 'map-search-outline' : 'map-search'
       } else if (route.name === 'Topicos') {
         iconName = focused ? 'book-open-outline' : 'book-open'
       } else if (route.name === 'Chat') {
         iconName = focused ? 'message-text-outline' : 'message-text'
-      } else if (route.name === 'Configurações') {
+      } else if (route.name === 'Configuracoes') {
         iconName = focused ? 'account-settings-outline' : 'account-settings'
       }
       return <Icon name={iconName} size={30} />
@@ -28,7 +27,7 @@ const MainRoutes = () => (
     <Tab.Screen name="Mapa" component={Main} />
     <Tab.Screen name="Topicos" component={() => { }} />
     <Tab.Screen name="Chat" component={() => { }} />
-    <Tab.Screen name="Configuracoes" component={() => { }} />
+    <Tab.Screen name="Configuracoes" component={() => {}} />
   </Tab.Navigator >
 )
 
