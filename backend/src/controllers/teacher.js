@@ -2,6 +2,7 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 
 const Teacher = require("../models/teacher");
+const User = require('../models/user')
 
 exports.create = async (req, res) => {
   const { cpf, rank } = req.body;
@@ -27,6 +28,7 @@ exports.create = async (req, res) => {
         console.log("teste");
         return res.status(400).json(errorHandler(err));
       }
+      User.findById(req.profile._id).update({teacher:true})
       return res.status(200).json({ teacher });
     });
   } catch (err) {
@@ -108,3 +110,26 @@ exports.update = async (req, res) => {
     });
   });
 };
+
+exports.teachesrByLocation = async (req,res) =>{
+  // const {coordinates} = req.location.coordinates
+  // console.log(coordinates)
+  User.findOne({
+    location:{
+      $near: {
+        $maxDistance:1000,
+        $geometry:{
+          type:"Point",
+          coordinates:['-47.071182','-22.9165836']
+        }
+      }
+    }
+  },{teacher:true}).find((error,results) => {
+    if(error){
+      console.log(error)
+    }
+    console.log(results)
+    return res.status(200).json({results})
+  })
+  
+}

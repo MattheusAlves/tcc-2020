@@ -4,6 +4,18 @@ const uuidv1 = require('uuidv1')
 
 const date = new Date()
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+});
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -20,23 +32,26 @@ const userSchema = new mongoose.Schema(
     },
     hashed_password: {
       type: String,
-      required: true
+      required: true,
+      select: false
     },
-    photo: {
-      data: Buffer,
-      contentType: String
+    teacher: {
+      type: Boolean,
+      default: false
     },
-    //    location:{
-    //        type:PointSchema,
-    //        index:'2dshepre'
-    //        //required:true
-    //    },
-    /**
-     * implementar geolocalização
-     *
-     */
+    // photo: {
+    //   data: Buffer,
+    //   contentType: String
+    // },
+    location: {
+      type: pointSchema, // Guardar Location no Async Storage front?
+      index: "2dsphere"
+    },
+    salt: {
+      type: String,
+      select: false
+    },
 
-    salt: String,
     birthDate: {
       type: Date,
       min: '1900-01-01',
@@ -48,7 +63,7 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Discipline',
         default: undefined,
-        trim:true
+        trim: true
       }
     ]
   },
