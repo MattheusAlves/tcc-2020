@@ -15,11 +15,11 @@ exports.create = async (req, res) => {
     if (!studyFields) {
       return res.status(400).json({ message: "Undefined fields for study" });
     }
-
+    console.log(studyFields)
     const teacher = await new Teacher({
       cpf,
       rank,
-      studyFields,
+      ...studyFields,
       user: req.profile._id,
     });
 
@@ -29,7 +29,11 @@ exports.create = async (req, res) => {
         return res.status(400).json(errorHandler(err));
       }
       User.findById(req.profile._id).update({teacher:true})
-      return res.status(200).json({ teacher });
+      Teacher.findById(teacher._id,(err,teacher) => {
+
+        return res.status(200).json(teacher)
+      }) 
+      // res.status(200).json({ teacher });
     });
   } catch (err) {
     return res.status(400).json({ message: "Teacher saving error" });

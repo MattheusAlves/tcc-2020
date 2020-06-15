@@ -24,6 +24,7 @@ const questionSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    //deve ser uma referencia para categorias
     response: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Response',

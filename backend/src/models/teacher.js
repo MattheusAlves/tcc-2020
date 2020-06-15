@@ -13,9 +13,6 @@ const teacherSchema = new mongoose.Schema(
       max: 10,
       default: 0
     },
-    /**
-     * Localização
-     */
     studyFields: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Discipline',
