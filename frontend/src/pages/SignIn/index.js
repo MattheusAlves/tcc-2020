@@ -36,12 +36,7 @@ export default function Login({ navigation }) {
       setDialogState(true);
       return 0;
     }
-<<<<<<< HEAD
-    sign(email, password)
-
-=======
     sign(email, password);
->>>>>>> 9d2f33eebdfaaae6571d010384a1528c8ecdb9c0
   }
 
   useEffect(() => {

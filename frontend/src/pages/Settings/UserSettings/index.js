@@ -7,7 +7,7 @@ const UserSettings = () => {
     const [name,setName] = useState('')
     const [password,setPassword] = useState('')
     const [disciplines,setDiscipline] = useState([])
-    const [name,setName] = useState('')
+    
   return(
 
   )
