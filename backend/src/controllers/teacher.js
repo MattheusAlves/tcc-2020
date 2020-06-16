@@ -28,11 +28,11 @@ exports.create = async (req, res) => {
         console.log("teste");
         return res.status(400).json(errorHandler(err));
       }
-      User.findById(req.profile._id).update({teacher:true})
-      Teacher.findById(teacher._id,(err,teacher) => {
+      User.findById(req.profile._id).update({ teacher: true })
+      Teacher.findById(teacher._id, (err, teacher) => {
 
         return res.status(200).json(teacher)
-      }) 
+      })
       // res.status(200).json({ teacher });
     });
   } catch (err) {
@@ -115,25 +115,26 @@ exports.update = async (req, res) => {
   });
 };
 
-exports.teachesrByLocation = async (req,res) =>{
-  // const {coordinates} = req.location.coordinates
-  // console.log(coordinates)
-  User.findOne({
-    location:{
+exports.teachersByLocation = async (req, res) => {
+  const coordinates = [...req.profile.location.coordinates]
+  await User.findOne({
+    location: {
       $near: {
-        $maxDistance:1000,
-        $geometry:{
-          type:"Point",
-          coordinates:['-47.071182','-22.9165836']
+        $maxDistance: 2000,
+        $geometry: {
+          type: "Point",
+          coordinates
         }
       }
     }
-  },{teacher:true}).find((error,results) => {
-    if(error){
+    , teacher: true, _id: { $ne: req.profile._id }
+  }).find((error, results) => {
+    if (error) {
       console.log(error)
+      return res.status(400).json(errorHandler(error))
     }
     console.log(results)
-    return res.status(200).json({results})
+    return res.status(200).json({ results })
   })
-  
+
 }

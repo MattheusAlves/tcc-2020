@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { create, update,teachesrByLocation } = require('../controllers/teacher')
+const { create, update,teachersByLocation } = require('../controllers/teacher')
 
 const { requireSignin, isAuth } = require('../controllers/auth')
 
@@ -14,7 +14,7 @@ router.post(
   isAuth,
   update
 )
-router.get('/teacher/location', teachesrByLocation)
+router.get('/teacher/location/:userId', teachersByLocation)
 //buscar geolocation do usuario e trazer professores que estão perto
 
 router.param('userId', userById)

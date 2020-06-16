@@ -16,6 +16,7 @@ exports.userById = async (req, res, next, id) => {
   })
 }
 
+
 /**
  * Atualiza as disciplinas do usuário
  */
