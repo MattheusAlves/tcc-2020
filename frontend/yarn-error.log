@@ -1,29 +1,29 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add MapView
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-geolocation-servie
 
 PATH: 
-  C:\Python\Scripts\;C:\Python\;C:\Python27\;C:\Python27\Scripts\;C:\Gradle\gradle-5.6.3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Python\Scripts\;C:\Program Files (x86)\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Genymobile\Genymotion\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Android\Sdk;ANDROID_HOME\platform-tools;ANDROID_HOME\tools;ANDROID_HOME\emulator;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Users\Matheus\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.1\bin;;C:\Users\Matheus\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\emulator;C:\Users\Matheus\AppData\Local\Android\Sdk\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\tools\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Yarn\bin;C:\Program Files (x86)\Nmap;C:\MinGW\bin;C:\Users\Matheus\AppData\Roaming\npm
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Nmap\;C:\MinGW\bin\;C:\Users\matheusad\AppData\Roaming\npm;C:\Users\matheusad\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\matheusad\AppData\Local\Programs\Git\cmd
 
 Yarn version: 
-  1.17.3
+  1.19.0
 
 Node version: 
-  14.4.0
+  12.16.3
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/MapView: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65939:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140464:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141436:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141358:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1224:12)
+  Error: https://registry.yarnpkg.com/react-native-geolocation-servie: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66027:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140539:22)
+      at Request.emit (events.js:310:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141511:10)
+      at Request.emit (events.js:310:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141433:12)
+      at Object.onceWrapper (events.js:416:28)
+      at IncomingMessage.emit (events.js:322:22)
+      at endReadableNT (_stream_readable.js:1187:12)
       at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 

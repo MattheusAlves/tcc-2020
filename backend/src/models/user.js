@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
     hashed_password: {
       type: String,
       required: true,
-      select: false
+
     },
     teacher: {
       type: Boolean,
@@ -49,7 +49,6 @@ const userSchema = new mongoose.Schema(
     },
     salt: {
       type: String,
-      select: false
     },
 
     birthDate: {

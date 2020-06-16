@@ -10,7 +10,7 @@ exports.userById = async (req, res, next, id) => {
         error: user
       })
     }
-   
+
     req.profile = user
     next()
   })
@@ -92,5 +92,17 @@ exports.update = async (req, res) => {
 
       return res.status(200).json({ user })
     })
+  })
+}
+
+exports.updateLocation = async (req, res) => {
+  const coordinates = [...req.body.coordinates]
+  User.findById(req.profile._id, (error, user) => {
+    if (error) {
+      return res.status(400).json(errorHandler(error))
+    }
+    user.location.coordinates = coordinates
+    user.save()
+    return res.status(200).json(user)
   })
 }

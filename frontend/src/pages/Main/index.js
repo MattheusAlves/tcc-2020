@@ -1,8 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, View,Dimensions } from 'react-native';
-import MapView,{Marker} from 'react-native-maps'
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import Geolocation from 'react-native-geolocation-service'
 
-import mapStyle from '../../helpers/MapConfig'
+import { useLocation } from '../../contexts/location'
+import styles from './style'
+
+// import MapView,{Marker} from 'react-native-maps'
+
+// import mapStyle from '../../helpers/MapConfig'
 /*
   Adicionar Fisrt login no backendo para o usuario escolher as disciplinas
   EJETAR EXPO E ADICIONAR REACT NATIVE MAPS AQUI
@@ -11,10 +16,17 @@ import mapStyle from '../../helpers/MapConfig'
   3-implementar geolocalização no backend
   */
 export default function Main() {
-  
-    return (
-      <View style={styles.container}>
-        <MapView style={styles.mapStyle} 
+  const { latitude, longitude, storeLocation } = useLocation()
+  useEffect(() => {
+    Geolocation.getCurrentPosition(pos => {
+      storeLocation(pos.coords.latitude, pos.coords.longitude)
+    })
+    console.log("T:", latitude, longitude)
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      {/* <MapView style={styles.mapStyle} 
          initialRegion={{
           latitude:-22.9650905,
           longitude:-47.140226,
@@ -28,22 +40,11 @@ export default function Main() {
     longitude:-47.140226,
    
   }}/>
-  </MapView>
-       </View>
-    );
-  }
+  </MapView> */}
+    </View>
+  );
+}
 
-  
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mapStyle: {
-    width: '100%',
-    height: '100%'
-  },
-});
+
+
 
