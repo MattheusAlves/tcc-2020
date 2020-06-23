@@ -29,7 +29,9 @@ function getHeaderTitle(route) {
     case 'Topicos':
       return 'Tópicos';
     case 'Chat':
-      return 'My account';
+      return 'Chat';
+      case 'Configurações':
+        return 'Configurações'
   }
 }
 
@@ -52,7 +54,7 @@ const MainRoutes = () => (
 
   })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={Topics} />
+    <Tab.Screen name="Topicos" component={Dashboard} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />
   </Tab.Navigator >
@@ -60,11 +62,8 @@ const MainRoutes = () => (
 
 
 
-const AppRoutes = ({ navigation, route }) => {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle:getHeaderTitle(route) })
-  }, [navigation, route])
-  return (
+const AppRoutes = ( route ) => {
+    return (
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes} options={({ route }) => ({
         headerTitle: getHeaderTitle(route),
