@@ -5,9 +5,9 @@ import Geolocation from 'react-native-geolocation-service'
 import { useLocation } from '../../contexts/location'
 import styles from './style'
 
-// import MapView,{Marker} from 'react-native-maps'
+import MapView,{Marker} from 'react-native-maps'
 
-// import mapStyle from '../../helpers/MapConfig'
+import mapStyle from '../../helpers/MapConfig'
 /*
   Adicionar Fisrt login no backendo para o usuario escolher as disciplinas
   EJETAR EXPO E ADICIONAR REACT NATIVE MAPS AQUI
@@ -34,7 +34,7 @@ export default function Main() {
           longitudeDelta: 42.0000
         }}
   
-      showsUserLocation={true}
+      // showsUserLocation={true}
   ><Marker coordinate={{
     latitude:-22.9650905,
     longitude:-47.140226,
