@@ -9,8 +9,8 @@ import Topics from "../pages/Topics/Topic";
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
 
-const Tab = createBottomTabNavigator()
 const AppStack = createStackNavigator();
+const Tab = createBottomTabNavigator()
 
 
 
@@ -30,9 +30,16 @@ function getHeaderTitle(route) {
       return 'Tópicos';
     case 'Chat':
       return 'Chat';
-      case 'Configurações':
-        return 'Configurações'
+    case 'Configuracoes':
+      return 'Configurações'
   }
+}
+function getHeaderVisibility(route) {
+  const routeName = route.state
+    ? route.state.routes[route.state.index].name
+    : route.params?.screen || 'Mapa';
+
+  return routeName === "Mapa" ? false : true
 }
 
 
@@ -62,16 +69,14 @@ const MainRoutes = () => (
 
 
 
-const AppRoutes = ( route ) => {
-    return (
+const AppRoutes = (route) => {
+  return (
     < AppStack.Navigator >
-      <AppStack.Screen name="Main" component={MainRoutes} options={({ route }) => ({
-        headerTitle: getHeaderTitle(route),
-        headerShown: (route) => {
-          console.log("rote", route.state.routes[route.state.index].name)
-          if (route.state.routes[route.state.index].name == "Topicos") { return false } return false
-        }
-      })} />
+      <AppStack.Screen name="Main" component={MainRoutes}
+        options={({ route }) => ({
+          headerTitle: getHeaderTitle(route),
+          headerShown: getHeaderVisibility(route) 
+        })} />
     </AppStack.Navigator >
   )
 };
