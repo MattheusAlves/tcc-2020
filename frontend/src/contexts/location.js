@@ -26,7 +26,6 @@ export const LocationProvider = ({ children }) => {
             const storagedLongitude = await AsyncStorage.getItem('@SMSELocation:longitude')
 
             if (storagedLatitude && storagedLongitude) {
-                console.log('entrou if estorage data')
                 setLatitude(storagedLatitude)
                 setLongitude(storagedLongitude)
             }

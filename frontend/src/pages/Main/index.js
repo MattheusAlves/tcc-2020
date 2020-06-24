@@ -15,12 +15,15 @@ import mapStyle from '../../helpers/MapConfig'
   2- Como diferenciar professores de diferentes disciplinas no mapa?
   3-implementar geolocalização no backend
   */
-export default function Main() {
+function Main() {
   const { latitude, longitude, storeLocation } = useLocation()
   useEffect(() => {
-    Geolocation.getCurrentPosition(pos => {
-      storeLocation(pos.coords.latitude, pos.coords.longitude)
-    })
+    async function getLocation() {
+      await Geolocation.getCurrentPosition(pos => {
+        storeLocation(pos.coords.latitude, pos.coords.longitude)
+      })
+    }
+    getLocation()
     console.log("T:", latitude, longitude)
   }, [])
 
@@ -44,7 +47,7 @@ export default function Main() {
     </View>
   );
 }
-
+export default Main
 
 
 
