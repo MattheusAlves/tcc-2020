@@ -25,7 +25,7 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Mapa':
-      return 'Mapa';
+      return 'Tapa';
     case 'Topicos':
       return 'Tópicos';
     case 'Chat':

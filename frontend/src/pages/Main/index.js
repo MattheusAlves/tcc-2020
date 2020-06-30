@@ -16,25 +16,23 @@ import mapStyle from '../../helpers/MapConfig'
   3-implementar geolocalização no backend
   */
 function Main() {
-  const { latitude, longitude, storeLocation } = useLocation()
+ // const { latitude, longitude,longitudeDelta,latitudeDelta, storeLocation } = useLocation()
   useEffect(() => {
-    async function getLocation() {
-      await Geolocation.getCurrentPosition(pos => {
-        storeLocation(pos.coords.latitude, pos.coords.longitude)
-      })
-    }
-    getLocation()
-    console.log("T:", latitude, longitude)
+   // function getLocation() {
+      // 
+    //}
+    //getLocation()
+   // console.log("T:", latitude, longitude)
   }, [])
 
   return (
     <View style={styles.container}>
       {/* <MapView style={styles.mapStyle} 
          initialRegion={{
-          latitude:-22.9650905,
-          longitude:-47.140226,
-          latitudeDelta: 42.0000,
-          longitudeDelta: 42.0000
+          latitude:latitude,
+          longitude:longitude,
+          latitudeDelta: latitudeDelta,
+          longitudeDelta: longitudeDelta  
         }}
   
       // showsUserLocation={true}
