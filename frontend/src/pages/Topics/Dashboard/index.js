@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 
-import styles from './style';
+import TouchableCollors, { styles } from './style';
 import api from '../../../services/api'
 
 function Dashboard() {
     const [disciplines, setDisciplines] = useState([{}])
+    const [opacity,setOpacity] = useState()
     const columns = 3
+    const latest = []
+    let cont = 0
+
     useEffect(() => {
         async function loadData() {
             const disciplinesArray = await api.get('/disciplines/list').catch(function (error) {
                 console.log(error)
             })
-
             if (disciplinesArray) {
                 setDisciplines(disciplinesArray.data.disciplines)
-                console.log(disciplines)
             }
         }
 
@@ -32,14 +34,31 @@ function Dashboard() {
                 empty: true
             });
             lastRowElements += 1; // [E]
+
         } return data; // [F]
     }
-    function _onPressButton(){
-        
+    function _onPressButton(id,cont) {
+        let value = []
+        value[cont] = 0.5
+        setOpacity(value)
+            
+        console.log(opacity)
+        // console.log(opacity[cont])
     }
+    function pickColor(latest) {
+        if (latest[latest.length - 1] === latest[latest.length - 2] ||
+            latest[latest.length - 1] === latest[latest.length - 3] ||
+            latest[latest.length - 1] === latest[latest.length - 4] ||
+            latest[latest.length - 1] === latest[latest.length - 5]) {
+            latest.push(TouchableCollors())
+            pickColor(latest)
+        }
+        return latest[latest.length - 1]
+    }
+
     return (
         <SafeAreaView>
-            <View>
+            <View style={styles.container}>
                 {disciplines.length > 1 ?
                     <FlatList
                         data={createRows(disciplines, columns)}
@@ -47,12 +66,17 @@ function Dashboard() {
                         numColumns={columns}
                         renderItem={({ item }) => {
                             if (item.empty) return <View style={[styles.item, styles.itemEmpty]} />
+                            latest.push(TouchableCollors())
+                            item.num = cont
+                            cont++
                             return (
                                 <TouchableOpacity
-                                 underlayColor="white"
-                                    onPress={_onPressButton}
-                                    style={styles.item}
+                                    onPress={() => _onPressButton(item._id,item.num)}
+                                    style={[styles.item, { backgroundColor: pickColor(latest),
+                                        opacity:  1 //opacity[item.num]
+                                    }]}
                                     key={() => Math.floor(Math.random() * 5)}>
+
                                     <Text style={styles.text}
                                         key={() => Math.floor(Math.random() * 5)}>
                                         {item.disciplineName}
