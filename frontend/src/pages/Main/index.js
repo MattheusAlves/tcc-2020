@@ -5,7 +5,7 @@ import Geolocation from 'react-native-geolocation-service'
 import { useLocation } from '../../contexts/location'
 import styles from './style'
 
-import MapView,{Marker} from 'react-native-maps'
+// import MapView,{Marker} from 'react-native-maps'
 
 import mapStyle from '../../helpers/MapConfig'
 /*

@@ -9,7 +9,7 @@ import {
 
 import TouchableCollors, { styles } from "./style";
 import api from "../../../services/api";
-import { colors } from "react-native-elements";
+
 
 function Dashboard() {
   const [disciplines, setDisciplines] = useState([{}]);
@@ -25,7 +25,7 @@ function Dashboard() {
         .get("/disciplines/list").then(function(disciplinesArray){
             if (disciplinesArray) {
                 setDisciplines(disciplinesArray.data.disciplines);
-                setAllColors(loadColors())
+                // setAllColors(loadColors())
                 return
               }
         })
@@ -111,7 +111,7 @@ function Dashboard() {
                   style={[
                     styles.item,
                     {
-                      backgroundColor: colors[item.num],
+                      backgroundColor: allColors[item.num],
                       opacity: 1, //opacity[item.num]
                     },
                   ]}
