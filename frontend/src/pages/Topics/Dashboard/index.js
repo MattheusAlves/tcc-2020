@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import {
   View,
   FlatList,
@@ -9,49 +9,52 @@ import {
 
 import TouchableCollors, { styles } from "./style";
 import api from "../../../services/api";
-import { colors } from "react-native-elements";
+
+const useStateCallbackWrapper = (initilValue, loadColors) => {
+  const [state, setState] = useState(initilValue);
+  useEffect(() => loadColors(), [state]);
+  return [state, setState];
+};
 
 function Dashboard() {
-  const [disciplines, setDisciplines] = useState([{}]);
+  const [disciplines, setDisciplines] = useState([{}]) //useStateCallbackWrapper([{}],loadColors);
   const [opacity, setOpacity] = useState();
-  const [allColors, setAllColors] = useState([""]);
+  const [allColors, setAllColors] = useState();
   const columns = 3;
-  const latest = [];
+  const colors = [];
   let cont = 0;
 
   useEffect(() => {
-    async function loadData() {
-     await api
-        .get("/disciplines/list").then(function(disciplinesArray){
-            if (disciplinesArray) {
-                setDisciplines(disciplinesArray.data.disciplines);
-                setAllColors(loadColors())
-                return
-              }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      
+    function loadData() {
+      api.get("/disciplines/list").then(function (disciplinesArray) {
+        if (disciplinesArray) {
+          setDisciplines(disciplinesArray.data.disciplines)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
     loadData()
-
-     function loadColors() {
-      const colors = [];
-      console.log(disciplines.length)
-      console.log(disciplines)
-      for (let i = 0; i <= disciplines.length - 1; i++) {
-          console.log("entrou if")
-          
-         colors.push(pickColor(colors));
-         console.log('colors if:',colors)
-      }
-      console.log(colors)
-      return colors
-     
-    }
-    
   }, []);
+  useLayoutEffect(() => {
+    if (disciplines.length > 1) {
+      loadColors().then(function (colors) {
+        console.log("setou cores", colors)
+      })
+    }
+  }, [disciplines])
+
+  const loadColors = () => {
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < disciplines.length; i++) {
+        colors.push(pickColor(colors));
+      }
+      console.log("color length:", colors.length)
+      console.log("disciplines length:", disciplines.length)
+      colors.length === disciplines.length ? resolve(colors) : ''
+    })
+  }
+
 
   function createRows(data, columns) {
     const rows = Math.floor(data.length / columns); // [A]
@@ -66,6 +69,7 @@ function Dashboard() {
       });
       lastRowElements += 1; // [E]
     }
+
     return data; // [F]
   }
   function _onPressButton(id, cont) {
@@ -78,23 +82,25 @@ function Dashboard() {
     console.log(allColors);
   }
   function pickColor(colors) {
-    const length = allColors.length;
+    console.log("Vetor de cores", colors)
+    //const length = allColors.length;
     const selectColor = TouchableCollors();
     console.log("selected color", selectColor);
-    if (
-      selectColor === colors[length - 1] ||
-      selectColor === colors[length - 2] ||
-      selectColor === colors[length - 3] ||
-      selectColor === colors[length - 4]
-    ) {
-      pickColor();
-    }
-    return selectColor;
+    // if (
+    //   selectColor === colors[colors.length - 1] ||
+    //   selectColor === colors[colors.length - 2] ||
+    //   selectColor === colors[colors.length - 3] ||
+    //   selectColor === colors[colors.length - 4]
+    // ) {
+    //  return pickColor();
+    // }
+    return selectColor
   }
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
+
         {disciplines.length > 1 ? (
           <FlatList
             data={createRows(disciplines, columns)}
@@ -107,13 +113,9 @@ function Dashboard() {
               cont++;
               return (
                 <TouchableOpacity
-                  onPress={() => _onPressButton(item._id, item.num)}
+                  onPress={() => _onPressButton(item._id)}
                   style={[
-                    styles.item,
-                    {
-                      backgroundColor: colors[item.num],
-                      opacity: 1, //opacity[item.num]
-                    },
+                    styles.item
                   ]}
                   key={() => Math.floor(Math.random() * 5)}
                 >
@@ -128,8 +130,8 @@ function Dashboard() {
             }}
           />
         ) : (
-          <Text>Network error</Text>
-        )}
+            <Text>Network error</Text>
+          )}
       </View>
     </SafeAreaView>
   );
