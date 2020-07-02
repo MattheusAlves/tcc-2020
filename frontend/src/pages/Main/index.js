@@ -17,13 +17,13 @@ import mapStyle from '../../helpers/MapConfig'
   */
 function Main() {
  // const { latitude, longitude,longitudeDelta,latitudeDelta, storeLocation } = useLocation()
-  useEffect(() => {
-   // function getLocation() {
-      // 
-    //}
-    //getLocation()
-   // console.log("T:", latitude, longitude)
-  }, [])
+  // useEffect(() => {
+  //  // function getLocation() {
+  //     // 
+  //   //}
+  //   //getLocation()
+  //  // console.log("T:", latitude, longitude)
+  // }, [])
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import {
   View,
   FlatList,
@@ -12,46 +12,46 @@ import api from "../../../services/api";
 
 
 function Dashboard() {
-  const [disciplines, setDisciplines] = useState([{}]);
-  const [opacity, setOpacity] = useState();
-  const [allColors, setAllColors] = useState([""]);
+  const [disciplines, setDisciplines] = useState([{}])
+  const [opacity, setOpacity] = useState([]);
+  const [allColors, setAllColors] = useState();
   const columns = 3;
-  const latest = [];
+  const colors = [];
   let cont = 0;
 
   useEffect(() => {
-    async function loadData() {
-     await api
-        .get("/disciplines/list").then(function(disciplinesArray){
-            if (disciplinesArray) {
-                setDisciplines(disciplinesArray.data.disciplines);
-                // setAllColors(loadColors())
-                return
-              }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      
+    console.log(opacity)
+    console.log("entrou use effect")
+    function loadData() {
+      api.get("/disciplines/list").then(function (disciplinesArray) {
+        if (disciplinesArray) {
+          const arrayLength = disciplinesArray.data.disciplines.length
+          loadColors(arrayLength).then(function (colors) {
+            setAllColors(colors)
+            setDisciplines(disciplinesArray.data.disciplines)
+          }).catch(function (err) {
+            console.log(err)
+          })
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
-    loadData()
+    if (disciplines.length <= 1) {
+      loadData()
+    }
+  }, [disciplines]);
 
-     function loadColors() {
-      const colors = [];
-      console.log(disciplines.length)
-      console.log(disciplines)
-      for (let i = 0; i <= disciplines.length - 1; i++) {
-          console.log("entrou if")
-          
-         colors.push(pickColor(colors));
-         console.log('colors if:',colors)
+  const loadColors = (length) => {
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < length; i++) {
+        colors.push(pickColor(colors));
       }
-      console.log(colors)
-      return colors
-     
-    }
-    
-  }, []);
+      console.log("color length:", colors.length)
+      colors.length === length ? resolve(colors) : ''
+    })
+  }
+
 
   function createRows(data, columns) {
     const rows = Math.floor(data.length / columns); // [A]
@@ -68,68 +68,75 @@ function Dashboard() {
     }
     return data; // [F]
   }
-  function _onPressButton(id, cont) {
-    // let value = []
-    // value[cont] = 0.5
-    // setOpacity(value)
 
-    // console.log(opacity)
-    // console.log(opacity[cont])
-    console.log(allColors);
+  const onPressButton = (num) => {
+    setOpacity([1, 2, 3, 4])
+    console.log(opacity)
+
   }
+
+  function getOpacity(num) {
+    if (opacity.indexOf(num) > -1) {
+      console.log("entrou if opacity")
+      return 0.3
+    }
+    return 1
+  }
+
   function pickColor(colors) {
-    const length = allColors.length;
+    console.log("Vetor de cores", colors)
+
     const selectColor = TouchableCollors();
     console.log("selected color", selectColor);
     if (
-      selectColor === colors[length - 1] ||
-      selectColor === colors[length - 2] ||
-      selectColor === colors[length - 3] ||
-      selectColor === colors[length - 4]
+      selectColor === colors[colors.length - 1] ||
+      selectColor === colors[colors.length - 2] ||
+      selectColor === colors[colors.length - 3] ||
+      selectColor === colors[colors.length - 4]
     ) {
-      pickColor();
+      return pickColor(colors);
     }
-    return selectColor;
+    return selectColor
   }
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
+
         {disciplines.length > 1 ? (
           <FlatList
             data={createRows(disciplines, columns)}
             keyExtractor={(item) => item._id}
             numColumns={columns}
             renderItem={({ item }) => {
-              if (item.empty)
-                return <View style={[styles.item, styles.itemEmpty]} />;
+              if (item.empty) {
+                return <View key={() => Math.floor(Math.random() * item.id)}
+                  style={[styles.item, styles.itemEmpty]} />;
+              }
               item.num = cont;
               cont++;
               return (
                 <TouchableOpacity
-                  onPress={() => _onPressButton(item._id, item.num)}
+                  onPress={() => onPressButton(item.num)}
                   style={[
-                    styles.item,
-                    {
-                      backgroundColor: allColors[item.num],
-                      opacity: 1, //opacity[item.num]
-                    },
+                    styles.item, { backgroundColor: allColors[item.num], }// opacity: getOpacity(item.num) }
                   ]}
-                  key={() => Math.floor(Math.random() * 5)}
-                >
-                  <Text
-                    style={styles.text}
-                    key={() => Math.floor(Math.random() * 5)}
-                  >
-                    {item.disciplineName}
-                  </Text>
+                  key={() => Math.floor(Math.random() * item.id)}>
+                  <View style={styles.textView}
+                    key={() => Math.floor(Math.random() * item.id)}>
+                    <Text
+                      style={styles.text}
+                      key={() => Math.floor(Math.random() * item.id)}>
+                      {item.disciplineName}
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               );
             }}
           />
         ) : (
-          <Text>Network error</Text>
-        )}
+            <Text key={() => Math.floor(Math.random() * item.id)}>Network error</Text>
+          )}
       </View>
     </SafeAreaView>
   );
