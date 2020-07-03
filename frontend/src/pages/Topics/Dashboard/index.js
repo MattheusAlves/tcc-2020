@@ -11,7 +11,7 @@ import TouchableCollors, { styles } from "./style";
 import api from "../../../services/api";
 
 
-export class Dashboard extends Component {
+class Dashboard extends Component {
   // const columns = 3;
   // const colors = [];
   // let cont = 0;
@@ -20,13 +20,13 @@ export class Dashboard extends Component {
     super(props)
     this.state = {
       disciplines: [{}],
-      opacity: [0],
+      opacity: [],
       allColors: []
     }
     this.colors = []
     this.cont = 0
     this.columns = 3
-    this.loadColors = this.loadColors.bind(this)
+    this.onPressButton = this.onPressButton.bind(this)
     // this.componentDidMount = this.componentDidMount.bind(this)
 
   }
@@ -40,8 +40,7 @@ export class Dashboard extends Component {
           const arrayLength = disciplinesArray.data.disciplines.length
           this.loadColors(arrayLength).then((colors) => {
             console.log("vai setar estado")
-            this.setState({ disciplines: disciplinesArray.data.disciplines })
-            // Disciplines(disciplinesArray.data.disciplines)
+            this.setState({ disciplines: disciplinesArray.data.disciplines, allColors: colors })
           }).catch(function (err) {
             console.log(err)
           })
@@ -58,6 +57,20 @@ export class Dashboard extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.cont = 0
+    // this.setState = {
+    //   disciplines: [{}],
+    //   opacity: [],
+    //   allColors: []
+    // }
+  }
+  componentDidUpdate() {
+    console.log("component did update exec")
+    this.cont = 0
+
+  }
+
   loadColors(length) {
     return new Promise((resolve, reject) => {
       for (let i = 0; i < length; i++) {
@@ -69,11 +82,7 @@ export class Dashboard extends Component {
 
   }
   pickColor(colors) {
-
-    console.log("Vetor de cores", colors)
-
     const selectColor = TouchableCollors();
-    console.log("selected color", selectColor);
     if (
       selectColor === colors[colors.length - 1] ||
       selectColor === colors[colors.length - 2] ||
@@ -99,56 +108,70 @@ export class Dashboard extends Component {
       });
       lastRowElements += 1; // [E]
     }
+    console.log("data:", data)
     return data; // [F]
   }
 
   onPressButton(num) {
-    // setOpacity([1, 2, 3, 4]);
-    // console.log(opacity)
-    console.log("press button")
-    this.setState({ opacity: num })
-
+    this.cont = 0
+    console.log("num onpress", num)
+    if (this.state.opacity.indexOf(num) > -1) {
+      console.log("entrou if on press")
+      this.setState({ opacity: this.state.opacity.splice(this.state.opacity.indexOf(num), 1) })
+    } else if (this.state.opacity.indexOf(num) === -1) {
+      this.setState({ opacity: [...this.state.opacity, num] })
+    }
   }
 
   getOpacity(num) {
     if (this.state.opacity.indexOf(num) > -1) {
-      console.log("entrou if opacity")
       return 0.3
     }
     return 1
   }
-
+handleRefreshe(){
+  console.log("handleRefresh")
+}
 
   render() {
+    this.count = 0
     return (
       <SafeAreaView>
         <View style={styles.container}>
-
-          {this.state.disciplines.length > 1 ? (
+          {console.log("atualizou")}
+          {this.state.disciplines.length > 1 || this.state.opacity.length > 1 ? (
             <FlatList
+              extraData={this.state.opacity}
               data={this.createRows(this.state.disciplines, this.columns)}
               keyExtractor={(item) => item._id}
               numColumns={this.columns}
-              renderItem={({ item }) => {
-                if (item.empty) {
-                  return <View key={() => Math.floor(Math.random() * item.id)}
+              // onRefresh={true}
+              renderItem={(item, index) => {
+                if (item.item.empty) {
+                  return <View key={() => Math.floor(Math.random() * item.item._id)}
                     style={[styles.item, styles.itemEmpty]} />;
                 }
-                item.num = this.cont;
-                this.cont++;
+                item.num = this.cont
+                ++this.cont
+                console.log(item.num)
                 return (
                   <TouchableOpacity
                     onPress={() => this.onPressButton(item.num)}
                     style={[
-                      styles.item, { backgroundColor: this.state.allColors[item.num], opacity: this.getOpacity(item.num) }
+                      styles.item, {
+                        backgroundColor: this.state.allColors[item.num],
+                        opacity: this.getOpacity(item.num)
+                      }
                     ]}
-                    key={() => Math.floor(Math.random() * item.id)}>
+                    key={() => Math.floor(Math.random() * item.item._id)}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.handleRefreshe}>
                     <View style={styles.textView}
-                      key={() => Math.floor(Math.random() * item.id)}>
+                      key={() => Math.floor(Math.random() * item.item._id)}>
                       <Text
                         style={styles.text}
-                        key={() => Math.floor(Math.random() * item.id)}>
-                        {item.disciplineName}
+                        key={() => Math.floor(Math.random() * item.item._id)}>
+                        {item.item.disciplineName}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -163,4 +186,4 @@ export class Dashboard extends Component {
     );
   }
 }
-// export default Dashboard;
+export default Dashboard;
