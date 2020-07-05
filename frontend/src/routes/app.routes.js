@@ -61,7 +61,7 @@ const MainRoutes = () => (
 
   })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={Dashboard} />
+    <Tab.Screen name="Topicos" component={Dashboard} options={{ headerStyle: { backgroundColor:'black' } }} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />
   </Tab.Navigator >
@@ -75,7 +75,8 @@ const AppRoutes = (route) => {
       <AppStack.Screen name="Main" component={MainRoutes}
         options={({ route }) => ({
           headerTitle: getHeaderTitle(route),
-          headerShown: getHeaderVisibility(route) 
+          headerShown: getHeaderVisibility(route),
+          headerStyle: { backgroundColor:'#f4511e' } 
         })} />
     </AppStack.Navigator >
   )

@@ -19,7 +19,7 @@ export default function App() {
           <LocationProvider>
             <StatusBar
               barStyle="light-content"
-              backgroundColor={commonStyles.colors.statusBar}
+              backgroundColor='#f4511e'
             />
             <PaperProvider>
               <Routes />
