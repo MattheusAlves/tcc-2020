@@ -43,30 +43,40 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderBottomWidth: 1,
         margin: 5,
-        overflow:'hidden'
-
+        overflow:'hidden',
     },
   
     svg: {
         flex: 1,
-        
         justifyContent: "center",
         alignSelf: "center",
         position: "absolute",
         width: (Dimensions.get('window').width / 2 - 16),
         height:82,
-        position:"absolute"
+        position:"absolute",
+        zIndex:1,
+        backgroundColor:'rgba(63,192,112,.8)'
+        // opacity:.6
     },
     cardContent: {
-        justifyContent: "center"
+        justifyContent: "center",
+        zIndex:2
     },
     textCard: {
         textAlign: "center",
         fontSize: 13,
         fontFamily: 'Roboto-Regular',
         fontWeight: "bold",
-        zIndex:1,
+        zIndex:3,
+        padding:5
     },
+    textContainer:{
+        flex:1,
+        backgroundColor:'rgba(255,255,255,.3)',
+        zIndex:4,
+        borderRadius:10,
+        
+    },  
     textHeader: {
         fontSize: 18,
         fontWeight: 'bold',
