@@ -25,7 +25,7 @@ function getWave() {
 function WaveCard(props) {
   const svg = <Svg
     width='100'
-    height='100'
+
     style={styles.svg}
     viewBox="0 0 640 180">
     <Path fill="#5000ca" fillOpacity="1" d={props.wave} />
@@ -35,7 +35,7 @@ function WaveCard(props) {
 
 function RenderComponent(props) {
   const Component = []
-  console.log("Props wave",props.wave[1])
+  console.log("Props wave", props.wave[1])
   for (let i = 0; i < props.data.length; i++) {
     Component.push(
       <>
@@ -43,12 +43,12 @@ function RenderComponent(props) {
 
           opacity: props.style.indexOf(i) > -1 ? .3 : 1
         }]}
-          onPress={() => props._onPress(i)}
+          onPress={() => props._onPress(i, props.data[i]._id)}
           key={props.data[i]._id}>
           <Card.Content style={styles.cardContent}>
             <WaveCard wave={props.wave[i].toString()} />
             <View style={styles.textContainer}>
-            <Title style={[styles.textCard, { opacity: 1 }]}>{props.data[i].disciplineName}</Title>
+              <Title style={[styles.textCard, { opacity: 1 }]}>{props.data[i].disciplineName}</Title>
             </View>
           </Card.Content>
 
@@ -62,20 +62,28 @@ function RenderComponent(props) {
 }
 
 const Dashboard = () => {
+
   const [opacity, setOpacity] = useState([])
   const [wave, setWave] = useState([])
   const [data, setData] = useState()
   const [disciplines, setDisciplines] = useState([{}])
   const [selectDiscipline, setSelectDiscipline] = useState([])
-  function _onPressCard(num) {
+
+  function _onPressCard(num, id) {
     console.log("press button")
     if (opacity.indexOf(num) > -1) {
+      console.log("id", id)
       setOpacity([...opacity.filter(item => item != num)])
-      // setSelectDiscipline([...selectDiscipline.splice(selectDiscipline.indexOf(id), 1)])
-    } else
+      setSelectDiscipline([...selectDiscipline.filter(item => item != id)])
+      console.log("removeu do array")
+      console.log(selectDiscipline)
+    } else {
       setOpacity([...opacity, num])
-    // setSelectDiscipline([...selectDiscipline, id])
-
+      setSelectDiscipline([...selectDiscipline, id])
+    }
+  }
+  function saveDisciplines() {
+    console.log(selectDiscipline)
   }
   useEffect(() => {
     api.get("/disciplines/list").then((disciplinesArray) => {
@@ -116,7 +124,7 @@ const Dashboard = () => {
             </ScrollView>
           </View>
 
-          <Button mode="contained" dark loading={false} onPress={() => { }}>Salvar</Button>
+          <Button mode="contained" dark loading={false} onPress={() => saveDisciplines()}>Salvar</Button>
         </View>
 
       ) :

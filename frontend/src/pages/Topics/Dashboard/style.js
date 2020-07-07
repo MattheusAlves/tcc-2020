@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 7,
         borderWidth: 2,
-        borderBottomWidth: 1,
+        borderBottomWidth: 2,
         margin: 5,
         overflow:'hidden',
     },
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         position: "absolute",
         width: (Dimensions.get('window').width / 2 - 16),
-        height:82,
+        height:'100%',
         position:"absolute",
         zIndex:1,
-        backgroundColor:'rgba(63,192,112,.8)'
-        // opacity:.6
+        backgroundColor:'rgba(255,255,255,.8)',
+        // opacity:.7
     },
     cardContent: {
         justifyContent: "center",
@@ -68,14 +68,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Regular',
         fontWeight: "bold",
         zIndex:3,
-        padding:5
+        padding:0,
     },
     textContainer:{
         flex:1,
         backgroundColor:'rgba(255,255,255,.3)',
         zIndex:4,
-        borderRadius:10,
-        
+        borderRadius:7,
+        padding:2,
+        width: (Dimensions.get('window').width / 2 - 25),
     },  
     textHeader: {
         fontSize: 18,
