@@ -16,7 +16,7 @@ router.post(
   // isAuth,
   /** addisTeacher */ create
 )
-router.get('/disciplines/list', requireSignin, isAuth, list)
+router.get('/disciplines/list',  list)
 router.post('/disciplines/remove/:disciplineId', requireSignin, isAuth, remove)
 
 router.param('disciplineId', disciplineById)
