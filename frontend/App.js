@@ -12,7 +12,6 @@ import { LocationProvider } from './src/contexts/location'
 import Routes from "./src/routes/index";
 const fetchFonts = () => {
   return Font.loadAsync({
-    'Markazi-Regular': require('./src/assets/fonts/Markazi Text Regular.ttf'),
     'Roboto-Regular':require('./src/assets/fonts/Roboto_Slab_Regular.ttf')
   });
 };

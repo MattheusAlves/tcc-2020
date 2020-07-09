@@ -27,6 +27,7 @@ function getWave() {
 function WaveCard(props) {
   const svg = <Svg
     width='100'
+    // key={props.data[i]._id + 2}
     style={styles.svg}
     viewBox="0 0 640 180">
     <Path fill="#5000ca" fillOpacity="1" d={props.wave} />
@@ -36,29 +37,23 @@ function WaveCard(props) {
 
 function RenderComponent(props) {
   const Component = []
-  console.log("Props wave", props.wave[1])
   for (let i = 0; i < props.data.length; i++) {
     Component.push(
-      <>
-        <Card style={[styles.item, {
 
-          opacity: props.style.indexOf(i) > -1 ? .3 : 1
-        }]}
-          onPress={() => props._onPress(i, props.data[i]._id)}
-          key={Math.floor(i+ 5 * Math.random())} >
-          <Card.Content style={styles.cardContent}
-            key={Math.floor(i + 1  * Math.random())}>
-            <WaveCard wave={props.wave[i].toString()}
-              key={Math.floor(i + 2 * Math.random())} />
-            <View style={styles.textContainer}
-              key={Math.floor(i + 3 * Math.random())}>
-              <Title style={[styles.textCard, { opacity: 1 }]}
-                key={Math.floor(i + 4 * Math.random())}>{props.data[i].disciplineName}</Title>
-            </View>
-          </Card.Content>
+      <Card style={[styles.item, {
 
-        </Card>
-      </>
+        opacity: props.style.indexOf(i) > -1 ? .3 : 1
+      }]}
+        onPress={() => props._onPress(i, props.data[i]._id)}
+        key={props.data[i]._id + 1} >
+        <Card.Content style={styles.cardContent} key={props.data[i]._id + 2}>
+          <WaveCard wave={props.wave[i].toString()} />
+          <View style={styles.textContainer} key={props.data[i]._id + 3}>
+            <Title style={[styles.textCard, { opacity: 1 }]} key={props.data[i]._id + 4} >{props.data[i].disciplineName}</Title>
+          </View>
+        </Card.Content>
+      </Card>
+
     )
 
   }
@@ -70,15 +65,45 @@ const Dashboard = () => {
 
   const [opacity, setOpacity] = useState([])
   const [wave, setWave] = useState([])
-  const [data, setData] = useState()
   const [disciplines, setDisciplines] = useState([{}])
   const [selectDiscipline, setSelectDiscipline] = useState([])
   const [dialogState, setDialogState] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("Suas disciplinas de interesse foram atualizadas");
   const [dialogTitle, setDialogTitle] = useState('')
+  const [refresh, setRefresh] = useState(false)
 
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
+
+  useEffect(() => {
+    async function getDate() {
+      api.get("/disciplines/list").then((disciplinesArray) => {
+        console.log("entrou get")
+        if (disciplinesArray) {
+          console.log("Entrou if disciplines array")
+          const arrayLength = disciplinesArray.data.disciplines.length
+          getWaveArray(arrayLength)
+          setDisciplines(disciplinesArray.data.disciplines)
+        }
+      }).catch(function (error) {
+        console.log("entrou error")
+        if (!error.response) {
+          setDialogTitle("Erro!")
+          setDialogMessage("Network Error: sem conexão.")
+          _showDialog()
+          if (!dialogState) {
+            setTimeout(() => {
+              setRefresh(!refresh)
+            }, 7000);
+          }
+        } else
+          console.log(error)
+      })
+    }
+    getDate()
+    setOpacity([])
+  }, [refresh])
+
 
   function _onPressCard(num, id) {
     console.log("press button")
@@ -127,19 +152,6 @@ const Dashboard = () => {
       _showDialog()
     }
   }
-  useEffect(() => {
-    api.get("/disciplines/list").then((disciplinesArray) => {
-      if (disciplinesArray) {
-        console.log("Entrou if disciplines array")
-        const arrayLength = disciplinesArray.data.disciplines.length
-        getWaveArray(arrayLength)
-        setDisciplines(disciplinesArray.data.disciplines)
-      }
-    }).catch(function (error) {
-      console.log(error)
-    })
-    setOpacity([])
-  }, [])
 
   function getWaveArray(arrayLength) {
     const waveArray = []
@@ -151,13 +163,13 @@ const Dashboard = () => {
 
   return (
     <>
+      <Dialog
+        dialogState={dialogState}
+        title={dialogTitle}
+        message={dialogMessage}
+        onDismiss={() => _hideDialog()} />
       {disciplines.length > 2 ? (
         <>
-          <Dialog
-            dialogState={dialogState}
-            title={dialogTitle}
-            message={dialogMessage}
-            onDismiss={() => _hideDialog()} />
 
           <View style={styles.appContainer}>
             <View style={styles.viewHeader}>
