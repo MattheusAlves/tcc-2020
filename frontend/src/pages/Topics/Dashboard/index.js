@@ -27,7 +27,6 @@ function getWave() {
 function WaveCard(props) {
   const svg = <Svg
     width='100'
-
     style={styles.svg}
     viewBox="0 0 640 180">
     <Path fill="#5000ca" fillOpacity="1" d={props.wave} />
@@ -46,11 +45,15 @@ function RenderComponent(props) {
           opacity: props.style.indexOf(i) > -1 ? .3 : 1
         }]}
           onPress={() => props._onPress(i, props.data[i]._id)}
-          key={props.data[i]._id}>
-          <Card.Content style={styles.cardContent}>
-            <WaveCard wave={props.wave[i].toString()} />
-            <View style={styles.textContainer}>
-              <Title style={[styles.textCard, { opacity: 1 }]}>{props.data[i].disciplineName}</Title>
+          key={Math.floor(i+ 5 * Math.random())} >
+          <Card.Content style={styles.cardContent}
+            key={Math.floor(i + 1  * Math.random())}>
+            <WaveCard wave={props.wave[i].toString()}
+              key={Math.floor(i + 2 * Math.random())} />
+            <View style={styles.textContainer}
+              key={Math.floor(i + 3 * Math.random())}>
+              <Title style={[styles.textCard, { opacity: 1 }]}
+                key={Math.floor(i + 4 * Math.random())}>{props.data[i].disciplineName}</Title>
             </View>
           </Card.Content>
 
@@ -148,7 +151,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {disciplines.length > 1 ? (
+      {disciplines.length > 2 ? (
         <>
           <Dialog
             dialogState={dialogState}
