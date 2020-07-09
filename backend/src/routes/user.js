@@ -12,10 +12,10 @@ router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
   })
 })
 
-router.post(
+router.put(
   '/update/disciplines/:userId',
-  requireSignin,
-  isAuth,
+  // requireSignin,
+  // isAuth,
   update
 )
 router.put(

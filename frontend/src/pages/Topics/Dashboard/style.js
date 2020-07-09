@@ -16,79 +16,68 @@ function TouchableCollors() {
 }
 
 const styles = StyleSheet.create({
-    // item: {
-    //     alignItems: "center",
-    //     flexGrow: 1,
-    //     margin: 4,
-    //     padding: 15,
-    //     flexBasis: 0,
-    //     borderRadius: 5,
-    //     opacity: 1
-    // },
-    text: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontFamily: 'sans-serif'
-    },
-    textView: {
-        padding: 5,
-        // opacity:0.3,
-        backgroundColor: 'rgba(255,255,255,0.3)',
-        borderRadius: 8
-    },
-    itemEmpty: {
-        backgroundColor: "transparent"
-    },
-    viewError: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'lightskyblue'
-    },
-    textError: {
-        fontSize: 32,
-        fontWeight: 'bold'
 
-    },
     container: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
-    scrollContainer: {
-    },
     appContainer: {
         flex: 1,
-        // backgroundColor:'rgba(102, 0, 204,0.7)',
-       
     },
-  
+    svgCurve: {
+        position: 'absolute',
+        width: Dimensions.get('window').width
+    },
     containerScrollView: {
         flex: 1,
-        // borderTopRightRadius: 25,
-        // borderTopLeftRadius: 25,
-        // backgroundColor: 'rgba(128,128,128,0.4)',
-        paddingTop: 12,
-        borderWidth:.5
+        marginTop: 12,
+        paddingTop: 2,
+        borderWidth: .5
     },
     item: {
-        width: (Dimensions.get('window').width / 2 - 9),
+        width: (Dimensions.get('window').width / 2 - 12),
         justifyContent: "center",
         alignItems: 'center',
         borderRadius: 7,
-        marginHorizontal: 4,
-        marginVertical: 5,
         borderWidth: 2,
-        borderBottomWidth: 1,
-        // backgroundColor: '#9999ff',
-       
-
+        borderBottomWidth: 2,
+        margin: 5,
+        overflow:'hidden',
+    },
+  
+    svg: {
+        flex: 1,
+        justifyContent: "center",
+        alignSelf: "center",
+        position: "absolute",
+        width: (Dimensions.get('window').width / 2 - 16),
+        height:'100%',
+        position:"absolute",
+        zIndex:1,
+        backgroundColor:'rgba(255,255,255,.8)',
+        // opacity:.7
+    },
+    cardContent: {
+        justifyContent: "center",
+        zIndex:2
     },
     textCard: {
         textAlign: "center",
-        
+        fontSize: 13,
+        fontFamily: 'Roboto-Regular',
+        fontWeight: "bold",
+        zIndex:3,
+        padding:0,
     },
+    textContainer:{
+        flex:1,
+        backgroundColor:'rgba(255,255,255,.3)',
+        zIndex:4,
+        borderRadius:7,
+        padding:2,
+        width: (Dimensions.get('window').width / 2 - 25),
+    },  
     textHeader: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -98,8 +87,17 @@ const styles = StyleSheet.create({
     viewHeader: {
         height: 60,
         justifyContent: 'center',
-        // opacity: .7
-    }
+    },
+    viewError: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textError: {
+        fontSize: 32,
+        fontWeight: 'bold'
+
+    },
 
 
 
