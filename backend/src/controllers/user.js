@@ -44,59 +44,25 @@ exports.update = async (req, res) => {
         error: 'User not found'
       })
     }
-    await user.populate('disciplines').execPopulate()
-    console.log("disciplinas user", user.disciplines)
     const selectDisciplines = []
-    for (let i = 0; i < user.disciplines.length; i++) {
-      if (disciplines.indexOf(user.disciplines[i]._id) === -1)
-        selectDisciplines.push(disciplines[disciplines.indexOf(user.disciplines[i]._id)])
+    console.log(user.disciplines)
+    for (let i = 0; i < disciplines.length; i++) {
+      if (user.disciplines.includes(disciplines[i]) === false)
+        selectDisciplines.push(disciplines[i])
     }
     console.log("select disciplines", selectDisciplines)
-    if (selectDisciplines.length < 1) {
-      return res.status(400).json({ Message: "User already has all these disciplines" })
+    if (!selectDisciplines[0]) {
+      return res.status(402).json({ Message: "User already has all these disciplines" })
     }
-    // Checa se o usuário já possui o campo de estudo
-    // for (let j = 0; j < disciplines.length; j++) {
-    //   if (disciplines[j].length < 3 || !_.isString(disciplines[j])) {
-    //     return res.status(400).json({
-    //       err: 'incorrectly formatted or undefined disciplines'
-    //     })
-    //   }
-    //   for (let i = 0; i < user.disciplines.length; i++) {
-    //     if (disciplines[j] == user.disciplines[i]) {
-    //       // Remove the first element if j = 0
-    //       j === 0 ? disciplines.shift() : disciplines.splice(j - 1, 1)
-    //       //trocar splice por filter
-    //     }
-    //   }
-    // }
-
-    if (disciplines.length < 1) {
-      return res
-        .status(400)
-        .json({ err: 'User already has all these disciplines' })
-    }
-
-    // if (
-    //   user.disciplines &&
-    //   user.disciplines.indexOf(req.discipline._id) != -1
-    // ) {
-    //   return res.status(200).json({
-    //     message: "User already has this discipline",
-    //   });
-    // } else if (user.disciplines) {
-    user.disciplines = [...user.disciplines, ...disciplines]
+    user.disciplines = [...user.disciplines, ...selectDisciplines]
     await user.populate('disciplines').execPopulate()
-    // } else {
-    //   user.disciplines = [req.discipline._id];
-    // }
-
     await user.save((err, user) => {
       if (err || !user) {
         return res.status(400).json(errorHandler(err))
       }
-
-      return res.status(200).json({ user })
+      user.hashed_password=''
+      user.salt = ''
+      return res.status(200).json({ user,length:selectDisciplines.length })
     })
   })
 }
