@@ -6,6 +6,8 @@ import Svg, { Rect, Text as text, Path } from 'react-native-svg'
 import TouchableCollors, { styles } from './style';
 import api from "../../../services/api";
 import { ScrollView, RectButton } from 'react-native-gesture-handler';
+import Dialog from '../../../components/Dialog'
+import { enableScreens } from 'react-native-screens';
 
 function getWave() {
   const svgPath = ["M0,224L30,224C60,224,120,224,180,234.7C240,245,300,267,360,245.3C420,224,480,160,540,138.7C600,117,660,139,720,128C780,117,840,75,900,80C960,85,1020,139,1080,149.3C1140,160,1200,128,1260,96C1320,64,1380,32,1410,16L1440,0L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z",
@@ -68,6 +70,12 @@ const Dashboard = () => {
   const [data, setData] = useState()
   const [disciplines, setDisciplines] = useState([{}])
   const [selectDiscipline, setSelectDiscipline] = useState([])
+  const [dialogState, setDialogState] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("Suas disciplinas de interesse foram atualizadas");
+  const [dialogTitle, setDialogTitle] = useState('')
+
+  const _showDialog = () => setDialogState(true);
+  const _hideDialog = () => setDialogState(false);
 
   function _onPressCard(num, id) {
     console.log("press button")
@@ -84,6 +92,37 @@ const Dashboard = () => {
   }
   function saveDisciplines() {
     console.log(selectDiscipline)
+    if (selectDiscipline.length >= 1) {
+      api.put(`/update/disciplines/5f071f6e9085a42248dd61b8`, {
+        disciplines: selectDiscipline
+      }).then((response) => {
+        setDialogTitle("Concluído!")
+        setDialogMessage(`${response.data.length} disciplinas de interesse foram atualizadas.`)
+        _showDialog()
+        setSelectDiscipline([])
+        setOpacity([])
+        console.log('response:', response)
+      }).catch((error) => {
+        //status code 402 = User already has all these disciplines
+        if (error.response.status === 402) {
+          setDialogTitle("Ops!")
+          setDialogMessage("Você já possui todas estas disciplinas")
+          _showDialog()
+          setSelectDiscipline([])
+          setOpacity([])
+        } else if (error.response.status === 400) {
+          setDialogTitle("Ops!")
+          setDialogMessage("Erro inesperado")
+          _showDialog()
+          setSelectDiscipline([])
+          setOpacity([])
+        }
+      })
+    } else {
+      setDialogTitle("Erro!")
+      setDialogMessage("Selecione pelo menos uma disciplina")
+      _showDialog()
+    }
   }
   useEffect(() => {
     api.get("/disciplines/list").then((disciplinesArray) => {
@@ -110,23 +149,30 @@ const Dashboard = () => {
   return (
     <>
       {disciplines.length > 1 ? (
-        <View style={styles.appContainer}>
-          <View style={styles.viewHeader}>
-            <Text style={styles.textHeader}>Escolha suas áreas de interesse</Text>
+        <>
+          <Dialog
+            dialogState={dialogState}
+            title={dialogTitle}
+            message={dialogMessage}
+            onDismiss={() => _hideDialog()} />
 
+          <View style={styles.appContainer}>
+            <View style={styles.viewHeader}>
+              <Text style={styles.textHeader}>Escolha suas áreas de interesse</Text>
+
+            </View>
+            <View style={styles.containerScrollView}>
+              <ScrollView style={styles.scrollView}>
+                <View style={styles.container}>
+                  <RenderComponent wave={wave} data={disciplines} style={opacity} _onPress={_onPressCard} />
+
+                </View>
+              </ScrollView>
+            </View>
+
+            <Button mode="contained" dark loading={false} onPress={() => saveDisciplines()}>Salvar</Button>
           </View>
-          <View style={styles.containerScrollView}>
-            <ScrollView style={styles.scrollView}>
-              <View style={styles.container}>
-                <RenderComponent wave={wave} data={disciplines} style={opacity} _onPress={_onPressCard} />
-
-              </View>
-            </ScrollView>
-          </View>
-
-          <Button mode="contained" dark loading={false} onPress={() => saveDisciplines()}>Salvar</Button>
-        </View>
-
+        </>
       ) :
         (<View style={styles.viewError}>
           <ActivityIndicator size='large' color='#666' />
