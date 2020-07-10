@@ -4,10 +4,6 @@ import { Button, Paragraph, Dialog, Portal } from "react-native-paper";
 
 function DialogComponent(props) {
   
-
-
-
-
   return (
       
     <View>
