@@ -7,25 +7,25 @@ import styles from './style'
 const Chat = () => {
   const [chatMessage, setChatMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
-  const [socket, setSocket] = useState()
+  const [socket] = useState(io("http://192.168.1.108:8000"))
 
 
   useEffect(() => {
-    if (!socket) {
-      setSocket(getSocket())
-    }
-  }, [socket])
+    console.log("rodou effect")
+    socket.on("chat message", msg => {
+      setChatMessages(oldMessages => [...oldMessages, msg])
+    })
 
-  const getSocket = () => io("http://localhost:8000")
-  socket.on("chat message", msg => {
-    console.log(msg)
-    setChatMessages([...chatMessages, msg])
-    console.log(chatMessages)
-  })
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
+
+
+
 
 
   async function submitMessage() {
-    console.log(chatMessages)
     await socket.emit("chat message", chatMessage)
     setChatMessage('')
 
@@ -38,10 +38,11 @@ const Chat = () => {
         style={{ height: 40, borderWidth: 2, }}
         value={chatMessage}
         onSubmitEditing={() => submitMessage()}
-        onChangeText={chatMessage => {
-          setChatMessage(chatMessage)
+        onChangeText={message => {
+          setChatMessage(message)
 
         }} />
+
       {chatMessages.map(message => <Text key={message}>{message}</Text>)}
     </View>
   )

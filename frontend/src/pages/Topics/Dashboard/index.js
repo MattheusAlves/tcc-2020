@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { Card, Title, Button } from 'react-native-paper';
-import Svg, { Rect, Text as text, Path } from 'react-native-svg'
+import Svg, { Path } from 'react-native-svg'
+import { ScrollView } from 'react-native-gesture-handler';
 
-import TouchableCollors, { styles } from './style';
+import { styles } from './style'
 import api from "../../../services/api";
-import { ScrollView, RectButton } from 'react-native-gesture-handler';
 import Dialog from '../../../components/Dialog'
-import { enableScreens } from 'react-native-screens';
+
 
 function getWave() {
   const svgPath = ["M0,224L30,224C60,224,120,224,180,234.7C240,245,300,267,360,245.3C420,224,480,160,540,138.7C600,117,660,139,720,128C780,117,840,75,900,80C960,85,1020,139,1080,149.3C1140,160,1200,128,1260,96C1320,64,1380,32,1410,16L1440,0L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z",
@@ -26,7 +26,8 @@ function getWave() {
 }
 function WaveCard(props) {
   const svg = <Svg
-    width='100'
+    width='100%'
+    height='100%'
     // key={props.data[i]._id + 2}
     style={styles.svg}
     viewBox="0 0 640 180">
@@ -40,16 +41,27 @@ function RenderComponent(props) {
   for (let i = 0; i < props.data.length; i++) {
     Component.push(
 
-      <Card style={[styles.item, {
+      <Card
+        style={[styles.item, { opacity: props.style.indexOf(i) > -1 ? .3 : 1 }]}
 
-        opacity: props.style.indexOf(i) > -1 ? .3 : 1
-      }]}
         onPress={() => props._onPress(i, props.data[i]._id)}
         key={props.data[i]._id + 1} >
+
+        <WaveCard wave={props.wave[i].toString()} />
+        
         <Card.Content style={styles.cardContent} key={props.data[i]._id + 2}>
-          <WaveCard wave={props.wave[i].toString()} />
-          <View style={styles.textContainer} key={props.data[i]._id + 3}>
-            <Title style={[styles.textCard, { opacity: 1 }]} key={props.data[i]._id + 4} >{props.data[i].disciplineName}</Title>
+
+
+          <View
+            style={styles.textContainer}
+            key={props.data[i]._id + 3}>
+
+            <Title
+              style={[styles.cardText, { opacity: 1 }]}
+              key={props.data[i]._id + 4} >
+              {props.data[i].disciplineName}
+            </Title>
+
           </View>
         </Card.Content>
       </Card>
@@ -83,7 +95,7 @@ const Dashboard = () => {
           console.log("Entrou if disciplines array")
           const arrayLength = disciplinesArray.data.disciplines.length
           getWaveArray(arrayLength)
-          setDisciplines(disciplinesArray.data.disciplines)
+          setDisciplines([...disciplinesArray.data.disciplines])
         }
       }).catch(function (error) {
         console.log("entrou error")
@@ -121,7 +133,7 @@ const Dashboard = () => {
   function saveDisciplines() {
     console.log(selectDiscipline)
     if (selectDiscipline.length >= 1) {
-      api.put(`/update/disciplines/5f071f6e9085a42248dd61b8`, {
+      api.put('/update/disciplines/5f071f6e9085a42248dd61b8', {
         disciplines: selectDiscipline
       }).then((response) => {
         setDialogTitle("Concluído!")
@@ -139,6 +151,7 @@ const Dashboard = () => {
           setSelectDiscipline([])
           setOpacity([])
         } else if (error.response.status === 400) {
+          console.log(error)
           setDialogTitle("Ops!")
           setDialogMessage("Erro inesperado")
           _showDialog()
@@ -168,22 +181,18 @@ const Dashboard = () => {
         title={dialogTitle}
         message={dialogMessage}
         onDismiss={() => _hideDialog()} />
-      {disciplines.length > 2 ? (
+      {disciplines.length > 5 ? (
         <>
 
           <View style={styles.appContainer}>
             <View style={styles.viewHeader}>
               <Text style={styles.textHeader}>Escolha suas áreas de interesse</Text>
-
             </View>
-            <View style={styles.containerScrollView}>
-              <ScrollView style={styles.scrollView}>
-                <View style={styles.container}>
-                  <RenderComponent wave={wave} data={disciplines} style={opacity} _onPress={_onPressCard} />
 
-                </View>
-              </ScrollView>
-            </View>
+            <ScrollView contentContainerStyle={styles.scrollViewItems} style={styles.scrollView}>
+              <RenderComponent wave={wave} data={disciplines} style={opacity} _onPress={_onPressCard} />
+            </ScrollView>
+
 
             <Button mode="contained" dark loading={false} onPress={() => saveDisciplines()}>Salvar</Button>
           </View>

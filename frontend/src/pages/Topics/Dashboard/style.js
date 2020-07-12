@@ -16,68 +16,63 @@ function TouchableCollors() {
 }
 
 const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        flexWrap: 'wrap'
-    },
     appContainer: {
         flex: 1,
     },
-    svgCurve: {
-        position: 'absolute',
-        width: Dimensions.get('window').width
+    scrollView: {
+        flex:1,
+        marginBottom:5
     },
-    containerScrollView: {
-        flex: 1,
+    scrollViewItems: {
+        //don't put flex:1
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        flexGrow:1,
         marginTop: 12,
         paddingTop: 2,
+        paddingBottom: 12,
         borderWidth: .5
     },
     item: {
         width: (Dimensions.get('window').width / 2 - 12),
+        height: 80,
         justifyContent: "center",
         alignItems: 'center',
         borderRadius: 7,
         borderWidth: 2,
         borderBottomWidth: 2,
         margin: 5,
-        overflow:'hidden',
+        overflow: 'hidden',
     },
-  
     svg: {
         flex: 1,
+        position: "absolute",
         justifyContent: "center",
         alignSelf: "center",
-        position: "absolute",
-        width: (Dimensions.get('window').width / 2 - 16),
-        height:'100%',
-        position:"absolute",
-        zIndex:1,
-        backgroundColor:'rgba(255,255,255,.8)',
+        zIndex: 1,
+        backgroundColor: 'rgba(255,255,255,.7)',
         // opacity:.7
     },
     cardContent: {
+        // backgroundColor:'red',
         justifyContent: "center",
-        zIndex:2
+        zIndex: 2
     },
-    textCard: {
+    cardText: {
         textAlign: "center",
         fontSize: 13,
         fontFamily: 'Roboto-Regular',
         fontWeight: "bold",
-        zIndex:3,
-        padding:0,
+        zIndex: 3,
+        padding: 0,
     },
-    textContainer:{
-        flex:1,
-        backgroundColor:'rgba(255,255,255,.3)',
-        zIndex:4,
-        borderRadius:7,
-        padding:2,
+    textContainer: {
+        flex: 1,
         width: (Dimensions.get('window').width / 2 - 25),
-    },  
+        backgroundColor: 'rgba(255,255,255,.3)',
+        zIndex: 4,
+        borderRadius: 7,
+    },
     textHeader: {
         fontSize: 18,
         fontWeight: 'bold',
