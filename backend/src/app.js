@@ -10,7 +10,9 @@ const expressValidator = require("express-validator");
 const cors = require("cors");
 
 require("dotenv").config();
-
+//https://levelup.gitconnected.com/handling-socketio-rooms-with-react-hooks-4723dd44692e
+//store user name
+const socketMap = {}
 // import routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
@@ -45,12 +47,25 @@ app.use("/api", disciplineRoutes);
 //socket.io methods || Chat
 //when a clint connects
 io.on("connection", socket => {
-  console.log("a user connected")
+  console.log(`Connected: ${socket.id}`)
+
+  socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`))
+
+  socket.on('join', data => {
+    console.log(`Socket ${socket.id} joining ${room}`)
+    socket.join(data.room)
+    socketMap[socket.id] = data.username
+  })
+
   //when clint send a message to the socket server
-  socket.on("chat message", msg => {
-    console.log(msg)
-    //send the  message to all clients
-    io.emit("chat message", msg)
+  socket.on("chat", data => {
+    const { message, room } = data
+    console.log(`msg: ${message}, room: ${room}`)
+    //send the  message to all clients in the room
+    io.to(data.room).emit('chat', {
+      message: data.message,
+      user: socketMap[socket.id].username
+    })
   })
 })
 

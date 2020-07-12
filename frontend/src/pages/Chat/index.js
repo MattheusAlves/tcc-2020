@@ -2,31 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text } from 'react-native';
 import io from 'socket.io-client'
 
+import {
+  initializeSocket,
+  disconnectSocket,
+  subscribeToChat,
+  sendMessage
+} from './Socket'
 import styles from './style'
 
 const Chat = () => {
+  const rooms = ['A', 'B', 'C']
   const [chatMessage, setChatMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([])
-  const [socket] = useState(io("http://192.168.1.108:8000"))
+  const [data, setData] = useState({ username: 'username', room: rooms[0] })
 
 
   useEffect(() => {
-    console.log("rodou effect")
-    socket.on("chat message", msg => {
-      setChatMessages(oldMessages => [...oldMessages, msg])
+    if (data) initializeSocket(data)
+
+    subscribeToChat((err, data) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      console.log(data)
+      setChatMessages(oldMessages => [...oldMessages, data.message])
     })
 
+    console.log("rodou effect")
+    // socket.on("chat message", msg => {
+    //   setChatMessages(oldMessages => [...oldMessages, msg])
+    // })
+
     return () => {
-      socket.disconnect()
+      disconnectSocket()
+
     }
-  }, [])
+  }, [data])
 
 
 
 
 
   async function submitMessage() {
-    await socket.emit("chat message", chatMessage)
+    sendMessage(data.room, chatMessage)
     setChatMessage('')
 
   }
