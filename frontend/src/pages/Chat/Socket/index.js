@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import io from 'socket.io-client'
 
 let socket
-const socketURL = "http://192.168.1.108:8000"
+const socketURL = "http://localhost:8000"
 
 export const initializeSocket = (data) => {
     socket = io(socketURL)
