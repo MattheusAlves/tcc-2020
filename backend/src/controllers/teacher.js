@@ -115,6 +115,7 @@ exports.update = async (req, res) => {
   });
 };
 
+//mover para users by location
 exports.teachersByLocation = async (req, res) => {
   const coordinates = [...req.profile.location.coordinates]
   await User.findOne({
