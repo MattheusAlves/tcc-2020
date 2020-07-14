@@ -15,7 +15,10 @@ const styles = StyleSheet.create({
         justifyContent: "center"
 
     },
-  
+    buttonIcon: {
+        padding: 0,
+        margin: 0
+    },
     searchbar: {
         marginTop: 20,
         margin: 3,
