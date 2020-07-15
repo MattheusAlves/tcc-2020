@@ -13,7 +13,7 @@ import styles from './style'
 const Chat = () => {
   const rooms = ['A', 'B', 'C']
   const [chatMessage, setChatMessage] = useState('')
-  const [chatMessages, setChatMessages] = useState([])
+  const [chatMessages, setChatMessages] = useState([{ username: undefined, message: undefined }])
   const [data, setData] = useState({ username: 'username', room: rooms[0] })
 
 
@@ -26,7 +26,7 @@ const Chat = () => {
         return
       }
       console.log(data)
-      setChatMessages(oldMessages => [...oldMessages, data.message])
+      setChatMessages(oldMessages => [...oldMessages, { username: data.username, message: data.message }])
     })
 
     console.log("rodou effect")
@@ -45,7 +45,8 @@ const Chat = () => {
 
 
   async function submitMessage() {
-    sendMessage(data.room, chatMessage)
+    console.log(chatMessages)
+    sendMessage(rooms[0], chatMessage)
     setChatMessage('')
 
   }
@@ -62,7 +63,13 @@ const Chat = () => {
 
         }} />
 
-      {chatMessages.map(message => <Text key={message}>{message}</Text>)}
+      {chatMessages.map(msg => (
+        msg.username && msg.message && (
+          <Text key={msg.message}>
+            {`${msg.username} : ${msg.message}`}
+          </Text>)
+      ))}
+
     </View>
   )
 }
