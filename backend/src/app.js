@@ -52,7 +52,7 @@ io.on("connection", socket => {
   socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`))
 
   socket.on('join', data => {
-    console.log(`Socket ${socket.id} joining ${room}`)
+    console.log(`Socket ${socket.id} joining ${data.room}`)
     socket.join(data.room)
     socketMap[socket.id] = data.username
   })
@@ -64,7 +64,7 @@ io.on("connection", socket => {
     //send the  message to all clients in the room
     io.to(data.room).emit('chat', {
       message: data.message,
-      user: socketMap[socket.id].username
+      username: socketMap[socket.id]
     })
   })
 })
