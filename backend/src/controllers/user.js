@@ -29,15 +29,6 @@ exports.update = async (req, res) => {
   if (disciplines.length < 1) {
     return res.status(400).json({ err: 'incorrectly formatted disciplines' })
   }
-  //  else {
-  //    for (let i = 0; i < disciplines.length; i++) {
-  //      if (disciplines[i].length < 3 || !_.isString(disciplines[i])) {
-  //        return res.status(400).json({
-  //          err: "incorrectly formatted or undefined disciplines",
-  //        });
-  //      }
-  //    }
-  //  }
   await User.findById(req.profile._id).exec(async (err, user) => {
     if (err || !user) {
       return res.status(400).json({
@@ -60,9 +51,9 @@ exports.update = async (req, res) => {
       if (err || !user) {
         return res.status(400).json(errorHandler(err))
       }
-      user.hashed_password=''
+      user.hashed_password = ''
       user.salt = ''
-      return res.status(200).json({ user,length:selectDisciplines.length })
+      return res.status(200).json({ user, length: selectDisciplines.length })
     })
   })
 }
@@ -77,4 +68,25 @@ exports.updateLocation = async (req, res) => {
     user.save()
     return res.status(200).json(user)
   })
+}
+
+exports.disciplinesByUser = async (req, res) => {
+  console.log("teste")
+  User.findById(req.profile._id).populate("disciplines").exec((err,user)=>{
+    console.log(user)
+    return res.status(200).json(user)
+  })
+  //   await User.findById(req.profile._id).exec(async (error, user) => {
+  //   if (error) {
+  //     return res.status(400).json({ error: errorHandler(error) })
+  //   }
+  //   console.log(req.profile._id)
+  //   await user.populate('disciplines').execPopulate().then((user) => {
+  //     console.log(user)
+  //   })
+  //   user.hashed_password = ''
+  //   user.salt = ''
+  //   // console.log(user.disciplines)
+  //   return res.status(200).json(user.disciplines)
+  // })
 }

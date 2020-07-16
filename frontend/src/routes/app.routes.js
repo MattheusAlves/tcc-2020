@@ -8,6 +8,7 @@ import Settings from "../pages/Settings/";
 import Topics from "../pages/Topics/Topic";
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
+import Users from '../pages/Chat/Users/'
 
 const AppStack = createStackNavigator();
 const Tab = createBottomTabNavigator()
@@ -61,7 +62,8 @@ const MainRoutes = () => (
 
   })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={Topics} options={{ headerStyle: { backgroundColor:'black' } }} />
+    <Tab.Screen name="Topicos" component={Topics}
+     options={{ headerStyle: { backgroundColor:'black' } }} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />
   </Tab.Navigator >

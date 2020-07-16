@@ -50,3 +50,17 @@ exports.remove = async (req, res) => {
       .json({ deletedDiscipline, message: "Discipline deleted succesfully" });
   });
 };
+//autocomplete INPUT
+exports.searchDisciplines = async (req, res) => {
+  console.log(req.query.value)
+  const query = req.query.value
+  await Discipline.find({ "disciplineName": new RegExp(query, 'i') })
+    .exec((error, result) => {
+      if (error) {
+        return res.status(400).json({ error: errorhandler(error) })
+      } else {
+
+        return res.status(200).json(result)
+      }
+    })
+}

@@ -10,12 +10,11 @@ import {
 } from './Socket'
 import styles from './style'
 
-const Chat = () => {
+const Chat = (props) => {
   const rooms = ['A', 'B', 'C']
   const [chatMessage, setChatMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([{ username: undefined, message: undefined }])
   const [data, setData] = useState({ username: 'username', room: rooms[0] })
-
 
   useEffect(() => {
     if (data) initializeSocket(data)
@@ -25,30 +24,17 @@ const Chat = () => {
         console.log(err)
         return
       }
-      console.log(data)
-      setChatMessages(oldMessages => [...oldMessages, { username: data.username, message: data.message }])
+      setChatMessages(oldMessages => [...oldMessages, data])
     })
 
-    console.log("rodou effect")
-    // socket.on("chat message", msg => {
-    //   setChatMessages(oldMessages => [...oldMessages, msg])
-    // })
+    return () => disconnectSocket()
 
-    return () => {
-      disconnectSocket()
-
-    }
   }, [data])
 
-
-
-
-
   async function submitMessage() {
-    console.log(chatMessages)
-    sendMessage(rooms[0], chatMessage)
+    console.log("chat messsages:", chatMessages)
+    sendMessage(data.room, chatMessage)
     setChatMessage('')
-
   }
 
   return (
@@ -62,14 +48,10 @@ const Chat = () => {
           setChatMessage(message)
 
         }} />
-
-      {chatMessages.map(msg => (
-        msg.username && msg.message && (
-          <Text key={msg.message}>
-            {`${msg.username} : ${msg.message}`}
-          </Text>)
-      ))}
-
+      {chatMessages.map(data =>
+        data.message != undefined && data.username != undefined &&
+        <Text key={data.message}>{`${data.username}: ${data.message}`}</Text>
+      )}
     </View>
   )
 }

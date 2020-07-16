@@ -1,20 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-autocomplete-input
 
 PATH: 
-  C:\Python\Scripts\;C:\Python\;C:\Python27\;C:\Python27\Scripts\;C:\Gradle\gradle-5.6.3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Python\Scripts\;C:\Program Files (x86)\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Genymobile\Genymotion\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Android\Sdk;ANDROID_HOME\platform-tools;ANDROID_HOME\tools;ANDROID_HOME\emulator;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Users\Matheus\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.1\bin;;C:\Users\Matheus\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\emulator;C:\Users\Matheus\AppData\Local\Android\Sdk\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\tools\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Yarn\bin;C:\Program Files (x86)\Nmap;C:\MinGW\bin;C:\Users\Matheus\AppData\Roaming\npm
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Nmap\;C:\MinGW\bin\;C:\Users\matheusad\AppData\Roaming\npm;C:\Users\matheusad\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\matheusad\AppData\Local\Programs\Git\cmd
 
 Yarn version: 
-  1.17.3
+  1.19.0
 
 Node version: 
-  14.4.0
+  12.16.3
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\Matheus\Documents\TCC\frontend\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\matheusad\Documents\react-native\TCC\tcc-2020\frontend\node_modules\@babel\compat-data\node_modules\.bin'
 
 npm manifest: 
   {
@@ -11810,6 +11810,13 @@ Lockfile:
     version "16.13.1"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
     integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+  
+  react-native-easy-grid@^0.2.2:
+    version "0.2.2"
+    resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz#f0be33620be1ebe2d2295918eb58b0a27e8272ab"
+    integrity sha512-MlYrNIldnEMKn6TVatQN1P64GoVlwGIuz+8ncdfJ0Wq/xtzUkQwlil8Uksyp7MhKfENE09MQnGNcba6Mx3oSAA==
+    dependencies:
+      lodash "^4.17.15"
   
   react-native-elements@^2.0.0:
     version "2.0.0"

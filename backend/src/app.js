@@ -52,9 +52,10 @@ io.on("connection", socket => {
   socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`))
 
   socket.on('join', data => {
-    console.log(`Socket ${socket.id} joining ${data.room}`)
-    socket.join(data.room)
-    socketMap[socket.id] = data.username
+    const { username, room } = data
+    console.log(`Socket ${socket.id} joining ${room} user ${username}`)
+    socket.join(room)
+    socketMap[socket.id] = username
   })
 
   //when clint send a message to the socket server
