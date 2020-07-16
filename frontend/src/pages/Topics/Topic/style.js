@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
         margin: 3,
     },
+    searchInputContainer:{
+        position:'absolute',
+        width:(Dimensions.get('window').width)
+    },
     topics: {
 
     }

@@ -18,11 +18,15 @@ const questionSchema = new mongoose.Schema({
     /**
      * Selecionar discipline do BD
      */
-
     category: {
-        type: String,
-        required: true,
-        trim: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Discipline'
+    },
+    //se a caregoria não existir na base disciplinas
+    categoryOther:{
+        type:String,
+        trim:true,
+        uppercase:true
     },
     //deve ser uma referencia para categorias
     response: [{

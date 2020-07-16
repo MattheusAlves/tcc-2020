@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Chip, Searchbar, IconButton, Drawer, Divider } from 'react-native-paper'
+import { Chip, Drawer, Divider, List } from 'react-native-paper'
 
 import styles from './style'
 import api from '../../../services/api'
+import autoCompInput from '../../../components/AutoCompInput'
+import AutoCompInput from '../../../components/AutoCompInput';
+
 const Topic = () => {
-  const [userDisciplines,setUserDisciplines] = useState([''])
+  const [userDisciplines, setUserDisciplines] = useState([''])
   const [dataSearchInput, setDataSearchInput] = useState([''])
   useEffect(() => {
+
+    /*
+      Trazer todas as disciplinas do usuário no use effect e dar opção de procurar novas
+      disciplinas com o search input 
+      */
     //pesquisar como implementar pesquisa com  mongoose
     // https://www.luiztools.com.br/post/como-criar-um-mecanismo-de-busca-com-nodejs-mongodb/
-    api.get(`user/disciplines/5e8ce51e78cbad20d0228d6f`).then((response) => {
-      console.log("disciplinas",response.data)
-    })
+    // api.get(`user/disciplines/5e8ce51e78cbad20d0228d6f`).then((response) => {
+    //   console.log("disciplinas", response.data)
+    // })
 
   }, [])
 
   const _onCloseChip = () => { }
   const _onPressChip = () => {
     console.log('teste')
-    api.get('/search/disciplines', {
-      params: {
-        value: 'no'
-      }
-    }).then((response) => {
-      console.log(response.data)
-      setDataSearchInput([...response.data.disciplineName])
-    })
+
   }
 
   return (
@@ -42,14 +43,19 @@ const Topic = () => {
           PHP
         </Chip>
       </View>
-      <Searchbar
-        placeholder="Search"
-        style={styles.searchbar}
-      // onChangeText={onChangeSearch}
-      // value={searchQuery}
-      />
+      {/* <View style={styles.searchInputContainer}> */}
+      <AutoCompInput />
+      {/* </View> */}
       <View style={styles.topics}>
-        <TouchableOpacity>
+        <List.Section title="Tópico 1">
+          <List.Accordion
+            title="teste1"
+            left={props => <List.Icon {...props} icon="folder" />}>
+            <Text style={{flex:1,margin:0,padding:0}}>Teste</Text>
+            <List.Item title="second item" />
+          </List.Accordion>
+        </List.Section>
+        {/* <TouchableOpacity>
           <Drawer.Item
             style={{ backgroundColor: '#64ffda' }}
             icon="star"
@@ -62,7 +68,7 @@ const Topic = () => {
             icon="star"
             label="First Item"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   )

@@ -55,6 +55,8 @@ exports.searchDisciplines = async (req, res) => {
   console.log(req.query.value)
   const query = req.query.value
   await Discipline.find({ "disciplineName": new RegExp(query, 'i') })
+  .select('disciplineName')
+    .limit(4)
     .exec((error, result) => {
       if (error) {
         return res.status(400).json({ error: errorhandler(error) })

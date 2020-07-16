@@ -7,7 +7,7 @@ exports.create = async (req, res) => {
     await console.log(req.body)
     req.body.user = req.profile._id
     const question = new Question(req.body)
-    await question.populate('user').execPopulate()
+    await question.populate('category').execPopulate()
 
     await question.save((err, question) => {
         if (err || !question) {
@@ -15,8 +15,8 @@ exports.create = async (req, res) => {
                 error: errorHandler(err)
             })
         }
-        question.user.salt = undefined
-        question.user.hashed_password = undefined
+        // question.user.salt = undefined
+        // question.user.hashed_password = undefined
         return res.status(200).json({
             message: question
         })
@@ -72,7 +72,7 @@ exports.response = async (req, res) => {
                     })
                 }
                 return res.status(200).json({
-                    Questao: question, Answer: response 
+                    Questao: question, Answer: response
                 })
             })
         })
@@ -93,4 +93,21 @@ exports.asnwersQuantity = async (req, res) => {
         })
     })
 
+}
+exports.questionByCategory = async (req, res) => {
+    const categories = req.disciplines || req.body.disciplines
+    categories.map(function (category) {
+        console.log(category)
+        Question.find({ category: category.toString() })
+            .limit(req.body.limit)
+            .populate('category')
+            .exec((err, result) => {
+                return new Promise((resolve, reject) => {
+                    const teste = result.map(function (resultado) {
+                        return { categoryName: resultado.category.disciplineName, resultado }
+                    })
+                    resolve(teste)
+                }).then((result) => res.status(200).json('teste'))
+            })
+    })
 }
