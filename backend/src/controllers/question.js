@@ -96,18 +96,27 @@ exports.asnwersQuantity = async (req, res) => {
 }
 exports.questionByCategory = async (req, res) => {
     const categories = req.disciplines || req.body.disciplines
-    categories.map(function (category) {
-        console.log(category)
-        Question.find({ category: category.toString() })
+    const data = await categories.map(async function (category) {
+        return await Question.find({ category: category.toString() })
             .limit(req.body.limit)
             .populate('category')
-            .exec((err, result) => {
-                return new Promise((resolve, reject) => {
-                    const teste = result.map(function (resultado) {
-                        return { categoryName: resultado.category.disciplineName, resultado }
-                    })
-                    resolve(teste)
-                }).then((result) => res.status(200).json('teste'))
-            })
+            .exec()
+    })
+
+    Promise.all(data).then((value) => {
+        const filtered = value.filter(function (value) {
+            return value != null && value != '' && value != undefined
+        })
+        console.log(filtered)
+        return filtered
+
+    }).then((filteredValue) => {
+        let formatedData = []
+        for (let i = 0; i < filteredValue.length; i++) {
+            formatedData.push(filteredValue[i].map((data) => {
+                return { categoryName: data.category.disciplineName, body: data }
+            }))
+        }
+        return res.status(200).json(formatedData)
     })
 }
