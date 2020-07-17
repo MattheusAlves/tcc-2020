@@ -9,8 +9,9 @@ const UserSettings = () => {
     const [disciplines,setDiscipline] = useState([])
     
   return(
-
-  )
+    
+  );
 }
+
 
 export default UserSettings;
