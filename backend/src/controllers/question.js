@@ -95,9 +95,12 @@ exports.asnwersQuantity = async (req, res) => {
 
 }
 exports.questionByCategory = async (req, res) => {
-    const categories = req.disciplines || req.body.disciplines
+    
+    const categories = req.query.disciplines
+ 
     const data = await categories.map(async function (category) {
-        return await Question.find({ category: category.toString() })
+        category = JSON.parse(category)
+        return await Question.find({ category: category.id })
             .limit(req.body.limit)
             .populate('category')
             .exec()
@@ -107,13 +110,13 @@ exports.questionByCategory = async (req, res) => {
         const filtered = value.filter(function (value) {
             return value != null && value != '' && value != undefined
         })
-        console.log(filtered)
         return filtered
 
     }).then((filteredValue) => {
         let formatedData = []
         for (let i = 0; i < filteredValue.length; i++) {
             formatedData.push(filteredValue[i].map((data) => {
+                console.log(data)
                 return { categoryName: data.category.disciplineName, body: data }
             }))
         }

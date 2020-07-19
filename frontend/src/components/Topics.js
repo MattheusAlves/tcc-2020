@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
-import { Divider, List } from 'react-native-paper'
+import { Divider, List, Drawer } from 'react-native-paper'
 
 import api from '../services/api'
 const Topics = (props) => {
     useEffect(() => {
 
-    },[])
+    }, [])
     return (
-        <List.Section title="Tópico 1">
-            <List.Accordion
-                title="teste1"
-                left={props => <List.Icon {...props} icon="folder" />}>
-                <Text style={{ flex: 1, margin: 0, padding: 0 }}>Teste</Text>
-                <List.Item title="second item" />
-            </List.Accordion>
-        </List.Section>
+        //Cada Drawer vai ser o titulo da categoria
+        <View>
+            <TouchableOpacity>
+                <Drawer.Item
+                    style={{ backgroundColor: '#64ffda' }}
+                    icon="star"
+                    label="First Item"
+                /></TouchableOpacity>
+            <Divider />
+            <TouchableOpacity onPress={() => _onPressChip()}>
+                <Drawer.Item
+                    style={{ backgroundColor: '#64ffda' }}
+                    icon="star"
+                    label="First Item"
+                />
+            </TouchableOpacity>
+        </View>
     )
 }
 
-export default components;
+export default Topics;
 
 const styles = StyleSheet.create({
 

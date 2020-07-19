@@ -71,11 +71,18 @@ exports.updateLocation = async (req, res) => {
 }
 
 exports.disciplinesByUser = async (req, res) => {
-  console.log("teste")
-  User.findById(req.profile._id).populate("disciplines").exec((err,user)=>{
-    console.log(user)
-    return res.status(200).json(user)
-  })
+  console.log(req.profile)
+  User.findById(req.profile._id)
+  .select('disciplines')
+    .populate("disciplines")
+    .exec((error, user) => {
+      if (error) {
+        console.log(error)
+        return res.status(400).json(errorHandler(error))
+      }
+      console.log(user)
+           return res.status(200).json(user)
+    })
   //   await User.findById(req.profile._id).exec(async (error, user) => {
   //   if (error) {
   //     return res.status(400).json({ error: errorHandler(error) })

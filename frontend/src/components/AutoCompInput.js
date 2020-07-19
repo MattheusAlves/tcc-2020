@@ -7,34 +7,55 @@ import api from '../services/api'
 const AutoCompInput = (props) => {
     const [query, setQuery] = useState('')
     const [data, setData] = useState([])
+    let typingTimer
+    const timeout = 600
+
     useEffect(() => {
         async function getDisciplines() {
-            setData([])
+
             if (query.length >= 3) {
-                api.get('/search/disciplines', {
+                await api.get('/search/disciplines', {
                     params: {
                         value: query
                     }
                 }).then((response) => {
                     if (response.data.length >= 1) {
                         response.data.map((discipline) => {
-                            setData(oldValue => [...oldValue, discipline.disciplineName])
+                            setData(oldValue => [...oldValue, { disciplineName: discipline.disciplineName, id: discipline._id }])
                         })
                     }
                 })
             }
         }
+
         getDisciplines()
+
     }, [query])
+    function controlTime(text) {
+        clearTimeout(typingTimer)
+        typingTimer = setTimeout(() => {
+            setData([])
+            setQuery(text)
+        }, timeout);
+    }
+
     return (
         <View style={styles.autocompleteContainer}>
             <Autocomplete
                 data={data}
+                placeholder="Adicionar categorias"
                 defaultQuery={query}
-                onChangeText={text => setQuery(text)}
+                listStyle={styles.touchable}
+                listContainerStyle={styles.touchableContainer}
+                inputContainerStyle={styles.inputContainer}
+                onChangeText={text => controlTime(text)}
                 renderItem={({ item, i }) => (
-                    <TouchableOpacity onPress={() => setQuery(item)}>
-                        <Text>{item}</Text>
+                    // item.length > 1 && i &&(
+                    <TouchableOpacity
+                        key={item._id}
+                        style={styles.touchable}
+                        onPress={() => props.addCategory(item)}>
+                        <Text style={{ fontWeight: 'bold' }}> {item.disciplineName}</Text>
                     </TouchableOpacity>
                 )}
             />
@@ -44,13 +65,34 @@ const AutoCompInput = (props) => {
 const styles = StyleSheet.create({
     autocompleteContainer: {
         flex: 1,
-        left: 0,
+        left: 10,
         position: 'absolute',
-        right: 0,
-        top: 0,
+        right: 10,
         zIndex: 1,
         backgroundColor: 'white',
-        borderRadius: 7
+    },
+    inputContainer: {
+        borderWidth: 0.7,
+        borderRadius: 4,
+        zIndex: 1,
+
+    },
+    touchable: {
+        flex: 1,
+        left: 0,
+        right: 0,
+        marginTop: 5,
+        padding: 0,
+        borderWidth: 0,
+        borderColor: '#fff',
+    },
+    touchableContainer: {
+        marginRight: 3,
+        marginLeft: 3,
+        borderTopWidth: 0,
+        backgroundColor: 'white',
+        borderRadius: 4,
+        zIndex: 2,
     }
 });
 

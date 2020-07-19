@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Chip, Drawer, Divider, List } from 'react-native-paper'
 
 import styles from './style'
 import api from '../../../services/api'
-import autoCompInput from '../../../components/AutoCompInput'
 import AutoCompInput from '../../../components/AutoCompInput';
+import Topics from '../../../components/Topics'
 
 const Topic = () => {
-  const [userDisciplines, setUserDisciplines] = useState([''])
+  const [userDisciplines, setUserDisciplines] = useState([])
   const [dataSearchInput, setDataSearchInput] = useState([''])
+  const [topics, setTopics] = useState([])
   useEffect(() => {
 
     /*
@@ -18,16 +19,37 @@ const Topic = () => {
       */
     //pesquisar como implementar pesquisa com  mongoose
     // https://www.luiztools.com.br/post/como-criar-um-mecanismo-de-busca-com-nodejs-mongodb/
-    // api.get(`user/disciplines/5e8ce51e78cbad20d0228d6f`).then((response) => {
-    //   console.log("disciplinas", response.data)
-    // })
+    if (userDisciplines.length < 1) {
+      api.get(`/user/disciplines/5e8ccfa2c2dff823147e7c9b`).then((response) => {
+        console.log("disciplinas", response.data)
+        response.data.disciplines.map((discipline) => {
+          setUserDisciplines(oldValue => [...oldValue, { name: discipline.disciplineName, id: discipline._id }])
+        })
+      })
+    }
 
   }, [])
+
+  useEffect(() => {
+    if (userDisciplines.length >= 1) {
+      console.log("if second effect")
+      console.log('rodou api')
+      api.get(`/question/by/categories`, {
+        params: {
+          disciplines: userDisciplines
+        }
+      }).then((topics) => {
+        console.log(topics.data)
+        setTopics(topics.data)
+      })
+    }
+  }, [userDisciplines])
+
 
   const _onCloseChip = () => { }
   const _onPressChip = () => {
     console.log('teste')
-
+    console.log(userDisciplines)
   }
 
   return (
@@ -37,38 +59,20 @@ const Topic = () => {
           style={styles.chip}
           textStyle={{ fontSize: 15 }}
           mode="outlined"
-          disabled={true}
+          disabled={false}
           onClose={() => console.log("fechou")}
           onPress={() => console.log('Pressed')}>
           PHP
         </Chip>
       </View>
-      {/* <View style={styles.searchInputContainer}> */}
-      <AutoCompInput />
-      {/* </View> */}
+      <View style={styles.main}>
+        <AutoCompInput />
+      
       <View style={styles.topics}>
-        <List.Section title="Tópico 1">
-          <List.Accordion
-            title="teste1"
-            left={props => <List.Icon {...props} icon="folder" />}>
-            <Text style={{flex:1,margin:0,padding:0}}>Teste</Text>
-            <List.Item title="second item" />
-          </List.Accordion>
-        </List.Section>
-        {/* <TouchableOpacity>
-          <Drawer.Item
-            style={{ backgroundColor: '#64ffda' }}
-            icon="star"
-            label="First Item"
-          /></TouchableOpacity>
-        <Divider />
-        <TouchableOpacity onPress={() => _onPressChip()}>
-          <Drawer.Item
-            style={{ backgroundColor: '#64ffda' }}
-            icon="star"
-            label="First Item"
-          />
-        </TouchableOpacity> */}
+        <ScrollView>
+          <Topics topics={topics} />
+        </ScrollView>
+        </View>
       </View>
     </View>
   )

@@ -20,15 +20,15 @@ const styles = StyleSheet.create({
         margin: 0
     },
     searchbar: {
-        marginTop: 20,
+        // marginTop: 20,
         margin: 3,
     },
     searchInputContainer:{
-        position:'absolute',
-        width:(Dimensions.get('window').width)
+        alignSelf:'center',
+        flexDirection:'row'
     },
     topics: {
-
+        top:60
     }
 
 
