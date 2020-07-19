@@ -3,7 +3,9 @@ import { View } from 'react-native';
 
 
 const Settings = () => {
-  return <View />;
+  return (
+    "teste"
+  )
 }
 
 export default Settings;

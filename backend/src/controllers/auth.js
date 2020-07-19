@@ -58,7 +58,8 @@ exports.signout = async (req, res) => {
 }
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
-  userProperty: 'auth'
+  userProperty: 'auth',
+  algorithms: ['HS256']
 })
 exports.isAuth = async (req, res, next) => {
   const user = req.profile && req.auth && req.profile._id == req.auth._id
