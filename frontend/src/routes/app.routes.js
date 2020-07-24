@@ -77,7 +77,7 @@ const AppRoutes = (route) => {
         options={({ route }) => ({
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
-          headerStyle: { backgroundColor:'#f4511e' } 
+          headerStyle: { backgroundColor:'#0baee1' } 
         })} />
     </AppStack.Navigator >
   )
