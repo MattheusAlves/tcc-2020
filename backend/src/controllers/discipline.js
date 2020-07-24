@@ -61,7 +61,7 @@ exports.searchDisciplines = async (req, res) => {
       if (error) {
         return res.status(400).json({ error: errorhandler(error) })
       } else {
-
+        console.log(result)
         return res.status(200).json(result)
       }
     })

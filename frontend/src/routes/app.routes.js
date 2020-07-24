@@ -1,14 +1,18 @@
 import React, { useLayoutEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 import Main from "../pages/Main/";
 import Register from "../pages/Register/";
 import Settings from "../pages/Settings/";
-import Topics from "../pages/Topics/Topic";
+import MainTopics from "../pages/Topics/Main/";
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
 import Users from '../pages/Chat/Users/'
+import Topic from "../pages/Topics/Topic/"
+import Response from '../pages/Topics/Topic/Response'
+
 
 const AppStack = createStackNavigator();
 const Tab = createBottomTabNavigator()
@@ -40,30 +44,49 @@ function getHeaderVisibility(route) {
     ? route.state.routes[route.state.index].name
     : route.params?.screen || 'Mapa';
 
-  return routeName === "Mapa" ? false : true
+  return routeName === "Mapa" ? false : false
 }
 
 
 const MainRoutes = () => (
-  <Tab.Navigator screenOptions={({ route }) => ({
-    tabBarIcon: ({ focused, color, size }) => {
-      let iconName
-      if (route.name === 'Mapa') {
-        iconName = focused ? 'map-search-outline' : 'map-search'
-      } else if (route.name === 'Topicos') {
-        iconName = focused ? 'book-open-outline' : 'book-open'
-      } else if (route.name === 'Chat') {
-        iconName = focused ? 'message-text-outline' : 'message-text'
-      } else if (route.name === 'Configuracoes') {
-        iconName = focused ? 'account-settings-outline' : 'account-settings'
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName
+        if (route.name === 'Mapa') {
+          if (focused) {
+            iconName = 'map-marker'
+            color = ' '
+          } else
+            iconName = 'location-arrow'
+        } else if (route.name === 'Topicos') {
+          if (focused) {
+            iconName = 'paste'
+            color = '#0000e6'
+          }
+          else
+            iconName = 'paste'
+        } else if (route.name === 'Chat') {
+          if (focused) {
+            iconName = 'comments'
+            color = '#0000e6'
+          }
+          else
+            iconName = 'comments'
+        } else if (route.name === 'Configuracoes') {
+          if (focused) {
+            iconName = 'user'
+            color = '#0000e6'
+          } else
+            iconName = 'user'
+        }
+        return <Icon name={iconName} size={25} color={color} />
       }
-      return <Icon name={iconName} size={30} />
-    }
 
-  })}>
+    })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={Topics}
-     options={{ headerStyle: { backgroundColor:'black' } }} />
+    <Tab.Screen name="Topicos" component={MainTopics}
+      options={{ headerShown: false }} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />
   </Tab.Navigator >
@@ -78,8 +101,9 @@ const AppRoutes = (route) => {
         options={({ route }) => ({
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
-          headerStyle: { backgroundColor:'#f4511e' } 
         })} />
+      <AppStack.Screen name="Topic" component={Topic} />
+      <AppStack.Screen name="Response" component={Response} />
     </AppStack.Navigator >
   )
 };

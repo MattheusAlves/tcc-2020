@@ -101,7 +101,7 @@ exports.questionByCategory = async (req, res) => {
     const data = await categories.map(async function (category) {
         category = JSON.parse(category)
         return await Question.find({ category: category.id })
-            .limit(req.body.limit)
+            .limit(parseInt(req.query.limit))
             .populate('category')
             .exec()
     })

@@ -1,35 +1,62 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
+const DEVICE_WIDTH = Dimensions.get('screen').width
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    chipContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: "flex-start",
-        margin: 5
+        backgroundColor: 'rgb(255,255,255)',
+        padding: 10,
     },
-    chip: {
-        width: 'auto',
-        justifyContent: "center"
+    userInformation: {
+        // flex:1,
+        marginBottom: 1,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin:5,    
+    },
+    icon: {
+    },
+    responseName:{
+      fontSize:17, 
+      fontWeight:'700' 
+    },
+    topic: {    
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        margin:5,
+    },
+    containerResponse:{
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    inputResponse:{
+        flex:1,
+        borderWidth:1,
+        padding:5,
+        margin:5,
+        borderRadius:7
+    },
+    post:{
+        borderWidth:1,
+        padding:8,
+    },
+    responses:{
 
     },
-    buttonIcon: {
-        padding: 0,
-        margin: 0
+    response:{
+        borderWidth:1,
+        padding:8,
+        margin:5,
+        borderRadius:5
     },
-    searchbar: {
-        // marginTop: 20,
-        margin: 3,
-    },
-    searchInputContainer:{
-        alignSelf:'center',
-        flexDirection:'row'
-    },
-    topics: {
-        top:60
+    buttonResponse:{
+        alignSelf:'flex-end'
     }
+
 
 
 })

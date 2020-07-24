@@ -1,20 +1,21 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-autocomplete-input
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-search-header
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Nmap\;C:\MinGW\bin\;C:\Users\matheusad\AppData\Roaming\npm;C:\Users\matheusad\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\matheusad\AppData\Local\Programs\Git\cmd
+  C:\Python\Scripts\;C:\Python\;C:\Python27\;C:\Python27\Scripts\;C:\Gradle\gradle-5.6.3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Python\Scripts\;C:\Program Files (x86)\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Genymobile\Genymotion\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Android\Sdk;ANDROID_HOME\platform-tools;ANDROID_HOME\tools;ANDROID_HOME\emulator;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Users\Matheus\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.1\bin;;C:\Users\Matheus\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\emulator;C:\Users\Matheus\AppData\Local\Android\Sdk\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\tools\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Yarn\bin;C:\Program Files (x86)\Nmap;C:\MinGW\bin;C:\Users\Matheus\AppData\Roaming\npm
 
 Yarn version: 
-  1.19.0
+  1.17.3
 
 Node version: 
-  12.16.3
+  14.4.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\matheusad\Documents\react-native\TCC\tcc-2020\frontend\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26)
 
 npm manifest: 
   {
@@ -37,15 +38,18 @@ npm manifest:
       "expo": "^37.0.12",
       "expo-cli": "^3.21.5",
       "expo-font": "~8.1.0",
+      "expo-linear-gradient": "~8.1.0",
       "lottie-ios": "3.1.3",
       "lottie-react-native": "^3.3.2",
       "mapview": "^1.0.0",
       "react": "~16.9.0",
       "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+      "react-native-autocomplete-input": "^4.2.0",
       "react-native-elements": "^2.0.0",
       "react-native-geolocation-service": "^5.0.0",
       "react-native-gesture-handler": "~1.6.0",
+      "react-native-linear-gradient": "^2.5.6",
       "react-native-maps": "0.26.1",
       "react-native-paper": "^3.8.0",
       "react-native-reanimated": "~1.7.0",
@@ -11811,12 +11815,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
     integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
   
-  react-native-easy-grid@^0.2.2:
-    version "0.2.2"
-    resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz#f0be33620be1ebe2d2295918eb58b0a27e8272ab"
-    integrity sha512-MlYrNIldnEMKn6TVatQN1P64GoVlwGIuz+8ncdfJ0Wq/xtzUkQwlil8Uksyp7MhKfENE09MQnGNcba6Mx3oSAA==
-    dependencies:
-      lodash "^4.17.15"
+  react-native-autocomplete-input@^4.2.0:
+    version "4.2.0"
+    resolved "https://registry.yarnpkg.com/react-native-autocomplete-input/-/react-native-autocomplete-input-4.2.0.tgz#fcfc3d2f19134d4c3394a4e6a5aae13d8c4c9129"
+    integrity sha512-bLZ9FO3NwcqYY3r6hefEEC4VW45L97kXuCyAqKXW1SJkkG/pGcen6zLq3SMFgoQuG3ryrO/ohz7gme7hFwzjoQ==
   
   react-native-elements@^2.0.0:
     version "2.0.0"
@@ -11851,6 +11853,11 @@ Lockfile:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
     integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+  
+  react-native-linear-gradient@^2.5.6:
+    version "2.5.6"
+    resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+    integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
   
   react-native-maps@0.26.1:
     version "0.26.1"
