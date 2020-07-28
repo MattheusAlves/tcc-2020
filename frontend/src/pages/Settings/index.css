@@ -1,3 +1,26 @@
-.teste{
-    color:red;
+#container {
+    visibility: hidden;
+}
+
+#loader {
+  color: #008cff;
+  height: 40px;
+  width: 30%;
+  position: absolute;
+  font-family: 'Helvetica Neue','calibiri';
+  font-size: 14px;
+  top: 45%;
+  left: 45%;
+}
+
+#element {
+    display: block;
+    width: 300px;
+    margin: 100px auto;
+    border-radius: 3px;
+}
+
+.e-avatar {
+    /*background-image: url('./pic01.png');
+    margin: 2px;*/
 }
