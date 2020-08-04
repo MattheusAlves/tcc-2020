@@ -15,48 +15,71 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        margin:5,    
+        margin: 5,
     },
     icon: {
     },
-    responseName:{
-      fontSize:17, 
-      fontWeight:'700' 
+    responseName: {
+        fontSize: 17,
+        fontWeight: '700'
     },
-    topic: {    
+    topic: {
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        margin:5,
+        margin: 5,
     },
-    containerResponse:{
-        flexDirection:'row',
-        alignItems:'center',
+    containerResponse: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    inputResponse:{
-        flex:1,
-        borderWidth:1,
-        padding:5,
-        margin:5,
-        borderRadius:7
+    inputResponse: {
+        flex: 1,
+        borderWidth: 1,
+        padding: 5,
+        margin: 5,
+        borderRadius: 7
     },
-    post:{
-        borderWidth:1,
-        padding:8,
+    post: {
+        borderWidth: 1,
+        padding: 8,
     },
-    responses:{
+    responses: {
 
     },
-    response:{
-        borderWidth:1,
-        padding:8,
-        margin:5,
-        borderRadius:5
+    response: {
+        borderWidth: 1,
+        padding: 8,
+        margin: 5,
+        borderRadius: 5
     },
-    buttonResponse:{
-        alignSelf:'flex-end'
+    responseFooter: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        padding: 3,
+        marginTop: 2
+    },
+
+    createdAt: {
+        alignSelf: 'flex-start',
+        fontStyle: 'italic',
+        bottom: 0
+    },
+    notes: {
+        alignSelf: 'flex-end',
+        flexDirection: 'row',
+
+    },
+    viewRate: {
+        flexDirection: 'row',
+        paddingHorizontal: 4,
+        justifyContent:"center",
+        borderWidth:1
+    },
+    rateLength:{
+        textAlignVertical:'bottom',
+        paddingHorizontal   :5
     }
-
 
 
 })

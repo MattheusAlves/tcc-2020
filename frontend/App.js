@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { StatusBar } from "react-native";
 import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from "react-native-paper";
@@ -9,11 +9,12 @@ import { AppLoading } from 'expo'
 
 import { AuthProvider } from "./src/contexts/auth";
 import { LocationProvider } from './src/contexts/location'
+import { TopicProvider } from './src/contexts/topic'
 
 import Routes from "./src/routes/index";
 const fetchFonts = () => {
   return Font.loadAsync({
-    'Roboto-Regular':require('./src/assets/fonts/Roboto_Slab_Regular.ttf')
+    'Roboto-Regular': require('./src/assets/fonts/Roboto_Slab_Regular.ttf')
   });
 };
 export default function App() {
@@ -31,13 +32,15 @@ export default function App() {
       <NavigationContainer>
         <AuthProvider>
           <LocationProvider>
-            <StatusBar
-              barStyle="light-content"
-              backgroundColor='#f4511e'
-            />
-            <PaperProvider>
-              <Routes />
-            </PaperProvider>
+            <TopicProvider>
+              <StatusBar
+                barStyle="light-content"
+              // backgroundColor='#f4511e'
+              />
+              <PaperProvider>
+                <Routes />
+              </PaperProvider>
+            </TopicProvider>
           </LocationProvider>
         </AuthProvider>
       </NavigationContainer>

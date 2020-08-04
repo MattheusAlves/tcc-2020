@@ -1,4 +1,5 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
+import {View} from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -11,7 +12,12 @@ import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
 import Users from '../pages/Chat/Users/'
 import Topic from "../pages/Topics/Topic/"
-import Response from '../pages/Topics/Topic/Response'
+import TopicsByCategory from '../pages/Topics/TopicsByCategory'
+
+import {useTopic} from '../contexts/topic'
+
+
+// import Response from '../pages/Topics/Topic/Response'
 
 
 const AppStack = createStackNavigator();
@@ -50,13 +56,14 @@ function getHeaderVisibility(route) {
 
 const MainRoutes = () => (
   <Tab.Navigator
+    tabBarOptions={{ keyboardHidesTabBar: true }}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName
         if (route.name === 'Mapa') {
           if (focused) {
             iconName = 'map-marker'
-            color = ' '
+            color = '#0000e6'
           } else
             iconName = 'location-arrow'
         } else if (route.name === 'Topicos') {
@@ -94,7 +101,8 @@ const MainRoutes = () => (
 
 
 
-const AppRoutes = (route) => {
+const AppRoutes = () => {
+  const {categoryName} = useTopic()
   return (
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes}
@@ -103,9 +111,29 @@ const AppRoutes = (route) => {
           headerShown: getHeaderVisibility(route),
         })} />
       <AppStack.Screen name="Topic" component={Topic} />
+      <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}
+        options={({ navigation,route }) => ({
+          headerStyle:{
+            backgroundColor:'#0099ff',
+            borderWidth:0,
+            shadowRadius:0,
+            shadowColor: 'transparent',
+            elevation:0,
+            shadowOffset: {
+              height: 0,
+          },
+          },
+          
+          
+          headerTintColor:'#fff',
+          headerTitleAlign:'center',
+            
+      
+          
+          headerTitle: typeof(categoryName) === 'undefined' ? '' : categoryName })} />
       <AppStack.Screen name="Response" component={Response} />
     </AppStack.Navigator >
   )
 };
 
-export default AppRoutes;
+export default AppRoutes; 
