@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StatusBar, RefreshControl, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar, RefreshControl, ActivityIndicator } from 'react-native';
 import { Chip, Divider } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -9,21 +9,26 @@ import api from '../../../services/api'
 import AutoCompInput from '../../../components/AutoCompInput';
 import Topics from '../../../components/Topics'
 import Dialog from '../../../components/Dialog'
-import {useTopic} from '../../../contexts/topic'
+import TopicsNotFound from '../../../components/TopicsNotFound'
+import ConnectionError from '../../../components/ConnectionError'
+import { useTopic } from '../../../contexts/topic'
 
-const Topic = ({navigation}) => {
+
+const Topic = ({ navigation }) => {
   const [userDisciplines, setUserDisciplines] = useState([])
   const [topics, setTopics] = useState([])
   const [dialog, setDialog] = useState(false)
   const [dialogError, setDialogError] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  const {setData} = useTopic()
+  const { setData } = useTopic()
 
   useEffect(() => {
     getUserDisciplines().then((disciplines) => {
       setUserDisciplines(disciplines)
+      setLoading(false)
     })
   }, [])
 
@@ -77,7 +82,7 @@ const Topic = ({navigation}) => {
 
   const onPressTopic = useCallback((topic) => {
     navigation.navigate('Topic', { topic: topic })
-    
+
   })
 
 
@@ -97,11 +102,11 @@ const Topic = ({navigation}) => {
     setUserDisciplines([...userDisciplines, { name: category.disciplineName, id: category.id }])
   }, [userDisciplines])
 
-  const onPressCategory = (idCategory,category) => {
-    navigation.navigate('TopicsByCategory', { id: idCategory})
-    setData(idCategory,category)
+  const onPressCategory = (idCategory, category) => {
+    navigation.navigate('TopicsByCategory', { id: idCategory })
+    setData(idCategory, category)
 
-    
+
   }
   return (
     <>
@@ -115,40 +120,38 @@ const Topic = ({navigation}) => {
             <RefreshControl refreshing={refreshing}
               onRefresh={onRefresh} style={{ paddingTop: 160 }} />
           }>
-
-
-          <View style={styles.chipContainer}>
-            {userDisciplines &&
-              userDisciplines.length >= 1 &&
-              userDisciplines.map((discipline) => (
-                <Chip
-                  style={styles.chip}
-                  key={discipline.id}
-                  textStyle={{ fontSize: 12 }}
-                  mode="outlined"
-                  disabled={false}
-                  onClose={() => onCloseChip(discipline.id)}
-                >
-                  <Text>{discipline.name}</Text>
-                </Chip>
-              ))}
-          </View>
-          {topics.length < 1 && error === false ?
-            <View style={styles.background}>
-              <View style={styles.containerNotFound}>
-                <Text style={styles.topicsNotFoundTitle}>Ainda não há nenhum tópico nas categorias selecionadas</Text>
-                <TouchableOpacity style={styles.touchableSubtitle}>
-                  <Text style={styles.topicsNotFoundSubtitle}>Inicia um Tópico <Icon name="rocket" size={30} color="#660066" /></Text>
-                  <Divider />
-                </TouchableOpacity>
-                <Image style={styles.logo} source={require('../../../assets/images/logo2.png')} resizeMode="contain" />
-              </View>
+          {loading === true ?
+            <View style={styles.containerLoading}>
+              <ActivityIndicator size="large" color="#0000ff" />
             </View>
-
             :
+
+            <View style={styles.chipContainer}>
+              {userDisciplines &&
+                userDisciplines.length >= 1 &&
+                userDisciplines.map((discipline) => (
+                  <Chip
+                    style={styles.chip}
+                    key={discipline.id}
+                    textStyle={{ fontSize: 12 }}
+                    mode="outlined"
+                    disabled={false}
+                    onClose={() => onCloseChip(discipline.id)}
+                  >
+                    <Text>{discipline.name}</Text>
+                  </Chip>
+                ))}
+            </View>
+          }
+          {topics.length < 1 && loading !== true &&
+            <TopicsNotFound />
+          }
+          {error && 
+          <ConnectionError />
+          }
+          {topics.length > 1 &&
             <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
           }
-
         </ScrollView>
 
 
@@ -161,6 +164,7 @@ const Topic = ({navigation}) => {
 
       </View>
     </>
+
   )
 }
 /**inserir um chip com as disciplinas de interesse do usuário 

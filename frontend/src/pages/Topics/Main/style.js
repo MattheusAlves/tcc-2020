@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5fcff',
         marginTop:46
     },
+    containerLoading:{
+        flex:1,
+        flexDirection:'row',
+        width: (Dimensions.get('window')).width,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: 'white'
+    },
     chipContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -36,57 +44,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: (Dimensions.get('screen').width),
+        backgroundColor:'white'
     },
 
-    topicsNotFoundView: {
-        flex: 1,
-    },
-    touchableSubtitle: {
-        borderRadius: 5,
-        backgroundColor: 'gray',
-        margin: 5,
-        justifyContent: "center",
-        alignItems: "center",
-        borderWidth: .3,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
-    },
-    topicsNotFoundTitle: {
-        fontSize: 18,
-        textAlign: 'center',
-        padding: 8,
-        color: 'black',
-        fontWeight: '700',
-
-
-    },
-    topicsNotFoundSubtitle: {
-        fontSize: 19,
-        fontWeight: '700',
-        textAlign: 'center',
-        padding: 20,
-        borderRadius: 5,
-        // backgroundColor: 'rgba(51, 102, 255,8)',
-        backgroundColor: 'white',
-        textAlign: 'center'
-    },
-    logo: {
-        width: 100,
-        height: 90,
-    },
-    containerNotFound: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 12,
-
-    },
     scrollView:{
         }
 })
