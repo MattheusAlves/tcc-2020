@@ -6,7 +6,7 @@ import styles from './index.css';
 import { Avatar } from 'react-native-paper';
 import { DataTable } from 'react-native-paper';
 import { List } from 'react-native-paper';
-import { Button, Col, Container, Row, Header, Grid } from 'react-native-paper';
+import { Button, Title,Paragraph , Col, Container, Row, Header, Grid } from 'react-native-paper';
 import Modal from './Modal';
 import UserSettings from './UserSettings/index';
 import { Dimensions, View } from 'react-native'
@@ -17,12 +17,12 @@ const DeviceWidth = Dimensions.get('window').width
 const Settings = () => {
 
   return (
-    <View>
+    <View style={{width:'60%', alignSelf: 'center'}} >
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center',  flexWrap: 'wrap' }}>
 
         <View style={{
-          width: '20%', height: '100%', borderRightWidth: 1, borderTopWidth: 1
-          , borderLeftWidth: 1, borderBottomWidth: 1, backgroundColor: 'powderblue'
+          width: '25%', height: '100%', borderRightWidth: 1, borderTopWidth: 1
+          , borderLeftWidth: 1, borderBottomWidth: 1, backgroundColor: 'white'
         }} >
           <Avatar.Image size={64} source={require('../../assets/images/photoProfile.png')} />
           <List.Accordion
@@ -55,20 +55,20 @@ const Settings = () => {
           <Divider />
         </View>
 
-        <View style={{ width: '80%', alignSelf:'stretch'}}>
-          <View style={{ height: 50, backgroundColor: 'skyblue', borderRightWidth: 1, borderTopWidth: 1
-          , borderLeftWidth: 1, borderBottomWidth: 1 }} />
+        <View style={{ width: '75%',height:'100%', alignSelf:'stretch'}}>
+          <View style={{ height: 50, backgroundColor: 'white', borderRightWidth: 1, borderTopWidth: 1
+          , borderLeftWidth: 1, borderBottomWidth: 1 }} >
+            <Title style={{ textAlign:'center'}}>Título</Title>
+            </View>
 
-          <View style={{ height: 100, backgroundColor: 'steelblue', borderRightWidth: 1, borderTopWidth: 1
-          , borderLeftWidth: 1, borderBottomWidth: 1 }} />
-
-        </View>
+          <View style={{ height: '88%', backgroundColor: 'white', borderRightWidth: 1, borderTopWidth: 1
+          , borderLeftWidth: 1, borderBottomWidth: 1 }} >
+            <Paragraph>Aqui será o conteúdo do menu escolhido à esquerda.</Paragraph>
+          </View>
+        </View>     
 
 
       </View>
-
-
-
 
 
 
