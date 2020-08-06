@@ -109,6 +109,10 @@ const Topic = ({ navigation }) => {
 
   }
   return (
+   error ? 
+      <ConnectionError />
+      :
+      
     <>
       <View style={styles.status} />
       <StatusBar barStyle='light-content' backgroundColor='rgba(59,89,152,1)' />
@@ -143,17 +147,15 @@ const Topic = ({ navigation }) => {
                 ))}
             </View>
           }
-          {topics.length < 1 && loading !== true &&
+          {topics.length < 1 && loading !== true && !error &&
             <TopicsNotFound />
           }
-          {error && 
-          <ConnectionError />
-          }
+         
+         
           {topics.length > 1 &&
             <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
           }
         </ScrollView>
-
 
         <Dialog dialogState={dialog} onDismiss={() => setDialog(false)}
           title="Limite excedido"

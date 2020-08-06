@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     containerLoading:{
         flex:1,
         flexDirection:'row',
-        width: (Dimensions.get('window')).width,
+        width: (Dimensions.get('window').width),
         justifyContent:'center',
         alignItems:'center',
         backgroundColor: 'white'
