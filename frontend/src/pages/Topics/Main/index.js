@@ -109,7 +109,7 @@ const Topic = ({ navigation }) => {
 
   }
   return (
-   error ? 
+   error ?
       <ConnectionError />
       :
       
