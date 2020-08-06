@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Main from "../pages/Main/";
 import Register from "../pages/Register/";
-import Settings from "../pages/Settings/";
+import Settings from "../pages/Settings/Main";
 import Topics from "../pages/Topics/Topic";
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
