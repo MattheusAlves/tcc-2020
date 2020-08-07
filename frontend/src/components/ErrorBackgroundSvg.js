@@ -1,4 +1,5 @@
 import React from "react"
+import {Dimensions} from 'react-native'
 import Svg, {
   G,
   Path,
@@ -12,7 +13,9 @@ import Svg, {
 
 function SvgComponent(props) {
   return (
-    <Svg width={422} height={904} viewBox="0 0 422 904" fill="none" {...props} >
+    <Svg width="100%" height="100%"
+    viewBox={`30 67 ${Dimensions.get('screen').width} ${Dimensions.get('screen').height}`} 
+    fill="none" {...props}  >
       <G clipPath="url(#prefix__clip0)" filter="url(#prefix__filter0_dd)">
         <Path fill="#fff" d="M4 0h414v896H4z" />
         <Path

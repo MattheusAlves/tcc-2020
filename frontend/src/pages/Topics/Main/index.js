@@ -32,10 +32,7 @@ const Topic = ({ navigation }) => {
     })
   }, [])
 
-  /**
-   * Criar um componente para error de conexão
-   */
-
+ 
   useEffect(() => {
     if (userDisciplines && userDisciplines.length >= 1) {
       api.get(`/question/by/categories`, {
@@ -51,8 +48,8 @@ const Topic = ({ navigation }) => {
     }
   }, [userDisciplines])
 
-  async function getUserDisciplines() {
-    return api.get(`/user/disciplines/5e8ccfa2c2dff823147e7c9b`).then((response) => {
+  async function getUserDisciplines() { 
+    return api.get(`/user/disciplines/5f2d5641fa9ab023fc52734a`).then((response) => {
       error === true ? setError(false) : ''
       const formatedUserDisciplines = response.data.disciplines.map((discipline) => {
         return { name: discipline.disciplineName, id: discipline._id }
@@ -79,16 +76,16 @@ const Topic = ({ navigation }) => {
     }
   }, [userDisciplines])
 
-
   const onPressTopic = useCallback((topic) => {
     navigation.navigate('Topic', { topic: topic })
-
   })
-
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    getUserDisciplines().then(() => setRefreshing(false))
+    getUserDisciplines().then((disciplines) =>{
+      setUserDisciplines(disciplines)
+      setRefreshing(false)
+    })
   })
 
   const addCategory = useCallback((category) => {
@@ -102,11 +99,9 @@ const Topic = ({ navigation }) => {
     setUserDisciplines([...userDisciplines, { name: category.disciplineName, id: category.id }])
   }, [userDisciplines])
 
-  const onPressCategory = (idCategory, category) => {
-    navigation.navigate('TopicsByCategory', { id: idCategory })
+  const onPressCategory = async(idCategory, category) => {
     setData(idCategory, category)
-
-
+    navigation.navigate('TopicsByCategory')
   }
   return (
    error ?
@@ -152,7 +147,7 @@ const Topic = ({ navigation }) => {
           }
          
          
-          {topics.length > 1 &&
+          {topics.length >= 1 &&
             <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
           }
         </ScrollView>

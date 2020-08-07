@@ -143,7 +143,7 @@ const MainRoutes = () => (
 
 
 const AppRoutes = () => {
-  const { categoryName } = useTopic()
+  const { categoryName } = useTopic().topicData
   return (
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes}
@@ -156,7 +156,7 @@ const AppRoutes = () => {
         })} />
       <AppStack.Screen name="Topic" component={Topic} />
       <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}
-        options={({ navigation, route }) => ({
+        options={() => ({
           headerStyle: {
             backgroundColor: '#0099ff',
             borderWidth: 0,
@@ -167,13 +167,8 @@ const AppRoutes = () => {
               height: 0,
             },
           },
-
-
           headerTintColor: '#fff',
           headerTitleAlign: 'center',
-
-
-
           headerTitle: typeof (categoryName) === 'undefined' ? '' : categoryName
         })} />
       <AppStack.Screen name="Response" component={Response} />

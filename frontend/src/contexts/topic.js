@@ -1,22 +1,25 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 const topicContextData = {
-    categoryId: '',
-    categoryName: '',
-    setData: () => {}
+    topicData: {
+        categoryId: '',
+        categoryName: ''
+    },
+    setData: () => { }
 }
 const TopicContext = createContext(topicContextData)
 
 export const TopicProvider = ({ children }) => {
-    const [categoryId, setCategoryId] = useState()
-    const [categoryName, setCategoryName] = useState()
+    const [topicData, setTopicData] = useState({})
+
     async function setData(categoryId, categoryName) {
-        setCategoryId(categoryId)
-        setCategoryName(categoryName)
-  
+        setTopicData({
+            categoryId: categoryId,
+            categoryName: categoryName
+        })
     }
     return (
-        <TopicContext.Provider value={{ categoryId, categoryName,setData }}>
+        <TopicContext.Provider value={{ topicData, setData }}>
             {children}
         </TopicContext.Provider >
     )

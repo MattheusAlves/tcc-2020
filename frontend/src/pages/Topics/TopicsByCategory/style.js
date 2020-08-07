@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(255, 255, 255)',
         position: 'absolute',
         height: 70,
-        zIndex:2,
-        marginTop:0,
-        },
+        zIndex: 2,
+        marginTop: 0,
+    },
 
     contentTop: {
         flexDirection: 'row',
@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 10,
     },
-    svgContainer:{
-        top:0,
-        marginTop:0,
-        justifyContent:'flex-start'
+    svgContainer: {
+        top: 0,
+        marginTop: 0,
+        justifyContent: 'flex-start'
     },
-  
+
     buttonNew: {
         margin: 8,
         justifyContent: "center",
@@ -50,19 +50,16 @@ const styles = StyleSheet.create({
     topic: {
         width: DEVICE_WIDTH - 10,
         // borderWidth: 1,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-
-        elevation: 2,
+        backgroundColor: 'rgba(0, 153, 255,.6)',
+        borderRadius:3,
+        marginTop:5
     },
     userInformation: {
+        backgroundColor: 'rgba(0, 153, 255,.6)',
         flexDirection: 'row',
-        padding: 5
+        padding: 7,
+        marginBottom:2,
+        borderRadius:4
     },
     username: {
         fontSize: 15,
@@ -74,6 +71,7 @@ const styles = StyleSheet.create({
         marginLeft: 45,
         fontSize: 16,
         fontWeight: '600',
+        color:'white'
     },
     topicPreview: {
         marginLeft: 45,
@@ -84,24 +82,32 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 8,
         marginTop: 5,
-        padding: 3
+        padding: 1,
+        borderWidth: .5,
+        borderRadius: 2,
+        borderColor: 'white'
     },
     like: {
         paddingHorizontal: 8
     },
-    categoryContainer:{
-        width:200,
-        alignSelf:'center',
-        backgroundColor:'rgba(51, 102, 255,1)',
-        alignItems:'center',
-        fontWeight:'600',
-        borderRadius:3
+    categoryContainer: {
+        width: 200,
+        alignSelf: 'center',
+        backgroundColor: 'rgba(51, 102, 255,1)',
+        alignItems: 'center',
+        fontWeight: '600',
+        borderRadius: 3
     },
-    categoryName:{
-        fontSize:22,
-        color:'white'
-        
-    }
+    categoryName: {
+        fontSize: 22,
+        color: 'white'
+
+    },
+    // dividerTopic: {
+    //     backgroundColor:'#13131A',
+    //     width:DEVICE_WIDTH,
+    //     padding:1,
+    // }
 
 })
 

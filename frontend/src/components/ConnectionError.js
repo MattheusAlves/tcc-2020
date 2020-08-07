@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity,Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 // import background from '../assets/images/error_complete.png'
 // https://undraw.co/search
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    width:Dimensions.get('window').width
   },
 
   touchable: {
