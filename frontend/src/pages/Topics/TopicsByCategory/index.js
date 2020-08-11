@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Svg, { Path } from 'react-native-svg'
-import { Avatar, Divider, Searchbar } from 'react-native-paper'
+import { Avatar, Searchbar } from 'react-native-paper'
 
 import api from '../../../services/api'
 import styles from './style'
 import { useTopic } from '../../../contexts/topic'
+import WaveHeader from '../../../components/WaveHeader'
 
 const initialState = {
     count: 5,
@@ -107,31 +107,9 @@ const TopicsByCategory = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.containerTop}>
                 <View style={styles.svgContainer}>
-                    <Svg width="100%" height="100%" viewBox='130 0 360 220'  >
-                        <Path fill="#0099ff" fill-opacity="1" d="M0,224L60,202.7C120,181,240,139,360,112C480,85,600,75,720,101.3C840,128,960,192,1080,213.3C1200,235,1320,213,1380,202.7L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z" style="--darkreader-inline-fill:#007acc;" data-darkreader-inline-fill=""></Path>
-                    </Svg>
+                    <WaveHeader />
                 </View>
                 <View style={styles.contentTop}>
-                    <DropDownPicker
-                        items={[
-                            {
-                                label: 'Relevancia', value: 'relevance',
-                                icon: () => <Icon name="flag" size={18} color="#900" />
-                            },
-                            {
-                                label: 'Data', value: 'date', icon: () =>
-                                    <Icon name="flag" size={18} color="#900" />
-                            },
-                        ]}
-                        defaultValue={selectedFilter}
-                        containerStyle={{ height: 40, width: 140 }}
-                        style={{ backgroundColor: '#fafafa' }}
-                        itemStyle={{
-                            justifyContent: 'flex-start'
-                        }}
-                        dropDownStyle={{ backgroundColor: '#fafafa' }}
-                        onChangeItem={item => setSelectedFilter(item.value)}
-                    />
                     <TouchableOpacity style={styles.buttonNew}>
                         <Text style={styles.buttonText}>Novo</Text>
                     </TouchableOpacity>
@@ -140,7 +118,7 @@ const TopicsByCategory = ({ navigation }) => {
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
                     <ScrollView>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={styles.topicContainer}>
                             <View style={styles.topic}>
                                 <TouchableOpacity style={styles.userInformation}>
                                     <Avatar.Text size={25} label={'MA'} />
@@ -148,13 +126,15 @@ const TopicsByCategory = ({ navigation }) => {
                                 </TouchableOpacity>
                                 <Text style={styles.title}>Título da Tópico novo</Text>
                                 <Text style={styles.topicPreview} numberOfLines={3}>
-                                    d
+                                    dsdfs dd fsfsfsffdsfs fsdfsdfsdfsd fsd sdf sd f  dsfds fsd fds fsd fds fdsfsf sf
                                     </Text>
                                 <View style={styles.topicInformation}>
                                     <Text style={styles.topicDate}>04/04/2020</Text>
-                                    <Text style={styles.like}>Likes</Text>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={styles.info}>13 <Icon name="thumbs-up" size={22} color='rgba(0, 153, 255,1)' /></Text>
+                                        <Text style={styles.info}>123 <Icon name="comments" size={22} color='rgba(0, 153, 255,1)' /></Text>
+                                    </View>
                                 </View>
-                                <Divider style={styles.dividerTopic} />
                             </View>
                         </TouchableOpacity>
                     </ScrollView>
