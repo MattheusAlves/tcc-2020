@@ -26,7 +26,6 @@ const TopicsByCategory = ({ navigation }) => {
     const [decayAnim,setDecayAnim] = useState(new Animated.Value(175))
 
     useEffect(() => {
-        console.log('chamou use effect')
         if (searchVisibility === true) {
             Animated.decay(
                 decayAnim,
@@ -41,8 +40,6 @@ const TopicsByCategory = ({ navigation }) => {
     }, [searchVisibility])
 
     useEffect(() => {
-        console.log('chamou')
-        console.log('decay layot effectt', decayAnim)
         navigation.setOptions({
             headerRight: () => (
                 searchVisibility === true ?
