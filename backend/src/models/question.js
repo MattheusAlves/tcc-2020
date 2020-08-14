@@ -20,13 +20,13 @@ const questionSchema = new mongoose.Schema({
      */
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Discipline'
+        ref: 'Discipline'
     },
     //se a caregoria não existir na base disciplinas
-    categoryOther:{
-        type:String,
-        trim:true,
-        uppercase:true
+    categoryOther: {
+        type: String,
+        trim: true,
+        uppercase: true
     },
     //deve ser uma referencia para categorias
     response: [{
@@ -40,7 +40,101 @@ const questionSchema = new mongoose.Schema({
         required: true,
 
     },
+    rate: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rate',
+    }],
+    likes: {
+        type: Number,
+        min: 0,
+        max: 10000,
+        default: undefined
+    },
+    dislikes: {
+        type: Number,
+        min: 0,
+        max: 10000,
+        default: undefined
+    },
 
 }, { timestamps: true })
+
+// questionSchema.post('save', function (doc, next) {
+//     this.getLikes(doc._id)
+//     next()
+// })
+questionSchema.pre('save', function (next) {
+    const Item = this.constructor;
+    Item.findById(this._id)
+        .populate({
+            path: 'rate', select: 'rate',
+            match: { 'rate': { $eq: 'like' } }
+        }).exec((error, result) => {
+            // if (result.rate) {
+                result.likes = result.rate.length + 5
+            // }
+        })
+    next()
+})
+questionSchema.methods = {
+    getLikes: function (questionId) {
+        this.findOne(questionId)
+            .populate({
+                path: 'rate', select: 'rate',
+                match: { 'rate': { $eq: 'like' } }
+            }).exec((error, result) => {
+                if (result.rate) {
+                    result.likes = result.rate.length + 5
+                    result.save((error, savedItem) => {
+                        if (error) console.log(error)
+                    })
+                }
+            })
+    },
+    getDislikes: function (questionId) {
+        this.findOne(questionId)
+            .select('rate')
+            .populate({
+                path: 'rate',
+                match: { 'rate': { $eq: 'dislike' } }
+            }).exec((error, result) => {
+                if (result.rate) {
+                    result.dislikes = result.rate.length
+                    result.save((error, savedItem) => {
+                        if (error) console.log(error)
+                    })
+                }
+            })
+    }
+}
+questionSchema.statics.getLikes = function (questionId) {
+    this.findOne(questionId)
+        .populate({
+            path: 'rate', select: 'rate',
+            match: { 'rate': { $eq: 'like' } }
+        }).exec((error, result) => {
+            if (result.rate) {
+                result.likes = result.rate.length
+                result.save((error, savedItem) => {
+                    if (error) console.log(error)
+                })
+            }
+        })
+}
+questionSchema.statics.getDislikes = function (questionId) {
+    this.findOne(questionId)
+        .select('rate')
+        .populate({
+            path: 'rate',
+            match: { 'rate': { $eq: 'dislike' } }
+        }).exec((error, result) => {
+            if (result.rate) {
+                result.dislikes = result.rate.length
+                result.save((error, savedItem) => {
+                    if (error) console.log(error)
+                })
+            }
+        })
+}
 
 module.exports = mongoose.model('Question', questionSchema)
