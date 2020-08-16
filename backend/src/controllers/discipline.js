@@ -15,6 +15,7 @@ exports.create = async (req, res) => {
 };
 
 exports.disciplineById = (req, res, next, id) => {
+  console.log("chegou")
   Discipline.findById(id).exec((err, discipline) => {
     if (err || !discipline) {
       return res.status(400).json({

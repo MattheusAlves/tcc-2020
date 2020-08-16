@@ -32,9 +32,6 @@ const Topic = ({ navigation }) => {
     })
   }, [])
 
-  /**
-   * Criar um componente para error de conexão
-   */
 
   useEffect(() => {
     if (userDisciplines && userDisciplines.length >= 1) {
@@ -52,7 +49,7 @@ const Topic = ({ navigation }) => {
   }, [userDisciplines])
 
   async function getUserDisciplines() {
-    return api.get(`/user/disciplines/5e8ccfa2c2dff823147e7c9b`).then((response) => {
+    return api.get(`/user/disciplines/5f2d5641fa9ab023fc52734a`).then((response) => {
       error === true ? setError(false) : ''
       const formatedUserDisciplines = response.data.disciplines.map((discipline) => {
         return { name: discipline.disciplineName, id: discipline._id }
@@ -79,16 +76,16 @@ const Topic = ({ navigation }) => {
     }
   }, [userDisciplines])
 
-
   const onPressTopic = useCallback((topic) => {
     navigation.navigate('Topic', { topic: topic })
-
   })
-
 
   const onRefresh = useCallback(() => {
     setRefreshing(true)
-    getUserDisciplines().then(() => setRefreshing(false))
+    getUserDisciplines().then((disciplines) => {
+      setUserDisciplines(disciplines)
+      setRefreshing(false)
+    })
   })
 
   const addCategory = useCallback((category) => {
@@ -102,70 +99,71 @@ const Topic = ({ navigation }) => {
     setUserDisciplines([...userDisciplines, { name: category.disciplineName, id: category.id }])
   }, [userDisciplines])
 
-  const onPressCategory = (idCategory, category) => {
-    navigation.navigate('TopicsByCategory', { id: idCategory })
+  const onPressCategory = async (idCategory, category) => {
     setData(idCategory, category)
-
-
+    navigation.navigate('TopicsByCategory')
   }
   return (
-   error ? 
-      <ConnectionError />
-      :
-      
-    <>
-      <View style={styles.status} />
-      <StatusBar barStyle='light-content' backgroundColor='rgba(59,89,152,1)' />
-      <AutoCompInput topics={topics} addCategory={addCategory} />
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollView}
-          contentContainerStyle={{ flexGrow: 1 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing}
-              onRefresh={onRefresh} style={{ paddingTop: 160 }} />
-          }>
-          {loading === true ?
-            <View style={styles.containerLoading}>
-              <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-            :
-
-            <View style={styles.chipContainer}>
-              {userDisciplines &&
-                userDisciplines.length >= 1 &&
-                userDisciplines.map((discipline) => (
-                  <Chip
-                    style={styles.chip}
-                    key={discipline.id}
-                    textStyle={{ fontSize: 12 }}
-                    mode="outlined"
-                    disabled={false}
-                    onClose={() => onCloseChip(discipline.id)}
-                  >
-                    <Text>{discipline.name}</Text>
-                  </Chip>
-                ))}
-            </View>
-          }
-          {topics.length < 1 && loading !== true && !error &&
-            <TopicsNotFound />
-          }
-         
-         
-          {topics.length > 1 &&
-            <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
-          }
-        </ScrollView>
-
-        <Dialog dialogState={dialog} onDismiss={() => setDialog(false)}
-          title="Limite excedido"
-          message="Remova uma categoria para adicionar mais" />
+    error ?
+      <>
+        <ConnectionError />
         <Dialog dialogState={dialogError} onDismiss={() => setDialogError(false)}
           title="Error!"
           message="Erro ao se comunicar. Verifique sua conexão de rede." />
+      </>
+      :
 
-      </View>
-    </>
+      <>
+        <View style={styles.status} />
+        <StatusBar barStyle='light-content' backgroundColor='rgba(59,89,152,1)' />
+        <AutoCompInput topics={topics} addCategory={addCategory} />
+        <View style={styles.container}>
+          <ScrollView style={styles.scrollView}
+            contentContainerStyle={{ flexGrow: 1 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing}
+                onRefresh={onRefresh} style={{ paddingTop: 160 }} />
+            }>
+            {loading === true ?
+              <View style={styles.containerLoading}>
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+              :
+
+              <View style={styles.chipContainer}>
+                {userDisciplines &&
+                  userDisciplines.length >= 1 &&
+                  userDisciplines.map((discipline) => (
+                    <Chip
+                      style={styles.chip}
+                      key={discipline.id}
+                      textStyle={{ fontSize: 12 }}
+                      mode="outlined"
+                      disabled={false}
+                      onClose={() => onCloseChip(discipline.id)}
+                    >
+                      <Text>{discipline.name}</Text>
+                    </Chip>
+                  ))}
+              </View>
+            }
+            {topics.length < 1 && loading !== true && !error &&
+              <TopicsNotFound />
+            }
+
+
+            {topics.length >= 1 &&
+              <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
+            }
+          </ScrollView>
+
+          <Dialog dialogState={dialog} onDismiss={() => setDialog(false)}
+            title="Limite excedido"
+            message="Remova uma categoria para adicionar mais" />
+
+
+        </View>
+      </>
 
   )
 }

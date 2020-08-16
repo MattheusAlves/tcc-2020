@@ -71,7 +71,6 @@ exports.updateLocation = async (req, res) => {
 }
 
 exports.disciplinesByUser = async (req, res) => {
-  console.log(req.profile)
   User.findById(req.profile._id)
   .select('disciplines')
     .populate("disciplines")

@@ -8,7 +8,6 @@ import styles from './style'
 import api from '../../../services/api'
 
 
-// https://www.npmjs.com/package/mongoose-deep-populate
 const initialState = {
   count: 5,
 };
@@ -23,6 +22,7 @@ function reducer(state, action) {
       throw new Error();
   }
 }
+
 const setRate = (item, value) => {
   const rate = value === true ? 'like' : 'dislike'
   return api.put(`/question/response/rate/5e8ccefd3d1d05332c4b0bee/${item._id}`, {
@@ -33,6 +33,7 @@ const setRate = (item, value) => {
 }
 
 const Topic = ({route}) => {
+
   const [topic, setTopic] = useState(route.params.topic.body)
   const [userInitials, setUserInitials] = useState(getInitials(route.params.topic.body.user.name))
   const [topicResponses, setTopicResponses] = useState([])
@@ -41,8 +42,8 @@ const Topic = ({route}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [responsesQuantity, setResponsesQuantity] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
+
   useEffect(() => {
-    console.log("rodou effect")
     getResponses()
   }, [state.count])
 
@@ -53,8 +54,8 @@ const Topic = ({route}) => {
         setResponsesQuantity(result.data.answersQuantity)
       })
   }
+
   const getResponses = () => {
-    console.log("rodou get response")
     return api.get(`/question/responses/5e8ccefd3d1d05332c4b0bee/${topic._id}`,
       {
         params: { limit: state.count }
@@ -80,6 +81,7 @@ const Topic = ({route}) => {
     initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
     return initials
   }
+
   const onScrollBottom = async (e) => {
     const windowHeight = Dimensions.get('window').height
     const height = e.nativeEvent.contentSize.height
@@ -105,10 +107,12 @@ const Topic = ({route}) => {
       setResponse('')
     })
   }
+
   const onRefresh = useCallback(() => {
     setRefreshing(true)
     getResponses().then(() => setRefreshing(false))
   }, [])
+
   return (
     topic ? (
       <View style={styles.container}>

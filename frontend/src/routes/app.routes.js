@@ -1,5 +1,5 @@
 import React from "react";
-import {View} from 'react-native'
+import { View } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -14,7 +14,9 @@ import Users from '../pages/Chat/Users/'
 import Topic from "../pages/Topics/Topic/"
 import TopicsByCategory from '../pages/Topics/TopicsByCategory'
 
-import {useTopic} from '../contexts/topic'
+import ConnectionError from '../components/ConnectionError'
+
+import { useTopic } from '../contexts/topic'
 
 
 // import Response from '../pages/Topics/Topic/Response'
@@ -56,43 +58,84 @@ function getHeaderVisibility(route) {
 
 const MainRoutes = () => (
   <Tab.Navigator
-    tabBarOptions={{ keyboardHidesTabBar: true }}
+    tabBarOptions={{
+      keyboardHidesTabBar: true,
+      style: {
+        backgroundColor: 'rgba(96,47,158,.8)',
+        borderWidth: 0,
+        borderTopColor: 'transparent',
+        borderRadius:30,
+        margin: 0,
+        paddingHorizontal: 10,
+        paddingVertical: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
+        marginBottom:4,
+        marginHorizontal:6,
+        position:'absolute'
+      },
+      inactiveTintColor:'white',
+      activeTintColor:'black'
+      
+    }}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName
         if (route.name === 'Mapa') {
           if (focused) {
             iconName = 'map-marker'
-            color = '#0000e6'
-          } else
+            color = 'rgb(110, 122, 219)'
+          } else {
             iconName = 'location-arrow'
+            color = 'white'
+          }
         } else if (route.name === 'Topicos') {
           if (focused) {
             iconName = 'paste'
-            color = '#0000e6'
+            // color = 'rgb(110, 122, 219)'
           }
-          else
+          else {
             iconName = 'paste'
+            color = 'white'
+          }
         } else if (route.name === 'Chat') {
           if (focused) {
             iconName = 'comments'
-            color = '#0000e6'
+            color = 'rgb(110, 122, 219)'
           }
-          else
+          else {
             iconName = 'comments'
+            color = 'white'
+          }
         } else if (route.name === 'Configuracoes') {
           if (focused) {
             iconName = 'user'
-            color = '#0000e6'
-          } else
+            color = 'rgb(110, 122, 219)'
+          } else {
             iconName = 'user'
+            color = 'white'
+          }
         }
-        return <Icon name={iconName} size={25} color={color} />
+        return <Icon name={iconName} size={28} color={color}  style={{shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        zIndex:30,
+        elevation: 20,}}/>
       }
 
     })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={MainTopics}
+    <Tab.Screen name="Topicos" component={ConnectionError}
       options={{ headerShown: false }} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />
@@ -102,35 +145,34 @@ const MainRoutes = () => (
 
 
 const AppRoutes = () => {
-  const {categoryName} = useTopic()
+  const { categoryName } = useTopic().topicData
   return (
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes}
         options={({ route }) => ({
+          style:{
+            backgroundColor:"blue"
+          },
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
         })} />
       <AppStack.Screen name="Topic" component={Topic} />
       <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}
-        options={({ navigation,route }) => ({
-          headerStyle:{
-            backgroundColor:'#0099ff',
-            borderWidth:0,
-            shadowRadius:0,
+        options={() => ({
+          headerStyle: {
+            backgroundColor: '#0099ff',
+            borderWidth: 0,
+            shadowRadius: 0,
             shadowColor: 'transparent',
-            elevation:0,
+            elevation: 0,
             shadowOffset: {
               height: 0,
+            },
           },
-          },
-          
-          
-          headerTintColor:'#fff',
-          headerTitleAlign:'center',
-            
-      
-          
-          headerTitle: typeof(categoryName) === 'undefined' ? '' : categoryName })} />
+          headerTintColor: '#fff',
+          headerTitleAlign: 'center',
+          headerTitle: typeof (categoryName) === 'undefined' ? '' : categoryName
+        })} />
       <AppStack.Screen name="Response" component={Response} />
     </AppStack.Navigator >
   )

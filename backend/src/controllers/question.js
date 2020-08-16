@@ -153,7 +153,8 @@ exports.responsesQuantity = async (req, res) => {
 
 exports.questionByCategory = async (req, res) => {
 
-    const categories = req.query.disciplines
+    
+    const categories = req.query.disciplines;
 
     const data = await categories.map(async function (category) {
         category = JSON.parse(category)
@@ -166,7 +167,7 @@ exports.questionByCategory = async (req, res) => {
             })
             .exec()
     })
-
+    console.log(data)
     Promise.all(data).then((value) => {
         const filtered = value.filter(function (value) {
             return value != null && value != '' && value != undefined
@@ -183,5 +184,22 @@ exports.questionByCategory = async (req, res) => {
             }))
         }
         return res.status(200).json(formatedData)
+    })
+}
+
+exports.questionByUnicCategory = (req,res) => {
+    const {_id} = req.discipline
+    console.log(_id)
+    Question.find({category:_id})
+    .limit(parseInt(req.query.limit))
+    .populate({
+        path:'user', select:"_id",
+        path:'user', select:'name'
+    }).exec((error,result)=> {
+        if(error){
+            console.log(error)
+        }
+        console.log(result)
+        return res.status(200).json(result)
     })
 }
