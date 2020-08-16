@@ -34,7 +34,7 @@ function reducer(state, action) {
 const TopicsByCategory = ({ navigation }) => {
     const [selectedFilter, setSelectedFilter] = useState('relevance')
     const [searchVisibility, setSearchVisibility] = useState(false)
-    const [topics, setTopics] = useState()
+    const [topics, setTopics] = useState([])
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const DEVICE_WIDTH = Dimensions.get('window').width
@@ -118,18 +118,19 @@ const TopicsByCategory = ({ navigation }) => {
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
                     <ScrollView>
+                        {topics.length > 0 && topics.map(topic =>  
                         <TouchableOpacity style={styles.topicContainer}>
                             <View style={styles.topic}>
                                 <TouchableOpacity style={styles.userInformation}>
                                     <Avatar.Text size={25} label={'MA'} />
-                                    <Text style={styles.username}>Matheus Alves</Text>
+                                    <Text style={styles.username}>{topic.user.name}</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.title}>Título da Tópico novo</Text>
+                                <Text style={styles.title}>{topic.title}</Text>
                                 <Text style={styles.topicPreview} numberOfLines={3}>
-                                    dsdfs dd fsfsfsffdsfs fsdfsdfsdfsd fsd sdf sd f  dsfds fsd fds fsd fds fdsfsf sf
-                                    </Text>
+                                {topic.description}
+                                 </Text>
                                 <View style={styles.topicInformation}>
-                                    <Text style={styles.topicDate}>04/04/2020</Text>
+                                    <Text style={styles.topicDate}>{topic.createdAt}</Text>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text style={styles.info}>13 <Icon name="thumbs-up" size={22} color='rgba(0, 153, 255,1)' /></Text>
                                         <Text style={styles.info}>123 <Icon name="comments" size={22} color='rgba(0, 153, 255,1)' /></Text>
@@ -137,6 +138,7 @@ const TopicsByCategory = ({ navigation }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
+                        )}
                     </ScrollView>
                 </View>
             </View>
