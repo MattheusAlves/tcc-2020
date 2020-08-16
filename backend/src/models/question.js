@@ -42,7 +42,7 @@ const questionSchema = new mongoose.Schema({
     },
     rate: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rate',
+        ref: 'RateQuestion',
     }],
     likes: {
         type: Number,
@@ -62,7 +62,7 @@ const questionSchema = new mongoose.Schema({
 // questionSchema.post('save', function (doc, next) {
 //     this.getLikes(doc._id)
 //     next()
-// })
+// // })
 questionSchema.pre('save', function (next) {
     const Item = this.constructor;
     Item.findById(this._id)
@@ -70,9 +70,12 @@ questionSchema.pre('save', function (next) {
             path: 'rate', select: 'rate',
             match: { 'rate': { $eq: 'like' } }
         }).exec((error, result) => {
-            // if (result.rate) {
+            if (error || !result) {
+                console.log(error)
+            } else {
+                console.log('result:', result)
                 result.likes = result.rate.length + 5
-            // }
+            }
         })
     next()
 })

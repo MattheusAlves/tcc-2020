@@ -119,7 +119,7 @@ const TopicsByCategory = ({ navigation }) => {
                 <View style={styles.bodyContent}>
                     <ScrollView>
                         {topics.length > 0 && topics.map(topic =>  
-                        <TouchableOpacity style={styles.topicContainer}>
+                        <TouchableOpacity style={styles.topicContainer} key ={topic._id}>
                             <View style={styles.topic}>
                                 <TouchableOpacity style={styles.userInformation}>
                                     <Avatar.Text size={25} label={'MA'} />

@@ -61,10 +61,10 @@ const MainRoutes = () => (
     tabBarOptions={{
       keyboardHidesTabBar: true,
       style: {
-        backgroundColor: 'rgba(96,47,158,.8)',
+        backgroundColor: 'rgba(96,47,158,1)',
         borderWidth: 0,
         borderTopColor: 'transparent',
-        borderRadius:30,
+        // borderTopRightRadius:30,
         margin: 0,
         paddingHorizontal: 10,
         paddingVertical: 3,
@@ -76,8 +76,9 @@ const MainRoutes = () => (
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         elevation: 6,
-        marginBottom:4,
-        marginHorizontal:6,
+        zIndex:10,
+        // marginBottom:4,
+        // marginHorizontal:6,
         position:'absolute'
       },
       inactiveTintColor:'white',
@@ -127,15 +128,15 @@ const MainRoutes = () => (
           width: 0,
           height: 3,
         },
-        shadowOpacity: 0.29,
-        shadowRadius: 4.65,
+        shadowOpacity: 0.29,  
+        shadowRadius: 4.65, 
         zIndex:30,
         elevation: 20,}}/>
       }
 
     })}>
     <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={ConnectionError}
+    <Tab.Screen name="Topicos" component={MainTopics}
       options={{ headerShown: false }} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Configuracoes" component={Settings} />

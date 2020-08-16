@@ -2,6 +2,7 @@
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const Question = require('../models/question')
 const Response = require('../models/response')
+const RateQuestion = require('../models/rateQuestion')
 
 exports.create = async (req, res) => {
     await console.log(req.body)
@@ -54,6 +55,76 @@ exports.list = async (req, res) => {
     })
 
 }
+exports.rateQuestion = async (req, res) => {
+    const { rate } = req.body
+    await RateQuestion.findOne({ question: req.question._id, user: req.profile._id })
+        .exec((error, result) => {
+            if (error) {
+                console.log(error)
+                return res.status(400).json(error)
+            }
+            if (!result || result === null || result === '') {
+                const questionRate = new RateQuestion({
+                    rate,
+                    question: req.question._id,
+                    user: req.profile._id
+                })
+                questionRate.save((error, savedRate) => {
+                    if (error) {
+                        console.log(error)
+                        return res.status(400)
+                    }
+                    Question.findByIdAndUpdate(req.question._id,
+                        { "$push": { "rate": savedRate._id } },
+                        { "new": true }, function (error, result) {
+                            if (error) throw error
+                        })
+                    return res.status(200).json(savedRate)
+                })
+            }
+            else {
+                if (result.rate === rate) {
+                    req.rateId = result._id
+                    removeQuestionRate(req)
+                        .then(() => {
+                            return res.status(200).json({ message: 'rate removed' })
+                        })
+                        .catch((error) => {
+                            return res.status(400).json(errorHandler(error))
+                        })
+                } else {
+                    result.rate = rate
+                    result.save((error, savedRate) => {
+                        if (error) {
+                            console.log(error)
+                            return res.status(400)
+                        }
+                        return res.status(200).json(savedRate)
+                    })
+                }
+            }
+
+        })
+}
+
+const removeQuestionRate = (req) => {
+    return new Promise(async function (resolve, reject) {
+        await Question.findByIdAndUpdate(req.question._id, { $pullAll: { rate: [req.rateId] } }, (error, result) => {
+            if (error) {
+                reject(error)
+            }
+        })
+
+        RateQuestion.deleteOne({ _id: req.rateId }, (error) => {
+            if (error)
+                reject(error)
+
+            resolve()
+        })
+
+    })
+}
+
 
 exports.response = async (req, res) => {
     req.body.user = req.profile._id
@@ -144,7 +215,7 @@ exports.responsesQuantity = async (req, res) => {
         }
         console.log(question.response.length)
         return res.status(200).json({
-            
+
             answersQuantity: question.response.length
         })
     })
@@ -153,7 +224,7 @@ exports.responsesQuantity = async (req, res) => {
 
 exports.questionByCategory = async (req, res) => {
 
-    
+
     const categories = req.query.disciplines;
 
     const data = await categories.map(async function (category) {
@@ -187,19 +258,19 @@ exports.questionByCategory = async (req, res) => {
     })
 }
 
-exports.questionByUnicCategory = (req,res) => {
-    const {_id} = req.discipline
+exports.questionByUnicCategory = (req, res) => {
+    const { _id } = req.discipline
     console.log(_id)
-    Question.find({category:_id})
-    .limit(parseInt(req.query.limit))
-    .populate({
-        path:'user', select:"_id",
-        path:'user', select:'name'
-    }).exec((error,result)=> {
-        if(error){
-            console.log(error)
-        }
-        console.log(result)
-        return res.status(200).json(result)
-    })
+    Question.find({ category: _id })
+        .limit(parseInt(req.query.limit))
+        .populate({
+            path: 'user', select: "_id",
+            path: 'user', select: 'name'
+        }).exec((error, result) => {
+            if (error) {
+                console.log(error)
+            }
+            console.log(result)
+            return res.status(200).json(result)
+        })
 }
