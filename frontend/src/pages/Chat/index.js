@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text } from 'react-native';
+import { Title, Divider, List, Searchbar, Avatar, Colors } from 'react-native-paper';
 import io from 'socket.io-client'
+import { ContentMenuTopSearch } from './Components/Content/ContentMenuTopSearch';
+import { ContentMenuMiddle } from './Components/Content/ContentMenuMiddle';
+import { ContentMenuContact } from './Components/Content/ContentMenuContacts';
 
 import {
   initializeSocket,
@@ -39,19 +43,11 @@ const Chat = (props) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        autoCorrect={false}
-        style={{ height: 40, borderWidth: 2, }}
-        value={chatMessage}
-        onSubmitEditing={() => submitMessage()}
-        onChangeText={message => {
-          setChatMessage(message)
-
-        }} />
-      {chatMessages.map(data =>
-        data.message != undefined && data.username != undefined &&
-        <Text key={data.message}>{`${data.username}: ${data.message}`}</Text>
-      )}
+      <ContentMenuTopSearch />
+      <Divider />
+      <ContentMenuMiddle />
+      <Divider />
+      <ContentMenuContact />
     </View>
   )
 }
