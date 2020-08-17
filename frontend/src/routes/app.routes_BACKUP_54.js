@@ -6,8 +6,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 import Main from "../pages/Main/";
 import Register from "../pages/Register/";
+<<<<<<< HEAD
 import Settings from "../pages/Settings/Main";
+import Topics from "../pages/Topics/Topic";
+=======
+import Settings from "../pages/Settings/";
 import MainTopics from "../pages/Topics/Main/";
+>>>>>>> origin/Topic
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";
 import Users from '../pages/Chat/Users/'
@@ -109,6 +114,10 @@ const AppRoutes = () => {
         options={({ route }) => ({
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
+<<<<<<< HEAD
+          headerStyle: { backgroundColor:'#0baee1' } 
+=======
+>>>>>>> origin/Topic
         })} />
       <AppStack.Screen name="Topic" component={Topic} />
       <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}

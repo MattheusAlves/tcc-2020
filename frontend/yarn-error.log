@@ -2,19 +2,19 @@ Arguments:
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
 
 PATH: 
-  C:\Python\Scripts\;C:\Python\;C:\Python27\;C:\Python27\Scripts\;C:\Gradle\gradle-5.6.3\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Python\Scripts\;C:\Program Files (x86)\Python\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Genymobile\Genymotion\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Android\Sdk;ANDROID_HOME\platform-tools;ANDROID_HOME\tools;ANDROID_HOME\emulator;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Users\Matheus\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2019.1.1\bin;;C:\Users\Matheus\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\emulator;C:\Users\Matheus\AppData\Local\Android\Sdk\tools;C:\Users\Matheus\AppData\Local\Android\Sdk\tools\bin;C:\Users\Matheus\AppData\Local\Android\Sdk\platform-tools;C:\Users\Matheus\AppData\Local\Yarn\bin;C:\Program Files (x86)\Nmap;C:\MinGW\bin;C:\Users\Matheus\AppData\Roaming\npm
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Nmap\;C:\MinGW\bin\;C:\Users\matheusad\AppData\Roaming\npm;C:\Users\matheusad\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\matheusad\AppData\Local\Programs\Git\cmd
 
 Yarn version: 
-  1.17.3
+  1.19.0
 
 Node version: 
-  14.4.0
+  12.16.3
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\Matheus\Documents\TCC\frontend\node_modules\@babel\compat-data\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\matheusad\Documents\react-native\TCC\tcc-2020\frontend\node_modules\@babel\helper-create-class-features-plugin\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
@@ -37,20 +37,25 @@ npm manifest:
       "expo": "^37.0.12",
       "expo-cli": "^3.21.5",
       "expo-font": "~8.1.0",
+      "expo-linear-gradient": "~8.1.0",
       "lottie-ios": "3.1.3",
       "lottie-react-native": "^3.3.2",
       "mapview": "^1.0.0",
       "react": "~16.9.0",
       "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+      "react-native-autocomplete-input": "^4.2.0",
+      "react-native-dropdown-picker": "^3.1.11",
       "react-native-elements": "^2.0.0",
       "react-native-geolocation-service": "^5.0.0",
       "react-native-gesture-handler": "~1.6.0",
+      "react-native-linear-gradient": "^2.5.6",
       "react-native-maps": "0.26.1",
       "react-native-paper": "^3.8.0",
       "react-native-reanimated": "~1.7.0",
       "react-native-safe-area-context": "0.7.3",
       "react-native-screens": "~2.2.0",
+      "react-native-search-header": "^0.3.5",
       "react-native-svg": "11.0.1",
       "react-native-vector-icons": "^6.6.0",
       "react-native-web": "~0.11.7",
@@ -4956,6 +4961,15 @@ Lockfile:
       string-width "^3.1.0"
       strip-ansi "^5.2.0"
       wrap-ansi "^5.1.0"
+  
+  cliui@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/cliui/-/cliui-6.0.0.tgz#511d702c0c4e41ca156d7d0e96021f23e13225b1"
+    integrity sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==
+    dependencies:
+      string-width "^4.2.0"
+      strip-ansi "^6.0.0"
+      wrap-ansi "^6.2.0"
   
   clone-response@^1.0.2:
     version "1.0.2"
@@ -11811,6 +11825,26 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
     integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
   
+  react-native-animatable@^1.3.2:
+    version "1.3.3"
+    resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+    integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+    dependencies:
+      prop-types "^15.7.2"
+  
+  react-native-autocomplete-input@^4.2.0:
+    version "4.2.0"
+    resolved "https://registry.yarnpkg.com/react-native-autocomplete-input/-/react-native-autocomplete-input-4.2.0.tgz#fcfc3d2f19134d4c3394a4e6a5aae13d8c4c9129"
+    integrity sha512-bLZ9FO3NwcqYY3r6hefEEC4VW45L97kXuCyAqKXW1SJkkG/pGcen6zLq3SMFgoQuG3ryrO/ohz7gme7hFwzjoQ==
+  
+  react-native-dropdown-picker@^3.1.11:
+    version "3.1.11"
+    resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-3.1.11.tgz#663efcef168e7e56bb34fb8e1d54bc5e2de82b22"
+    integrity sha512-2dY5Kt9iVN/IXSfruU89rIEM0WXjfspKuJ/hVobaHYiTzJ2gy7xHRakUYkbDrsWrMgAq7+Q+iTp3c92CQjnTWg==
+    dependencies:
+      prop-types "^15.7.2"
+      react-native-vector-icons "^7.0.0"
+  
   react-native-elements@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.0.0.tgz#eebe36c3250808ebd4a7e9dcf97a666fb7a20930"
@@ -11844,6 +11878,11 @@ Lockfile:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
     integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+  
+  react-native-linear-gradient@^2.5.6:
+    version "2.5.6"
+    resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+    integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
   
   react-native-maps@0.26.1:
     version "0.26.1"
@@ -11900,6 +11939,14 @@ Lockfile:
     dependencies:
       debounce "^1.2.0"
   
+  react-native-search-header@^0.3.5:
+    version "0.3.5"
+    resolved "https://registry.yarnpkg.com/react-native-search-header/-/react-native-search-header-0.3.5.tgz#7720beeef391df9073ddc7d6c385f75439b450b5"
+    integrity sha512-gh4Z10aVVmANsz4UOMTLoZsHo7C6jcMLlP72acuaNr9oGnwpsNUbTqybvddlOWFhv93ywv1eA5nGhcwP+rSr/A==
+    dependencies:
+      react-native-animatable "^1.3.2"
+      semver "^6.3.0"
+  
   react-native-status-bar-height@^2.2.0:
     version "2.5.0"
     resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
@@ -11921,6 +11968,15 @@ Lockfile:
       lodash "^4.0.0"
       prop-types "^15.6.2"
       yargs "^13.2.2"
+  
+  react-native-vector-icons@^7.0.0:
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.0.0.tgz#5b92ed363c867645daad48c559e1f99efcfbb813"
+    integrity sha512-Ku8+dTUAnR9pexRPQqsUcQEZlxEpFZsIy8iOFqVL/3mrUyncZJHtqJyx2cUOmltZIC6W2GI4IkD3EYzPerXV5g==
+    dependencies:
+      lodash "^4.17.15"
+      prop-types "^15.7.2"
+      yargs "^15.0.2"
   
   react-native-view-shot@3.1.2:
     version "3.1.2"
@@ -14678,7 +14734,7 @@ Lockfile:
       string-width "^3.0.0"
       strip-ansi "^5.0.0"
   
-  wrap-ansi@^6.0.0:
+  wrap-ansi@^6.0.0, wrap-ansi@^6.2.0:
     version "6.2.0"
     resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
     integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
@@ -14865,6 +14921,14 @@ Lockfile:
       camelcase "^5.0.0"
       decamelize "^1.2.0"
   
+  yargs-parser@^18.1.2:
+    version "18.1.3"
+    resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
+    integrity sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==
+    dependencies:
+      camelcase "^5.0.0"
+      decamelize "^1.2.0"
+  
   yargs-parser@^7.0.0:
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-7.0.0.tgz#8d0ac42f16ea55debd332caf4c4038b3e3f5dfd9"
@@ -14905,6 +14969,23 @@ Lockfile:
       which-module "^2.0.0"
       y18n "^4.0.0"
       yargs-parser "^13.1.2"
+  
+  yargs@^15.0.2:
+    version "15.4.1"
+    resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
+    integrity sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==
+    dependencies:
+      cliui "^6.0.0"
+      decamelize "^1.2.0"
+      find-up "^4.1.0"
+      get-caller-file "^2.0.1"
+      require-directory "^2.1.1"
+      require-main-filename "^2.0.0"
+      set-blocking "^2.0.0"
+      string-width "^4.2.0"
+      which-module "^2.0.0"
+      y18n "^4.0.0"
+      yargs-parser "^18.1.2"
   
   yargs@^9.0.0:
     version "9.0.1"

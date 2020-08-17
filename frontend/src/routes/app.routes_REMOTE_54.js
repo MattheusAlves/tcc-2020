@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 import Main from "../pages/Main/";
 import Register from "../pages/Register/";
-import Settings from "../pages/Settings/Main";
+import Settings from "../pages/Settings/";
 import MainTopics from "../pages/Topics/Main/";
 import Dashboard from "../pages/Topics/Dashboard"
 import Chat from "../pages/Chat/";

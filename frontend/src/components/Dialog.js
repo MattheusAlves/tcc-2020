@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { memo } from "react";
+import { View } from "react-native";
 import { Button, Paragraph, Dialog, Portal } from "react-native-paper";
 
-function DialogComponent(props) {
-  
+const DialogComponent = memo((props) => {
   return (
-      
+
     <View>
       <View>
         <Portal>
@@ -22,6 +21,6 @@ function DialogComponent(props) {
       </View>
     </View>
   );
-}
+})
 
 export default DialogComponent;
