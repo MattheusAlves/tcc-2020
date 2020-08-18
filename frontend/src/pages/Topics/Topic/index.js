@@ -4,6 +4,7 @@ import { Avatar, Headline } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+import { useTopic } from '../../../contexts/topic'
 import styles from './style'
 import api from '../../../services/api'
 
@@ -32,10 +33,10 @@ const setRate = (item, value) => {
   })
 }
 
-const Topic = ({route}) => {
+const Topic = ({ route }) => {
 
-  const [topic, setTopic] = useState(route.params.topic.body)
-  const [userInitials, setUserInitials] = useState(getInitials(route.params.topic.body.user.name))
+  const [topic, setTopic] = useState()
+  const [userInitials, setUserInitials] = useState()
   const [topicResponses, setTopicResponses] = useState([])
   const [response, setResponse] = useState('')
   const [pending, setPending] = useState(false)
@@ -43,20 +44,31 @@ const Topic = ({route}) => {
   const [responsesQuantity, setResponsesQuantity] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
 
+  const { topicId } = useTopic()
+
   useEffect(() => {
+    console.log(topicId)
+    const loadTopic = async () => {
+      api.get(`/question/${topicId}`)
+        .then((result) => {
+          setTopic(result)
+          setUserInitials(getInitials(result.user.name))
+        })
+    }
+    loadTopic()
     getResponses()
   }, [state.count])
 
-  const getResponsesQuantity = () => {
-    api.get(`/question/response/quantity/5e8ccefd3d1d05332c4b0bee/${topic._id}`)
+  const getResponsesQuantity = async () => {
+    api.get(`/question/response/quantity/5e8ccefd3d1d05332c4b0bee/${topicId}`)
       .then((result) => {
 
         setResponsesQuantity(result.data.answersQuantity)
       })
   }
 
-  const getResponses = () => {
-    return api.get(`/question/responses/5e8ccefd3d1d05332c4b0bee/${topic._id}`,
+  const getResponses = async () => {
+    return api.get(`/question/responses/5e8ccefd3d1d05332c4b0bee/${topicId}`,
       {
         params: { limit: state.count }
       })

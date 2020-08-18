@@ -35,15 +35,24 @@ const styles = StyleSheet.create({
     buttonNew: {
         margin: 8,
         justifyContent: "center",
-        padding: 10,
+        alignItems:'center',
+        paddingHorizontal: 14,
+        paddingVertical:8,
         backgroundColor: 'white',
         borderRadius: 3,
+        
+    },
+    buttonText:{
+        fontSize:18,
+        fontWeight:"900",
+        textAlign:'center',
+        textAlignVertical:'center'
     },
     body: {
         flex: 1,
         flexDirection: "row",
         justifyContent: 'center',
-        top: 80,
+        marginTop: 80,
     },
     topic: {
         width: DEVICE_WIDTH - 10,
@@ -53,6 +62,8 @@ const styles = StyleSheet.create({
         borderWidth: .25,
         borderColor: '#484848',
         overflow: 'hidden',
+        marginVertical:6
+
 
     },
 
@@ -103,7 +114,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(51, 102, 255,1)',
         alignItems: 'center',
         fontWeight: '600',
-        borderRadius: 3
+        borderRadius: 3,
+       
     },
     categoryName: {
         fontSize: 22,

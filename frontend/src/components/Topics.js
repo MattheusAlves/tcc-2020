@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Dimensions, Image, ImageBackground } from 'react-native'
+import { View, TouchableOpacity,  StyleSheet, Dimensions} from 'react-native'
 import { Drawer, Card, } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 

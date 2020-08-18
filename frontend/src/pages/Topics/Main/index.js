@@ -11,8 +11,8 @@ import Topics from '../../../components/Topics'
 import Dialog from '../../../components/Dialog'
 import TopicsNotFound from '../../../components/TopicsNotFound'
 import ConnectionError from '../../../components/ConnectionError'
-import { useTopic } from '../../../contexts/topic'
-
+import { useCategory } from '../../../contexts/category'
+import {useTopic} from '../../../contexts/topic'
 
 const Topic = ({ navigation }) => {
   const [userDisciplines, setUserDisciplines] = useState([])
@@ -23,7 +23,8 @@ const Topic = ({ navigation }) => {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const { setData } = useTopic()
+  const { setData } = useCategory()
+  const { setFullTopic,setTopicId} = useTopic()
 
   useEffect(() => {
     getUserDisciplines().then((disciplines) => {
@@ -76,8 +77,11 @@ const Topic = ({ navigation }) => {
     }
   }, [userDisciplines])
 
-  const onPressTopic = useCallback((topic) => {
-    navigation.navigate('Topic', { topic: topic })
+  const onPressTopic = useCallback(async (topic) => {
+    // setFullTopic(topic.body)
+    navigation.navigate('Topic')
+    console.log("topic",topic.body._id)
+    setTopicId(topic.body._id)
   })
 
   const onRefresh = useCallback(() => {
@@ -117,46 +121,48 @@ const Topic = ({ navigation }) => {
         <View style={styles.status} />
         <StatusBar barStyle='light-content' backgroundColor='rgba(59,89,152,1)' />
         <AutoCompInput topics={topics} addCategory={addCategory} />
+
         <View style={styles.container}>
-          <ScrollView style={styles.scrollView}
-            contentContainerStyle={{ flexGrow: 1 }}
-            refreshControl={
-              <RefreshControl refreshing={refreshing}
-                onRefresh={onRefresh} style={{ paddingTop: 160 }} />
-            }>
-            {loading === true ?
-              <View style={styles.containerLoading}>
-                <ActivityIndicator size="large" color="#0000ff" />
-              </View>
-              :
+          <View>
+            <ScrollView
+              contentContainerStyle={{flexGrow: 1 }}
+              refreshControl={
+                <RefreshControl refreshing={refreshing}
+                  onRefresh={onRefresh} style={{ paddingTop: 160 }} />
+              }>
+              {loading === true ?
+                <View style={styles.containerLoading}>
+                  <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+                :
 
-              <View style={styles.chipContainer}>
-                {userDisciplines &&
-                  userDisciplines.length >= 1 &&
-                  userDisciplines.map((discipline) => (
-                    <Chip
-                      style={styles.chip}
-                      key={discipline.id}
-                      textStyle={{ fontSize: 12 }}
-                      mode="outlined"
-                      disabled={false}
-                      onClose={() => onCloseChip(discipline.id)}
-                    >
-                      <Text>{discipline.name}</Text>
-                    </Chip>
-                  ))}
-              </View>
-            }
-            {topics.length < 1 && loading !== true && !error &&
-              <TopicsNotFound />
-            }
+                <View style={styles.chipContainer}>
+                  {userDisciplines &&
+                    userDisciplines.length >= 1 &&
+                    userDisciplines.map((discipline) => (
+                      <Chip
+                        style={styles.chip}
+                        key={discipline.id}
+                        textStyle={{ fontSize: 12 }}
+                        mode="outlined"
+                        disabled={false}
+                        onClose={() => onCloseChip(discipline.id)}
+                      >
+                        <Text>{discipline.name}</Text>
+                      </Chip>
+                    ))}
+                </View>
+              }
+              {topics.length < 1 && loading !== true && !error &&
+                <TopicsNotFound />
+              }
 
 
-            {topics.length >= 1 &&
-              <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
-            }
-          </ScrollView>
-
+              {topics.length >= 1 &&
+                <Topics topics={topics} onPress={onPressTopic} onPressCategory={onPressCategory} />
+              }
+            </ScrollView>
+          </View>
           <Dialog dialogState={dialog} onDismiss={() => setDialog(false)}
             title="Limite excedido"
             message="Remova uma categoria para adicionar mais" />

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { create, list, questionById, response, responsesQuantity, questionByCategory, questionByUnicCategory,
-    responsesByQuestion, rateQuestion } = require('../controllers/question')
+    responsesByQuestion, rateQuestion, getQuestion } = require('../controllers/question')
 const { rate, responseById, rateByResponseQuantity } = require('../controllers/response')
 const { userById } = require('../controllers/user')
 const { isAuth, requireSignin } = require('../controllers/auth')
@@ -15,6 +15,7 @@ router.get('/question/by/categories/', questionByCategory)
 router.get('/question/responses/:userId/:questionId', responsesByQuestion)
 router.get('/question/response/rate/quantity/:responseId', rateByResponseQuantity)
 router.get('/question/by/categorie/:categoryId', questionByUnicCategory)
+router.get('/question/:questionId', getQuestion)
 
 router.post('/question/response/:userId/:questionId', response)
 router.post('/question/create/:userId', create)

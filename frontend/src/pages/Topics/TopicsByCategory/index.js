@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useLayoutEffect, useReducer } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useReducer, useCallback } from 'react';
 import {
     View,
     TouchableOpacity,
     Text,
     ScrollView,
     Dimensions,
-    Animated
+    Animated,
+    RefreshControl
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar, Searchbar } from 'react-native-paper'
 
 import api from '../../../services/api'
 import styles from './style'
+import { useCategory } from '../../../contexts/category'
 import { useTopic } from '../../../contexts/topic'
 import WaveHeader from '../../../components/WaveHeader'
 
@@ -32,25 +33,28 @@ function reducer(state, action) {
 }
 
 const TopicsByCategory = ({ navigation }) => {
-    const [selectedFilter, setSelectedFilter] = useState('relevance')
     const [searchVisibility, setSearchVisibility] = useState(false)
     const [topics, setTopics] = useState([])
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [refreshing, setRefreshing] = useState(false)
+    const [pending, setPending] = useState(false)
 
     const DEVICE_WIDTH = Dimensions.get('window').width
     const [decayAnim, setDecayAnim] = useState(new Animated.Value(175))
-    const { topicData } = useTopic()
+    const { categoryData } = useCategory()
+    const {setFullTopic} = useTopic()
 
     useEffect(() => {
         loadTopics()
             .then((result) => {
                 console.log('reusltado:', result.data)
                 setTopics(result.data)
+                setPending(false)
             })
             .catch((error) => console.log("Error:", error))
 
 
-    }, [])
+    }, [state.count])
 
     useLayoutEffect(() => {
         const loadSearchHeader = async () => {
@@ -98,11 +102,33 @@ const TopicsByCategory = ({ navigation }) => {
     }, [searchVisibility])
 
     const loadTopics = async () => {
-        return await api.get(`/question/by/categorie/${topicData.categoryId}`, {
+        return await api.get(`/question/by/categorie/${categoryData.categoryId}`, {
             params: { limit: state.count }
         })
     }
-
+    const onRefresh = useCallback(() => {
+        setRefreshing(true)
+        loadTopics()
+            .then((result) => {
+                console.log('reusltado:', result.data)
+                setTopics(result.data)
+                setRefreshing(false)
+            })
+            .catch((error) => console.log("Error:", error))
+    })
+    const onScrollBottom = async (e) => {
+        const windowHeight = Dimensions.get('window').height
+        const height = e.nativeEvent.contentSize.height
+        const offset = e.nativeEvent.contentOffset.y
+        if (windowHeight + offset >= height && !pending) {
+            setPending(true)
+            dispatch({ type: 'increment' })
+        }
+    }
+    const handleNavigate = async (topic) => {
+        navigation.navigate('Topic')
+        setFullTopic(topic)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.containerTop}>
@@ -117,27 +143,32 @@ const TopicsByCategory = ({ navigation }) => {
             </View>
             <View style={styles.body}>
                 <View style={styles.bodyContent}>
-                    <ScrollView>
-                        {topics.length > 0 && topics.map(topic =>  
-                        <TouchableOpacity style={styles.topicContainer} key ={topic._id}>
-                            <View style={styles.topic}>
-                                <TouchableOpacity style={styles.userInformation}>
-                                    <Avatar.Text size={25} label={'MA'} />
-                                    <Text style={styles.username}>{topic.user.name}</Text>
-                                </TouchableOpacity>
-                                <Text style={styles.title}>{topic.title}</Text>
-                                <Text style={styles.topicPreview} numberOfLines={3}>
-                                {topic.description}
-                                 </Text>
-                                <View style={styles.topicInformation}>
-                                    <Text style={styles.topicDate}>{topic.createdAt}</Text>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.info}>13 <Icon name="thumbs-up" size={22} color='rgba(0, 153, 255,1)' /></Text>
-                                        <Text style={styles.info}>123 <Icon name="comments" size={22} color='rgba(0, 153, 255,1)' /></Text>
+                    <ScrollView
+                        onScroll={(e) => onScrollBottom(e)} scrollEventThrottle={500}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing}
+                                onRefresh={onRefresh} style={{ paddingTop: 160 }} />
+                        }>
+                        {topics.length > 0 && topics.map(topic =>
+                            <TouchableOpacity style={styles.topicContainer} key={topic._id} onPress={() => handleNavigate(topic)}>
+                                <View style={styles.topic}>
+                                    <TouchableOpacity style={styles.userInformation}>
+                                        <Avatar.Text size={25} label={'MA'} />
+                                        <Text style={styles.username}>{topic.user.name}</Text>
+                                    </TouchableOpacity>
+                                    <Text style={styles.title}>{topic.title}</Text>
+                                    <Text style={styles.topicPreview} numberOfLines={3}>
+                                        {topic.description}
+                                    </Text>
+                                    <View style={styles.topicInformation}>
+                                        <Text style={styles.topicDate}>{topic.createdAt}</Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={styles.info}>{topic.likes} <Icon name="thumbs-up" size={22} color='rgba(0, 153, 255,1)' /></Text>
+                                            <Text style={styles.info}>{topic.response.length} <Icon name="comments" size={22} color='rgba(0, 153, 255,1)' /></Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
                         )}
                     </ScrollView>
                 </View>

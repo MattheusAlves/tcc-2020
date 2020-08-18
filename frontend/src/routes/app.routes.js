@@ -16,7 +16,8 @@ import TopicsByCategory from '../pages/Topics/TopicsByCategory'
 
 import ConnectionError from '../components/ConnectionError'
 
-import { useTopic } from '../contexts/topic'
+import { useCategory } from '../contexts/category'
+
 
 
 // import Response from '../pages/Topics/Topic/Response'
@@ -79,7 +80,6 @@ const MainRoutes = () => (
         zIndex:10,
         // marginBottom:4,
         // marginHorizontal:6,
-        position:'absolute'
       },
       inactiveTintColor:'white',
       activeTintColor:'black'
@@ -146,7 +146,7 @@ const MainRoutes = () => (
 
 
 const AppRoutes = () => {
-  const { categoryName } = useTopic().topicData
+  const { categoryName } = useCategory().categoryData
   return (
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes}
@@ -157,6 +157,7 @@ const AppRoutes = () => {
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
         })} />
+       
       <AppStack.Screen name="Topic" component={Topic} />
       <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}
         options={() => ({

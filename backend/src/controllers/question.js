@@ -29,6 +29,7 @@ exports.create = async (req, res) => {
 exports.questionById = async (req, res, next, id) => {
     await Question.findById(id).exec((err, question) => {
         if (err || !question) {
+            console.log('entrou error')
             if (err) {
                 return res.status(400).json({
                     error: errorHandler(err)
@@ -40,6 +41,10 @@ exports.questionById = async (req, res, next, id) => {
 
         next()
     })
+}
+exports.getQuestion = async (req,res) => {
+    console.log(req.question)
+    return res.status(200).json(req.question)
 }
 
 exports.list = async (req, res) => {
@@ -79,6 +84,8 @@ exports.rateQuestion = async (req, res) => {
                         { "new": true }, function (error, result) {
                             if (error) throw error
                         })
+                    Question.getLikes(req.question._id)
+                    Question.getDislikes(req.question._id)
                     return res.status(200).json(savedRate)
                 })
             }
@@ -87,24 +94,30 @@ exports.rateQuestion = async (req, res) => {
                     req.rateId = result._id
                     removeQuestionRate(req)
                         .then(() => {
+                            Question.getLikes(req.question._id)
+                            Question.getDislikes(req.question._id)
                             return res.status(200).json({ message: 'rate removed' })
                         })
                         .catch((error) => {
                             return res.status(400).json(errorHandler(error))
                         })
                 } else {
+
                     result.rate = rate
                     result.save((error, savedRate) => {
                         if (error) {
                             console.log(error)
                             return res.status(400)
                         }
+                        Question.getLikes(req.question._id)
+                        Question.getDislikes(req.question._id)
                         return res.status(200).json(savedRate)
                     })
                 }
             }
 
         })
+
 }
 
 const removeQuestionRate = (req) => {

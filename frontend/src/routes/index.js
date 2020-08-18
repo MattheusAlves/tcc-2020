@@ -5,6 +5,8 @@ import {useAuth} from '../contexts/auth'
 import AuthRoutes from './auth.routes'
 import AppRoutes from './app.routes'
 
+import {TopicProvider} from '../contexts/topic'
+
  const Routes = () => {
     const {signed,loading} = useAuth()
 
@@ -16,7 +18,7 @@ import AppRoutes from './app.routes'
         )
       }
 
-    return signed ? <AppRoutes/> : <AppRoutes/>
+    return signed ? <AppRoutes/> : <TopicProvider><AppRoutes/></TopicProvider>
     
 }
 

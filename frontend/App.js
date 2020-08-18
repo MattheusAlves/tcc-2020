@@ -9,7 +9,7 @@ import { AppLoading } from 'expo'
 
 import { AuthProvider } from "./src/contexts/auth";
 import { LocationProvider } from './src/contexts/location'
-import { TopicProvider } from './src/contexts/topic'
+import { CategoryProvider } from './src/contexts/category'
 
 import Routes from "./src/routes/index";
 const fetchFonts = () => {
@@ -32,7 +32,7 @@ export default function App() {
       <NavigationContainer>
         <AuthProvider>
           <LocationProvider>
-            <TopicProvider>
+            <CategoryProvider>
               <StatusBar
                 barStyle="light-content"
               // backgroundColor='#f4511e'
@@ -40,7 +40,7 @@ export default function App() {
               <PaperProvider>
                 <Routes />
               </PaperProvider>
-            </TopicProvider>
+            </CategoryProvider>
           </LocationProvider>
         </AuthProvider>
       </NavigationContainer>

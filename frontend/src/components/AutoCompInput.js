@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     autocompleteContainer: {
         flexDirection: 'row',
         alignItems: "center",
-        position: 'absolute',
+        // position: 'absolute',
         width: (Dimensions.get('window').width),
         borderWidth: 0,
         zIndex: 10,

@@ -3,10 +3,9 @@ import { StyleSheet, Dimensions } from 'react-native'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
+        // flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#f5fcff',
-        marginTop:46
     },
     containerLoading:{
         flex:1,
@@ -21,13 +20,15 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginTop:5,
         marginBottom:10,
+        
         justifyContent: 'center',
     },
     chip: {
         width: 'auto',
         justifyContent: "center",
         fontSize: 14,
-        zIndex:10
+        elevation:3,
+        marginHorizontal:2,
     },
     topics: {
         marginTop: 0
@@ -39,16 +40,10 @@ const styles = StyleSheet.create({
         height: 5,
         backgroundColor: '#3B5998'
     },
-    background: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: (Dimensions.get('screen').width),
-        backgroundColor:'white'
-    },
+ 
+    scrollView:{    
 
-    scrollView:{
-        }
+     }
 })
 
 
