@@ -12,7 +12,7 @@ export class ContactProfile01 extends React.Component {
                 title="Stepahny Fernando"
                 description="Ola, tudo bem?"
                 style={{ cursor: 'pointer' }}
-                left={props => <List.Icon icon={require('../../../../assets/images/profile01.jpg')}
+                left={props => <List.Icon icon={require('../../../../../../assets/images/profile01.jpg')}
                     style={{ height: '10px' }} />}
             />
         </View>
@@ -29,7 +29,7 @@ export class ContactProfile02 extends React.Component {
                 title="Stepahny Fernando"
                 description="Ola, tudo bem?"
                 style={{ cursor: 'pointer' }}
-                left={props => <List.Icon icon={require('../../../../assets/images/profile02.jpg')}
+                left={props => <List.Icon icon={require('../../../../../../assets/images/profile02.jpg')}
                     style={{ height: '10px' }} />}
             />
         </View>

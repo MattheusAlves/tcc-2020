@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text } from 'react-native';
 import { Title, Divider, List, Searchbar, Avatar, Colors } from 'react-native-paper';
 import io from 'socket.io-client'
-import { ContentMenuTopSearch } from './Components/Content/ContentMenuTopSearch';
-import { ContentMenuMiddle } from './Components/Content/ContentMenuMiddle';
-import { ContentMenuContact } from './Components/Content/ContentMenuContacts';
+import { ContentMenuTopSearch } from './Components/Content/Messages/ContentMenuTopSearch';
+import { ContentMenuMiddle } from './Components/Content/Messages/ContentMenuMiddle';
+import { ContentMenuContact } from './Components/Content/Messages/ContentMenuContacts';
 
 import {
   initializeSocket,

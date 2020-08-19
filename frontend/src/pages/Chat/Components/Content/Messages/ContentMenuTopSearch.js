@@ -13,7 +13,7 @@ export class ContentMenuTopSearch extends React.Component {
                     <Avatar.Image style={{
                         marginLeft: '30%', marginTop: '2%', marginBottom: '2%',
                         cursor: 'pointer'
-                    }} size={60} source={require('../../../../assets/images/profile01.jpg')} />
+                    }} size={60} source={require('../../../../../assets/images/profile01.jpg')} />
                 </View>
 
                 <View style={{ width: '50%' }}>

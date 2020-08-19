@@ -19,8 +19,6 @@ class Layout extends React.Component {
 
     changeTitle = (titleMenu, subtitleMenu, contentMenu) => {
 
-
-
         if (titleMenu == "Perfil")
             contentMenu = <ContentProfile />
         else if (titleMenu == "Cursos" && subtitleMenu == "First item")
