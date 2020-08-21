@@ -13,7 +13,7 @@ class Layout extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { title: "Perfil", subtitle: "", contentMenu: "esse é o conteúdo padrão", }
+        this.state = { title: "Perfil", subtitle: "", content: "esse é o conteúdo padrão", }
         this.changeTitle = this.changeTitle.bind(this)
     }
 
