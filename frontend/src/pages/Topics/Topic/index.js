@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Dimensions, RefreshControl } from 'react-native';
+import React, { useEffect,useLayoutEffect, useState, useReducer, useCallback } from 'react';
+import { View, Text, TouchableOpacity, TextInput, Dimensions, RefreshControl,ActivityIndicator } from 'react-native';
 import { Avatar, Headline } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { useTopic } from '../../../contexts/topic'
 import styles from './style'
 import api from '../../../services/api'
 
@@ -34,35 +33,36 @@ const setRate = (item, value) => {
 }
 
 const Topic = ({ route }) => {
-
   const [topic, setTopic] = useState()
-  const [userInitials, setUserInitials] = useState()
+  const [userInitials, setUserInitials] = useState('')
   const [topicResponses, setTopicResponses] = useState([])
   const [response, setResponse] = useState('')
   const [pending, setPending] = useState(false)
   const [state, dispatch] = useReducer(reducer, initialState);
   const [responsesQuantity, setResponsesQuantity] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
-
-  const { topicId } = useTopic()
-
+  const {topicId} = route.params
+  
   useEffect(() => {
-    console.log(topicId)
     const loadTopic = async () => {
       api.get(`/question/${topicId}`)
         .then((result) => {
-          setTopic(result)
-          setUserInitials(getInitials(result.user.name))
+          console.log("result:",result.data)
+          setTopic(result.data)
+          setUserInitials(getInitials(result.data.user.name))
+          
         })
-    }
-    loadTopic()
-    getResponses()
+      }
+      loadTopic()
+      getResponses()
   }, [state.count])
 
   const getResponsesQuantity = async () => {
     api.get(`/question/response/quantity/5e8ccefd3d1d05332c4b0bee/${topicId}`)
       .then((result) => {
-
+        if(result.data.answersQuantity === 0){
+          setResponsesQuantity(null)
+        }else
         setResponsesQuantity(result.data.answersQuantity)
       })
   }
@@ -142,8 +142,8 @@ const Topic = ({ route }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.topic}>
-            <Text style={styles.title}>{topic.title || ''}</Text>
-            <Text style={styles.description}>{topic.description || topic.response}</Text>
+            <Text style={styles.title}>{topic.title}</Text>
+            <Text style={styles.description}>{topic.description}</Text>
           </View>
           <View style={styles.containerResponse}>
             <TextInput style={styles.inputResponse} onChangeText={(text) => setResponse(text)} value={response} />
@@ -151,6 +151,9 @@ const Topic = ({ route }) => {
               <Text>Postar</Text>
             </TouchableOpacity>
           </View>
+          {topicResponses.length < 1 && responsesQuantity != null ? 
+          <ActivityIndicator size={45}/>
+            :
           <View style={styles.responses}>
             {topicResponses.map(item => (
               <View style={styles.response}>
@@ -187,9 +190,10 @@ const Topic = ({ route }) => {
 
             ))}
           </View>
+          }
         </ScrollView>
       </View>
-    ) : <Text>Carregando...</Text>
+    ) : <ActivityIndicator/>
   )
 }
 

@@ -27,7 +27,9 @@ exports.create = async (req, res) => {
 }
 
 exports.questionById = async (req, res, next, id) => {
-    await Question.findById(id).exec((err, question) => {
+    await Question.findById(id)
+    .populate({path:'user',select:'name'})
+    .exec((err, question) => {
         if (err || !question) {
             console.log('entrou error')
             if (err) {

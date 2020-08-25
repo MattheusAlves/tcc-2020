@@ -12,7 +12,7 @@ import Dialog from '../../../components/Dialog'
 import TopicsNotFound from '../../../components/TopicsNotFound'
 import ConnectionError from '../../../components/ConnectionError'
 import { useCategory } from '../../../contexts/category'
-import {useTopic} from '../../../contexts/topic'
+import { useTopic } from '../../../contexts/topic'
 
 const Topic = ({ navigation }) => {
   const [userDisciplines, setUserDisciplines] = useState([])
@@ -24,7 +24,7 @@ const Topic = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
 
   const { setData } = useCategory()
-  const { setFullTopic,setTopicId} = useTopic()
+  const { setDataTopic } = useTopic()
 
   useEffect(() => {
     getUserDisciplines().then((disciplines) => {
@@ -77,11 +77,9 @@ const Topic = ({ navigation }) => {
     }
   }, [userDisciplines])
 
-  const onPressTopic = useCallback(async (topic) => {
-    // setFullTopic(topic.body)
-    navigation.navigate('Topic')
-    console.log("topic",topic.body._id)
-    setTopicId(topic.body._id)
+  const onPressTopic = useCallback(async(topic) => {
+    navigation.navigate('Topic',{topicId:topic.body._id,})
+ 
   })
 
   const onRefresh = useCallback(() => {
@@ -125,7 +123,7 @@ const Topic = ({ navigation }) => {
         <View style={styles.container}>
           <View>
             <ScrollView
-              contentContainerStyle={{flexGrow: 1 }}
+              contentContainerStyle={{ flexGrow: 1 }}
               refreshControl={
                 <RefreshControl refreshing={refreshing}
                   onRefresh={onRefresh} style={{ paddingTop: 160 }} />

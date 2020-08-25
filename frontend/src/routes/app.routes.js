@@ -13,6 +13,7 @@ import Chat from "../pages/Chat/";
 import Users from '../pages/Chat/Users/'
 import Topic from "../pages/Topics/Topic/"
 import TopicsByCategory from '../pages/Topics/TopicsByCategory'
+import Profile from '../pages/Profile/'
 
 import ConnectionError from '../components/ConnectionError'
 
@@ -139,7 +140,7 @@ const MainRoutes = () => (
     <Tab.Screen name="Topicos" component={MainTopics}
       options={{ headerShown: false }} />
     <Tab.Screen name="Chat" component={Chat} />
-    <Tab.Screen name="Configuracoes" component={Settings} />
+    <Tab.Screen name="Configuracoes" component={Profile} />
   </Tab.Navigator >
 )
 
