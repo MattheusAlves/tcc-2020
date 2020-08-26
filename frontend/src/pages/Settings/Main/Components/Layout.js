@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Divider, Text } from 'react-native-paper';
-import { Button, Title, Paragraph, Avatar, List } from 'react-native-paper';
-import { View } from 'react-native';
-import { ContentProfile } from '../Components/Content/ContentProfile';
-import { ContentCursos } from '../Components/Content/ContentCursos';
-import { ContentPagamentos } from '../Components/Content/ContentPagamentos';
-import { ContentConta } from '../Components/Content/ContentConta';
-
+import { Button, Title, Paragraph, Avatar, List, Divider, Text } from 'react-native-paper';
+import { View, ScrollView } from 'react-native';
+import { ContentProfile } from '../Components/Content/Profile/ContentProfile';
+import { ContentCursos } from '../Components/Content/Courses/ContentCursos';
+import { ContentPagamentos } from '../Components/Content/Payments/ContentPagamentos';
+import { ContentConta } from '../Components/Content/Account/ContentConta';
+import { ContentTeacher } from '../Components/Content/Profile/TeacherProfile';
 
 
 class Layout extends React.Component {
@@ -19,14 +18,18 @@ class Layout extends React.Component {
 
     changeTitle = (titleMenu, subtitleMenu, contentMenu) => {
 
-        if (titleMenu == "Perfil")
+        if (titleMenu == "Perfil" && subtitleMenu == "Aluno")
             contentMenu = <ContentProfile />
-        else if (titleMenu == "Cursos" && subtitleMenu == "First item")
+        else if (titleMenu == "Perfil" && subtitleMenu == "Professor")
+            contentMenu = <ContentTeacher />
+        else if (titleMenu == "Cursos" && subtitleMenu == "Certificados")
             contentMenu = <ContentCursos />
-        else if (titleMenu == "Pagamentos" && subtitleMenu == "Editar")
+        else if (titleMenu == "Pagamentos")
             contentMenu = <ContentPagamentos />
         else if (titleMenu == "Conta")
             contentMenu = <ContentConta />
+        else
+            contentMenu = <ContentProfile />
 
         this.setState({
             title: titleMenu,
@@ -37,12 +40,12 @@ class Layout extends React.Component {
 
     render() {
         return (
-            <View style={{ width: '60%', height: '90%', marginTop: '2px', alignSelf: 'center' }} >
+            <View style={{ width: '100%', height: '100%', marginTop: '2px', alignSelf: 'center' }} >
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', flexWrap: 'wrap' }}>
 
                     <View style={{
-                        width: '25%', height: '100%', borderRightWidth: 0.5, borderTopWidth: 0.5
-                        , borderLeftWidth: 0.5, borderBottomWidth: 0.5, backgroundColor: 'white'
+                        width: '25%', height: '100%', backgroundColor: 'white', borderRightWidth: 0.1, borderColor: "lightgray",
+                        borderBottomWidth: 0.1, borderTopWidth: 0.1, borderLeftWidth: 0.1
                     }} >
                         <View style={{ flexDirection: 'row' }}>
                             <View>
@@ -55,16 +58,32 @@ class Layout extends React.Component {
 
                         </View>
                         <Divider />
-                        <List.Item left={props =>
-                            <List.Icon {...props} icon={require('../../../../assets/images/account-box.png')} />}
-                            title="Perfil" onPress={() => this.changeTitle("Perfil", "Adicione informações sobre você")} style={{ cursor: 'pointer' }} />
+
+                        <List.Accordion
+                            title="Perfil"
+                            left={props => <List.Icon {...props} icon={require('../../../../assets/images/account-box.png')} />}>
+                            <List.Item left={props =>
+                                <List.Icon {...props} />}
+                                title="Aluno" onPress={() => this.changeTitle("Perfil", "Aluno")} style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: `#FFFAFA`
+                                }} />
+                            <List.Item style={{}} left={props =>
+                                <List.Icon {...props} />}
+                                title="Professor" onPress={() => this.changeTitle("Perfil", "Professor")} style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: `#FFFAFA`
+                                }} />
+
+                        </List.Accordion>
+
 
                         <Divider />
 
                         <List.Accordion
                             title="Cursos"
                             left={props => <List.Icon {...props} icon={require('../../../../assets/images/book-open-page-variant.png')} />}>
-                            <List.Item title="First item" onPress={() => this.changeTitle("Cursos", "First item")} style={{ cursor: 'pointer' }} />
+                            <List.Item title="Certifficados" onPress={() => this.changeTitle("Cursos", "Certificados")} style={{ cursor: 'pointer' }} />
                         </List.Accordion>
                         <Divider />
 
@@ -83,8 +102,8 @@ class Layout extends React.Component {
                     {/* Título na div superior */}
                     <View style={{ width: '75%', height: '100%', alignSelf: 'stretch' }}>
                         <View style={{
-                            height: '12%', backgroundColor: 'white', borderRightWidth: 0.5, borderTopWidth: 0.5,
-                            borderLeftWidth: 0.5, borderBottomWidth: 0.5
+                            height: '12%', backgroundColor: 'white', borderRightWidth: 0.1, borderColor: "lightgray",
+                            borderBottomWidth: 0.1, borderTopWidth: 0.1, borderLeftWidth: 0.1
                         }} >
                             <Title style={{ textAlign: 'center' }}>
                                 {this.state.title}
@@ -95,12 +114,16 @@ class Layout extends React.Component {
 
                         {/* Título na div inferior - conteúdo */}
                         <View style={{
-                            height: '88%', backgroundColor: 'white', borderRightWidth: 1, borderTopWidth: 1,
-                            borderLeftWidth: 1, borderBottomWidth: 1,  alignItems: 'center',
+                            height: '88%', backgroundColor: 'white', alignItems: 'center', borderRightWidth: 0.1, borderColor: "lightgray",
+                            borderBottomWidth: 0.1, borderTopWidth: 0.1, borderLeftWidth: 0.1
                         }} >
-                            <Paragraph>
-                                {this.state.content}
-                            </Paragraph>
+                            <ScrollView >
+                                <View style={{ alignContent: 'right' }}>
+                                    <Paragraph>
+                                        {this.state.content}
+                                    </Paragraph>
+                                </View>
+                            </ScrollView>
                         </View>
                     </View>
 
