@@ -1,0 +1,4 @@
+Falta fazer no aplicativo TCC UNIP
+
+-Melhorar o mapa ( ja aprece na aplicacao mobile)
+-Configuracoes de perfil ( usuario alterar nome, endereço, disciplinas, senha)
