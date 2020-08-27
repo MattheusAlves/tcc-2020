@@ -43,7 +43,7 @@ export class ContentTeacher extends React.Component {
                     </View>
                 </View >
 
-                <Modal style={{ width: "100px", height: "100px", marginTop: "60px" }} visible={this.state.modalVisible} onDismiss={this.hideModal}>
+                <Modal style={{ width: "900px", height: "900px", marginTop: "60px" }} visible={this.state.modalVisible} onDismiss={this.hideModal}>
                     <Text>Example Modal</Text>
                     <Text>Example Modal</Text>
                     <Text>Example Modal</Text>
@@ -65,6 +65,9 @@ export class ContentTeacher extends React.Component {
                     <Text>Example Modal</Text>
                     <Text>Example Modal</Text>
                     <Text>Example Modal</Text>
+                    <Text>Example Modal</Text>
+                    <Text>Example Modal</Text>
+                    <Text>Example Modal</Text>                  
                 </Modal>
             </View>
         );

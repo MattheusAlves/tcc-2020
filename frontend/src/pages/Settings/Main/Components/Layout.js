@@ -117,8 +117,8 @@ class Layout extends React.Component {
                             height: '88%', backgroundColor: 'white', alignItems: 'center', borderRightWidth: 0.1, borderColor: "lightgray",
                             borderBottomWidth: 0.1, borderTopWidth: 0.1, borderLeftWidth: 0.1
                         }} >
-                            <ScrollView >
-                                <View style={{ alignContent: 'right' }}>
+                            <ScrollView  style={{width: "100%", height: "100%"}}>
+                                <View style={{  alignSelf: 'center' }}>
                                     <Paragraph>
                                         {this.state.content}
                                     </Paragraph>
