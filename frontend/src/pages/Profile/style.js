@@ -123,6 +123,67 @@ const styles = StyleSheet.create({
         fontStyle:"italic",
         fontSize:18,
         color:'gray',
+    },
+    classInformation:{
+        width:WIDTH,
+        marginTop:10,
+        justifyContent:'center'
+    },
+    class:{
+        fontSize:18,
+        color:'gray',
+    },
+    classes:{
+        flex:1,
+        marginHorizontal:5
+    },
+    scrollClasses:{
+        flexDirection:'row',
+        alignItems:"center",
+        justifyContent:'center'
+    },
+     discipline:{
+        marginHorizontal:3,
+        fontSize:18,
+        fontWeight:"bold",
+        color:'white'
+    },
+    classPrice:{
+        width:150,
+        borderWidth:1,
+        borderBottomColor:'blue',
+        borderTopColor:'lightblue',
+        borderRadius:8,
+        alignItems:'center',
+        backgroundColor:'rgba(2,0,100,.7)',
+        color:'white',
+        fontSize:18,
+    },
+    priceLabel:{
+        fontSize:18,
+        color:'white',
+        padding:2
+    },
+    price:{
+        fontSize:18,
+        color:'white',
+        padding:1
+        // fontWeight:'700' 
+    },
+    disciplineContainer:{
+        width:150,
+        alignItems:"center",
+        borderRadius:8,
+        padding:5,
+        backgroundColor:'rgba(2,0,100,1)',
+        zIndex:3
+    },
+    next:{
+        position:'absolute',
+        right:0,
+        opacity:.6,
+        zIndex:3,
+        paddingHorizontal:10
     }
 })
 

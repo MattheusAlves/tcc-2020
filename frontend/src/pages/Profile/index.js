@@ -55,12 +55,38 @@ const Profile = () => {
             <Text style={styles.bio}>Matheus Alves Domingos, de natal - Rio grande do norte! Muito prazer.
             Formado em nada na faculgado josé estácio. interessado por JavaScripot, php, node, etc.</Text>
           </View>
+            <Text style={styles.class}>Aulas Particulares</Text>
           <View style={styles.classInformation}>
-            <Text style={styles.class}>Sobre as aulas</Text>
-            <View style={styles.classes}>
-              <Text>Aulas particulares de:</Text>
-              <Text>Geografia, PHP e JavaScript.</Text>
-            </View>
+              <Icon name='caret-right' size={45} color='lightgray' style={styles.next}/>
+            <ScrollView horizontal={true} contentContainerStyle={styles.scrollClasses}>
+              <View style={styles.classes}>
+                <View style={styles.classPrice}>
+                  <View style={styles.disciplineContainer}>
+                    <Text style={styles.discipline} >Geografia</Text>
+                  </View>
+                  <Text style={styles.priceLabel}>Preço hora aula</Text>
+                  <Text style={styles.price}>R$14,90</Text>
+                </View>
+              </View>
+              <View style={styles.classes}>
+                <View style={styles.classPrice}>
+                  <View style={styles.disciplineContainer}>
+                    <Text style={styles.discipline} >Geografia</Text>
+                  </View>
+                  <Text style={styles.priceLabel}>Preço hora aula</Text>
+                  <Text style={styles.price}>R$14,90</Text>
+                </View>
+              </View>
+              <View style={styles.classes}>
+                <View style={styles.classPrice}>
+                  <View style={styles.disciplineContainer}>
+                    <Text style={styles.discipline} >Geografia</Text>
+                  </View>
+                  <Text style={styles.priceLabel}>Preço hora aula</Text>
+                  <Text style={styles.price}>R$14,90</Text>
+                </View>
+              </View>
+            </ScrollView>
           </View>
         </View>
       </ScrollView >
