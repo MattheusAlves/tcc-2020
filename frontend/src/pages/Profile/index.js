@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity,Linking } from 'react-native';
 import { Avatar, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -14,7 +14,14 @@ const Profile = () => {
   useEffect(() => {
 
   }, [])
-
+  const sendOnWhatsapp = (number) =>{
+    const url = 'whatsapp://send?text=oi'+'&phone=5519997706148';
+    Linking.openURL(url).then((data) => {
+      console.log("Whatsapp Opened")
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
   return (
     <View style={styles.container} >
       <View style={styles.containerHeader}>
@@ -39,44 +46,26 @@ const Profile = () => {
             <View style={styles.disciplinesContainer}>
               <Text style={styles.disciplineText}>Disciplinas de interesse</Text>
               <View style={styles.disciplinesContent}>
-                <Text style={styles.discipline}>Geografia</Text>
+                <Text >Geografia</Text>
               </View>
             </View>
           </View>
           <View style={styles.userContact}>
             <View style={styles.numberContainer}>
-              <TouchableOpacity style={styles.numberContainer}>
+              <TouchableOpacity style={styles.numberContainer} onPress={() => sendOnWhatsapp()}>
                 <Icon name="whatsapp" size={30} color="green" style={{ margin: 3 }} />
                 <Text style={styles.telephoneNumber}>(19)997706148</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.userBio}>
-            <Text style={styles.bio}>Matheus Alves Domingos, de natal - Rio grande do norte! Muito prazer.
-            Formado em nada na faculgado josé estácio. interessado por JavaScripot, php, node, etc.</Text>
+            <Text style={styles.bio}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            </Text>
           </View>
             <Text style={styles.class}>Aulas Particulares</Text>
           <View style={styles.classInformation}>
               <Icon name='caret-right' size={45} color='lightgray' style={styles.next}/>
-            <ScrollView horizontal={true} contentContainerStyle={styles.scrollClasses}>
-              <View style={styles.classes}>
-                <View style={styles.classPrice}>
-                  <View style={styles.disciplineContainer}>
-                    <Text style={styles.discipline} >Geografia</Text>
-                  </View>
-                  <Text style={styles.priceLabel}>Preço hora aula</Text>
-                  <Text style={styles.price}>R$14,90</Text>
-                </View>
-              </View>
-              <View style={styles.classes}>
-                <View style={styles.classPrice}>
-                  <View style={styles.disciplineContainer}>
-                    <Text style={styles.discipline} >Geografia</Text>
-                  </View>
-                  <Text style={styles.priceLabel}>Preço hora aula</Text>
-                  <Text style={styles.price}>R$14,90</Text>
-                </View>
-              </View>
+            <ScrollView horizontal={true} contentContainerStyle={styles.scrollClasses} showsHorizontalScrollIndicator={false}>
               <View style={styles.classes}>
                 <View style={styles.classPrice}>
                   <View style={styles.disciplineContainer}>

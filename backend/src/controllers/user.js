@@ -16,6 +16,16 @@ exports.userById = async (req, res, next, id) => {
     next()
   })
 }
+exports.getProfile = async (req, res) => {
+  await User.findById(id)
+    .populate('Discipline')
+    .exec((error, user) => {
+      if (error || !user) {
+        return res.status(400).json(errorHandler(error))
+      }
+      return res.status(200).json(user)
+    })
+}
 
 
 /**
@@ -72,7 +82,7 @@ exports.updateLocation = async (req, res) => {
 
 exports.disciplinesByUser = async (req, res) => {
   User.findById(req.profile._id)
-  .select('disciplines')
+    .select('disciplines')
     .populate("disciplines")
     .exec((error, user) => {
       if (error) {
@@ -80,7 +90,7 @@ exports.disciplinesByUser = async (req, res) => {
         return res.status(400).json(errorHandler(error))
       }
       console.log(user)
-           return res.status(200).json(user)
+      return res.status(200).json(user)
     })
   //   await User.findById(req.profile._id).exec(async (error, user) => {
   //   if (error) {

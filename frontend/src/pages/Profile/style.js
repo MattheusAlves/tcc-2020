@@ -126,12 +126,14 @@ const styles = StyleSheet.create({
     },
     classInformation:{
         width:WIDTH,
-        marginTop:10,
+        marginTop:15,
         justifyContent:'center'
     },
     class:{
+        marginTop:10,
         fontSize:18,
         color:'gray',
+        fontWeight:"700"
     },
     classes:{
         flex:1,
