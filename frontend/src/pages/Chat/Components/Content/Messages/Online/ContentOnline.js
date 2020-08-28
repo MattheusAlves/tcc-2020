@@ -1,8 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { List,Title } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { ContactProfile01, ContactProfile02 } from '../Contacts/Contact';
-import { GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive} from './Onlines';
 
 export class ContentOnline extends React.Component {
 
@@ -11,10 +10,19 @@ export class ContentOnline extends React.Component {
 
             <View>
                 <ContactProfile01/>
+                <Divider />
+
                 <ContactProfile02/>
+                <Divider />
+
                 <ContactProfile01/>
+                <Divider />
+
                 <ContactProfile02/>
+                <Divider />
+
                 <ContactProfile02/>
+                <Divider />
             </View>
         );
     };

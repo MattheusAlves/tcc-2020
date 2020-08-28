@@ -7,7 +7,6 @@ export class GroupOne extends React.Component {
 
     render() {
         return (
-
             <View>
                 <List.Item
                     title="Grupo da Família"
@@ -25,7 +24,6 @@ export class GroupTwo extends React.Component {
 
     render() {
         return (
-
             <View>
                 <List.Item
                     title="Grupo do Trabalho"

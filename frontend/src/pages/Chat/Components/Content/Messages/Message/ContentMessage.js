@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { List } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { ContactProfile01, ContactProfile02 } from '../Contacts/Contact';
-import { GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive} from '../Online/Onlines';
+import { GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive } from '../Online/Onlines';
 
 export class ContentMessage extends React.Component {
 
@@ -11,18 +11,31 @@ export class ContentMessage extends React.Component {
 
             <View>
                 <GroupOne />
+                <Divider />
+
                 <ContactProfile01 />
+                <Divider />
 
                 <GroupTwo />
+                <Divider />
+
                 <ContactProfile02 />
+                <Divider />
 
                 <GroupThree />
+                <Divider />
+
                 <ContactProfile01 />
+                <Divider />
 
                 <GroupFour />
-                <ContactProfile02 />
+                <Divider />
 
-                <GroupFive/>
+                <ContactProfile02 />
+                <Divider />
+
+                <GroupFive />
+                <Divider />
             </View>
         );
     };

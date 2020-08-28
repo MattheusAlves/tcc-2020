@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { List, Text } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { ContentMessage } from './Message/ContentMessage';
 import { ContentOnline } from './Online/ContentOnline';
 import { ContentGroups } from './Groups/ContentGroups';
@@ -35,6 +35,7 @@ export class ContentMenuContact extends React.Component {
         return (
             <View>
                 <ContentMenuMiddle changeStateParent={this.changeState.bind(this)} />
+                <Divider/>
                 {this.state.content}
             </View>
         );

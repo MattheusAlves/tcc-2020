@@ -45,8 +45,6 @@ const Chat = (props) => {
     <View style={styles.container}>
       <ContentMenuTopSearch />
       <Divider />
-      <ContentMenuMiddle />
-      <Divider />
       <ContentMenuContact />
     </View>
   )

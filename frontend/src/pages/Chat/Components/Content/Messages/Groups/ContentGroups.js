@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { List, Title } from 'react-native-paper';
-import { ContactProfile01, ContactProfile02 } from '../Contacts/Contact';
+import {Divider } from 'react-native-paper';
 import { GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive} from './AllGroups';
 
 export class ContentGroups extends React.Component {
@@ -11,10 +10,15 @@ export class ContentGroups extends React.Component {
 
             <View>
                 <GroupOne/>
+                <Divider />
                 <GroupTwo/>
+                <Divider />
                 <GroupThree/>
+                <Divider />
                 <GroupFour/>
+                <Divider />
                 <GroupFive/>
+                <Divider />
             </View>
         );
     };
