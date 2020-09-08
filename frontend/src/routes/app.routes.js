@@ -14,6 +14,11 @@ import Users from '../pages/Chat/Users/'
 import Topic from "../pages/Topics/Topic/"
 import TopicsByCategory from '../pages/Topics/TopicsByCategory'
 
+import  ContactProfile01 from '../pages/Chat/Components/Content/Messages/Contacts/Contact';
+import  GroupOne  from '../pages/Chat/Components/Content/Messages/Online/Onlines';
+
+import { OneConversationSelected } from '../pages/Chat/Components/Content/Messages/OneConversationSelected/OneConversationSelected';
+
 import {useTopic} from '../contexts/topic'
 
 
@@ -132,6 +137,8 @@ const AppRoutes = () => {
           
           headerTitle: typeof(categoryName) === 'undefined' ? '' : categoryName })} />
       <AppStack.Screen name="Response" component={Response} />
+      <AppStack.Screen name="GroupOne" component={GroupOne} />
+
     </AppStack.Navigator >
   )
 };

@@ -1,23 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
-import { List, Title } from 'react-native-paper';
+import { List, Title, Button } from 'react-native-paper';
 import { ContactProfile01, ContactProfile02 } from '../Contacts/Contact';
 
-export class GroupOne extends React.Component {
 
-    render() {
-        return (
-            <View>
-                <List.Item
-                    title="Grupo da Família"
-                    description="hahahaha"
-                    style={{ cursor: 'pointer' }}
-                    left={props => <List.Icon icon={require('../../../../../../assets/images/profile01.jpg')}
-                        style={{ height: '10px' }} />}
+export default function GroupOne({ navigation }) {
+
+    return (
+        <View>
+            <List.Item
+                title="Grupo da Família"
+                description="hahahaha"
+                style={{ cursor: 'pointer' }}
+                left={props => <List.Icon icon={require('../../../../../../assets/images/profile01.jpg')}
+                    style={{ height: '10px' }} />}
+                
                 />
-            </View>
-        );
-    };
+                <Button onPress={() => navigation.navigate(['OneConversationSelected'])} > Press me</Button>
+        </View>
+    );
 }
 
 export class GroupTwo extends React.Component {

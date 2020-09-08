@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import {Divider } from 'react-native-paper';
-import { GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive} from './AllGroups';
+import {GroupOne, GroupTwo, GroupThree, GroupFour, GroupFive} from './AllGroups';
 
 export class ContentGroups extends React.Component {
 
