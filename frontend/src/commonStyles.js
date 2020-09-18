@@ -18,6 +18,8 @@ export default {
   },
   colors: {
     default: "#7D40E7",
+    primary:'rgba(88,150,241,1)',
+    background:'rgba(69,68,68,1)',
     secondary: "",
     mainText: "#FFF",
     subText: "",

@@ -2,7 +2,8 @@ import React from "react";
 import { View } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import IconFeather from 'react-native-vector-icons/Feather'
 
 import Main from "../pages/Main/";
 import Register from "../pages/Register/";
@@ -53,94 +54,55 @@ function getHeaderVisibility(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
     : route.params?.screen || 'Mapa';
-
+  if(routeName == 'Perfil'){
+    // return true
+  }
   return routeName === "Mapa" ? false : false
 }
 
 
 const MainRoutes = () => (
   <Tab.Navigator
-    tabBarOptions={{
+  t
+    tabBarOptions={
+    {
       keyboardHidesTabBar: true,
+      tabStyle:{
+        justifyContent:'center',
+        alignItems:'center',
+        paddingBottom:2,
+        paddingTop:3
+        
+      },
       style: {
-        backgroundColor: 'rgba(96,47,158,1)',
+        backgroundColor: 'rgba(69,68,68,1)',
         borderWidth: 0,
         borderTopColor: 'transparent',
-        // borderTopRightRadius:30,
-        margin: 0,
-        paddingHorizontal: 10,
-        paddingVertical: 3,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 3,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        elevation: 6,
-        zIndex:10,
-        // marginBottom:4,
-        // marginHorizontal:6,
+          
       },
-      inactiveTintColor:'white',
-      activeTintColor:'black'
+      inactiveTintColor: 'rgba(255,255,255,.7 )',
+      activeTintColor: 'rgba(88,150,241,1)',
       
+
     }}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
-        let iconName
-        if (route.name === 'Mapa') {
-          if (focused) {
-            iconName = 'map-marker'
-            color = 'rgb(110, 122, 219)'
-          } else {
-            iconName = 'location-arrow'
-            color = 'white'
-          }
-        } else if (route.name === 'Topicos') {
-          if (focused) {
-            iconName = 'paste'
-            // color = 'rgb(110, 122, 219)'
-          }
-          else {
-            iconName = 'paste'
-            color = 'white'
-          }
+        if (route.name === 'Aulas') {
+          return <Icon name='teach' size={25} color={color} />
+        } else if (route.name === 'Tópicos') {
+          return <IconFeather name='tablet' size={25} color={color} />
         } else if (route.name === 'Chat') {
-          if (focused) {
-            iconName = 'comments'
-            color = 'rgb(110, 122, 219)'
-          }
-          else {
-            iconName = 'comments'
-            color = 'white'
-          }
-        } else if (route.name === 'Configuracoes') {
-          if (focused) {
-            iconName = 'user'
-            color = 'rgb(110, 122, 219)'
-          } else {
-            iconName = 'user'
-            color = 'white'
-          }
+          return <IconFeather name='message-square' size={25} color={color} />
+        } else if (route.name === 'Perfil') {
+          return <IconFeather name='user' size={25} color={color} />
         }
-        return <Icon name={iconName} size={28} color={color}  style={{shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 3,
-        },
-        shadowOpacity: 0.29,  
-        shadowRadius: 4.65, 
-        zIndex:30,
-        elevation: 20,}}/>
       }
 
     })}>
-    <Tab.Screen name="Mapa" component={Main} default />
-    <Tab.Screen name="Topicos" component={MainTopics}
-      options={{ headerShown: false }} />
+    <Tab.Screen name="Aulas" component={Main} default />
+    <Tab.Screen name="Tópicos" component={MainTopics}/>
     <Tab.Screen name="Chat" component={Chat} />
-    <Tab.Screen name="Configuracoes" component={Profile} />
+    <Tab.Screen name="Perfil" component={Profile} />
   </Tab.Navigator >
 )
 
@@ -152,13 +114,13 @@ const AppRoutes = () => {
     < AppStack.Navigator >
       <AppStack.Screen name="Main" component={MainRoutes}
         options={({ route }) => ({
-          style:{
-            backgroundColor:"blue"
+          style: {
+            backgroundColor: "blue"
           },
           headerTitle: getHeaderTitle(route),
           headerShown: getHeaderVisibility(route),
         })} />
-       
+
       <AppStack.Screen name="Topic" component={Topic} />
       <AppStack.Screen name="TopicsByCategory" component={TopicsByCategory}
         options={() => ({
