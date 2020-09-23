@@ -3,23 +3,26 @@ const _ = require("lodash");
 
 const Teacher = require("../models/teacher");
 const User = require('../models/user')
+const Classes = require('../models/classes');
 
 exports.create = async (req, res) => {
   const { cpf, rank } = req.body;
   // Transforma as disciplinas em um array, remove os espaços e capitaliza a primeira letra
-  const studyFields = await req.body.studyFields
-    .split(",")
-    .map((field) => field.trim());
+  const classes = req.body.classes
+  const studyFields = req.body.studyFields
+    // .split(",")
+    // .map((field) => field.trim());
 
   try {
-    if (!studyFields) {
-      return res.status(400).json({ message: "Undefined fields for study" });
-    }
-    console.log(studyFields)
+    // if (!studyFields) {
+    //   return res.status(400).json({ message: "Undefined fields for study" });
+    // }
+    console.log(classes)
     const teacher = await new Teacher({
       cpf,
       rank,
       ...studyFields,
+      classes,
       user: req.profile._id,
     });
 
@@ -114,6 +117,7 @@ exports.update = async (req, res) => {
     });
   });
 };
+
 
 //mover para users by location
 exports.teachersByLocation = async (req, res) => {

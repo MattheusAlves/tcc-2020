@@ -4,8 +4,13 @@ const teacherSchema = new mongoose.Schema(
   {
     cpf: {
       type: Number,
-      requrired: true,
+      requerid: true,
       unique: 11
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      unique: true
     },
     rank: {
       type: Number,
@@ -16,19 +21,14 @@ const teacherSchema = new mongoose.Schema(
     studyFields: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Discipline',
-      default: undefined,
-      unique: true
-
+      default:undefined
     }],
-    user: {
+    classes: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      unique: true
-    },
-    hourClassPrice:{
-      type:String,
-      required:true,
-    }
+      ref: 'Classes',
+      required: true
+    }]
+
   },
   { timestamps: true }
 )

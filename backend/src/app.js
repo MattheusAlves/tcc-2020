@@ -19,6 +19,7 @@ const userRoutes = require("./routes/user");
 const teacherRoutes = require("./routes/teacher");
 const questionRoutes = require("./routes/question");
 const disciplineRoutes = require("./routes/discipline");
+const classesRoutes = require('./routes/classes')
 
 // database
 mongoose
@@ -26,7 +27,7 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify:false
+    useFindAndModify: false
   })
   .then(() => console.log("DB Connected"));
 
@@ -43,6 +44,7 @@ app.use("/api", userRoutes);
 app.use("/api", teacherRoutes);
 app.use("/api", questionRoutes);
 app.use("/api", disciplineRoutes);
+app.use('/api', classesRoutes)
 
 
 //socket.io methods || Chat

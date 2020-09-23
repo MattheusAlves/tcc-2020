@@ -17,11 +17,13 @@ exports.userById = async (req, res, next, id) => {
   })
 }
 exports.getProfile = async (req, res) => {
-  await User.findById(id)
-    .populate('Discipline')
+  await User.findById(req.body.id)
+    .populate('disciplines')
+    .select({hashed_password:0,salt:0})
     .exec((error, user) => {
       if (error || !user) {
-        return res.status(400).json(errorHandler(error))
+        console.log(error)
+        return res.status(400).json(error)
       }
       return res.status(200).json(user)
     })

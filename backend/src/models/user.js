@@ -50,7 +50,14 @@ const userSchema = new mongoose.Schema(
     salt: {
       type: String,
     },
-
+    linkedin: {
+      type: String
+    },
+   
+   
+          github: {
+      type: String
+    },
     birthDate: {
       type: Date,
       min: '1900-01-01',
@@ -63,7 +70,7 @@ const userSchema = new mongoose.Schema(
         ref: 'Discipline',
         default: undefined,
         trim: true,
-        unique:true
+        unique: true
       }
     ]
   },

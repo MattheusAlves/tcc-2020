@@ -4,7 +4,7 @@ const router = express.Router()
 const { requireSignin, isAuth } = require('../controllers/auth')
 const { disciplineById } = require('../controllers/discipline')
 
-const { userById, update, updateLocation, disciplinesByUser } = require('../controllers/user')
+const { userById, update, updateLocation, disciplinesByUser,getProfile } = require('../controllers/user')
 
 router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
   res.json({
@@ -13,7 +13,7 @@ router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
 })
 
 router.get('/user/disciplines/:userId', disciplinesByUser)
-
+router.get('/user/profile',getProfile)
 router.put(
   '/update/disciplines/:userId',
   // requireSignin,
