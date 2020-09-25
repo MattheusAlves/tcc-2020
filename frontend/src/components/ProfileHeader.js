@@ -25,7 +25,7 @@ const components = (props, { navigation }) => {
             ]}>
                 <Animated.View style={styles.header}>
                     <Svg height="101" fill="none" xmlns="http://www.w3.org/2000/svg" style={styles.svg}>
-                        <Path fill-rule="evenodd" clip-rule="evenodd" d="M0 45.0163L17 46.8537C34 48.6911 69 52.3659 103 45.0163C137 37.6667 171 19.2927 206 24.8049C240 30.3171 274 60.6341 308 60.6341C343 60.6341 377 30.3171 394 14.6992L411 0V113H394C377 113 343 113 308 113C274 113 240 113 206 113C171 113 137 113 103 113C69 113 34 113 17 113H0V45.0163Z" fill="#0099FF" stroke="white" strokeWidth="2.2" />
+                        <Path fill-rule="evenodd" clip-rule="evenodd" d="M0 45.0163L17 46.8537C34 48.6911 69 52.3659 103 45.0163C137 37.6667 171 19.2927 206 24.8049C240 30.3171 274 60.6341 308 60.6341C343 60.6341 377 30.3171 394 14.6992L411 0V113H394C377 113 343 113 308 113C274 113 240 113 206 113C171 113 137 113 103 113C69 113 34 113 17 113H0V45.0163Z" fill="#5895F1" stroke="white" strokeWidth="2.2" />
                     </Svg>
                     <View style={styles.userInformation}>
                         <TouchableOpacity style={styles.msg}>
@@ -34,7 +34,7 @@ const components = (props, { navigation }) => {
                         <View style={styles.usernameContainer}>
                             <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">Matheus Alves Domingos</Text>
                         </View>
-                        <Avatar.Text size={74} label='MA' style={styles.avatar} />
+                        <Avatar.Text size={74} label='MA' color='white' style={styles.avatar} />
                     </View>
                 </Animated.View>
             </Animated.View>
@@ -84,13 +84,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderWidth: 2.2,
         borderColor: 'white',
-        backgroundColor: '#0099FF',
+        color:'white',
+        backgroundColor: 'rgba(88,149,241,1)',
         right: 0,
     },
     header: {
         justifyContent: 'center',
         position: 'absolute',
-        backgroundColor: 'rgba(0,153,255,.4)',
+        backgroundColor: 'rgba(0,52,130,.56)',
         paddingTop: 30
     },
     backButton: {
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         borderWidth: 2.2,
-        backgroundColor: 'rgba(0,153,255,1)',
+        backgroundColor: 'rgba(88,149,241,1)',
         borderColor: 'white',
         padding: 6,
         borderRadius: 20,

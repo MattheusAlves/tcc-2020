@@ -3,6 +3,8 @@ import common from '../../commonStyles'
 
 const WIDTH = Dimensions.get('screen').width
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -39,13 +41,53 @@ const styles = StyleSheet.create({
 
     },
     teacherInformation:{
-        marginHorizontal:6,
-        borderWidth:1,
+        // marginHorizontal:6,
+        // borderWidth:1,
         paddingHorizontal:2,
         paddingVertical:4,
         borderColor:'#E6E9F2',
         borderRadius:4,
-        backgroundColor:'#FAFAFA'
+        backgroundColor:'#FAFAFA',
+        borderColor:'#0099FF'
+    },
+    containerBio:{
+        flexDirection:'row',
+        justifyContent:'center',
+        marginVertical:5,
+        paddingHorizontal:2
+    },
+    teacherBio:{
+        width:WIDTH- 75,
+        textAlign:"justify",
+        fontSize:16,
+        color:'black',
+        fontWeight:'500'
+    },
+    quoteLeft:{
+        top:0,
+        alignSelf:'flex-start',
+        paddingHorizontal:2
+    },
+    quoteRight:{
+        alignSelf:'flex-end',
+    },
+    classes:{
+        marginHorizontal:6,
+        alignItems:'center',
+        justifyContent:'center',
+    
+    },
+    class:{
+        flex:1,
+        marginTop:2,
+        borderWidth:1,
+        height:200,
+        width:WIDTH-11,
+        paddingHorizontal:2,
+        paddingVertical:4,
+        marginRight:2,
+        borderRadius:4,
+
     }
 })
 
