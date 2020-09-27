@@ -2,6 +2,7 @@ const { errorHandler } = require('../helpers/dbErrorHandler')
 const _ = require('lodash')
 
 const User = require('../models/user')
+const Teacher = require('../models/teacher')
 const discipline = require('../models/discipline')
 
 exports.userById = async (req, res, next, id) => {
@@ -16,17 +17,30 @@ exports.userById = async (req, res, next, id) => {
     next()
   })
 }
+
 exports.getProfile = async (req, res) => {
-  await User.findById(req.body.id)
+  console.log(req.query)
+  const teacher = await Teacher.findOne({ user: req.body.id || req.query.id })
+    .populate('classes')
+    .populate('user')
+    .select({ hashed_password: 0, salt: 0 })
+    .exec()
+
+  if (teacher) {
+    return res.status(200).json(teacher)
+  }
+
+  return await User.findById(req.body.id || req.query.id)
     .populate('disciplines')
-    .select({hashed_password:0,salt:0})
+    .select({ hashed_password: 0, salt: 0 })
     .exec((error, user) => {
       if (error || !user) {
         console.log(error)
-        return res.status(400).json(error)
+        return res.status(400).json({error:error})
       }
       return res.status(200).json(user)
     })
+
 }
 
 

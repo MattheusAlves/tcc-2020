@@ -44,19 +44,23 @@ const userSchema = new mongoose.Schema(
     //   contentType: String
     // },
     location: {
-      type: pointSchema, // Guardar Location no Async Storage front?
+      type: pointSchema, 
       index: "2dsphere"
     },
     salt: {
       type: String,
     },
     linkedin: {
-      type: String
+      type: String,
+      default:undefined
     },
-   
-   
-          github: {
-      type: String
+    github: {
+      type: String,
+      default:undefined
+    },
+    phone:{
+      type:String,
+      dafault:undefined
     },
     birthDate: {
       type: Date,
