@@ -16,18 +16,13 @@ const teacherSchema = new mongoose.Schema(
       type: Number,
       min: 0,
       max: 10,
-      default: 0
+      default: undefined
     },
-    bio:{
-      type:String,
-      required:true,
-      maxlength:230
+    bio: {
+      type: String,
+      required: true,
+      maxlength: 350
     },
-    studyFields: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Discipline',
-      default:undefined
-    }],
     classes: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Classes',

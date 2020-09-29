@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
     },
     teacher: {
       type: Boolean,
-      default: false
+      default: undefined
     },
     // photo: {
     //   data: Buffer,

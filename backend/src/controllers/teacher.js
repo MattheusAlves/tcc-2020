@@ -6,42 +6,33 @@ const User = require('../models/user')
 const Classes = require('../models/classes');
 
 exports.create = async (req, res) => {
-  const { cpf, rank } = req.body;
-  // Transforma as disciplinas em um array, remove os espaços e capitaliza a primeira letra
-  const classes = req.body.classes
-  const studyFields = req.body.studyFields
+  const { cpf, rank, bio, classes } = req.body;
 
-  try {
-    const teacher = await new Teacher({
-      cpf,
-      rank,
-      ...studyFields,
-      classes,
-      user: req.profile._id,
-    });
+  const teacher = await new Teacher({
+    cpf,
+    rank,
+    bio,
+    classes,
+    user: req.profile._id,
+  });
 
-    await teacher.save((err, teacher) => {
-
-      if (err || !teacher) {
-        return res.status(400).json(errorHandler(err));
+  await teacher.save((err, teacher) => {
+    if (err || !teacher) {
+      return res.status(400).json(errorHandler(err));
+    }
+    User.findOneAndUpdate({ _id: req.profile._id }, { teacher: true }, {
+      new: true
+    }).then((error, updatedUser) => {
+      if (error || !updatedUser) {
+        return console.log(error)
       }
+      console.log(updatedUser)
+    })
 
-      User.findOneAndUpdate({ _id: req.profile._id }, { teacher: true }, {
-        new: true
-      }).then((error, updatedUser) => {
-        if (error || !updatedUser) {
-          return console.log(error)
-        }
-        console.log(updatedUser)
-      })
+    return res.status(200).json(teacher)
 
-      return res.status(200).json(teacher)
+  });
 
-    });
-  } catch (err) {
-    console.log(err)
-    return res.status(400).json({ message: "Teacher saving error" });
-  }
 };
 
 /**

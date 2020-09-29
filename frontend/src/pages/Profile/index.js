@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Animated, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import { View, Animated, Text, TouchableOpacity, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import api from '../../services/api'
@@ -9,21 +9,20 @@ import styles from './styles'
 
 const Profile = () => {
     const [scrollY] = useState(new Animated.Value(0))
-    const [profile, setProfile] = useState({user:''})
+    const [profile, setProfile] = useState()
     const [teacher, setTeacher] = useState(false)
-
     const colors = useRef(['#6C00F6', '#FF0000', '#108DD3', '#FF5C00', '#FF9900', '#24B400', '#0075FF', '#E09017', '#6C00F6',
         '#FF0000', '#108DD3', '#FF5C00', '#FF9900', '#24B400', '#0075FF', '#E09017', '#6C00F6', '#FF0000', '#108DD3', '#FF5C00',
         '#FF9900', '#24B400', '#0075FF', '#E09017', '#6C00F6', '#FF0000', '#108DD3', '#FF5C00', '#FF9900', '#24B400', '#0075FF',
-        '#E09017'])
+        '#E09017']).current
 
     useEffect(() => {
         api.get('/user/profile', {
             params: {
-                id: '5f70e16f12169404246d9c2f'
+                id: '5f72501058028435b4ad5782'
             }
         }).then(profile => {
-            if (profile.data.teacher == true) {
+            if (profile.data.user.teacher) {
                 setTeacher(true)
             }
             setProfile(profile.data)
@@ -32,11 +31,15 @@ const Profile = () => {
         })
     }, [])
     useEffect(() => {
-        console.log(profile)
-        console.log(teacher)
+    console.log(profile)
     }, [profile])
-    return (
-        <Header scrollY={scrollY}>
+
+    return !profile ?
+        <View style={{ flex: 1, backgroundColor: 'white', alignItems: "center", justifyContent: 'center' }}>
+            <ActivityIndicator size={50} />
+        </View>
+        : // active indicator
+        <Header scrollY={scrollY} name={profile.user.name} >
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <Animated.ScrollView
@@ -76,7 +79,7 @@ const Profile = () => {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                            {profile.user.teacher == true ? <>
+                            {teacher == true ? <>
                                 <TouchableOpacity style={styles.teacherChat}>
                                     <Text style={styles.teacherChatTxt}>Envie uma mensagem para este professor</Text>
                                 </TouchableOpacity>
@@ -84,8 +87,8 @@ const Profile = () => {
                                 <View style={styles.teacherInformation}>
                                     <View style={styles.containerBio}>
                                         <Icon size={20} name="quote-left" color='gray' style={styles.quoteLeft} />
-                                        <Text style={styles.teacherBio}>{profile.teacher.bio}
-                                    <Icon size={20} name="quote-right" color='gray' style={styles.quoteRight} /></Text>
+                                        <Text style={styles.teacherBio}>{profile.bio}
+                                            <Icon size={20} name="quote-right" color='gray' style={styles.quoteRight} /></Text>
                                     </View>
                                 </View>
 
@@ -93,24 +96,29 @@ const Profile = () => {
                                     horizontal={true}
                                     contentContainerStyle={styles.classes}
                                     showsHorizontalScrollIndicator={false}>
-                                    <TouchableOpacity>
-                                        <View style={[styles.class, { backgroundColor: colors.current[0] }]}>
-                                            <CardSvg style={styles.svg} />
-                                            <Text style={styles.classTitle}>Português</Text>
-                                            <Text style={styles.classPrice}>Preço da hora aula  </Text>
-                                            <Text style={styles.classPrice}>R$:12,50</Text>
-                                            <Text style={styles.rank}>12 Avaliações. Nota: 8</Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                    {profile.classes.map((classe,index) => {
+
+                                        return <TouchableOpacity>
+                                            <View style={[styles.class, { backgroundColor: colors[index] }]}>
+                                                <CardSvg style={styles.svg} />
+                                                <Text style={styles.classTitle}>{classe.discipline.disciplineName}</Text>
+                                                <Text style={styles.classPrice}>Preço da hora aula  </Text>
+                                                <Text style={styles.classPrice}>{`R$:${classe.hourClassPrice}`}</Text>
+                                                <Text style={styles.rank}>12 Avaliações. Nota: 8</Text>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    })}
                                 </ScrollView>
                             </> : <></>}
                         </View>
                     </Animated.ScrollView>
                 </View>
             </SafeAreaView>
-
         </Header>
-    )
+
+
+
 }
 
 export default Profile;

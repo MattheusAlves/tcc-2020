@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, Dimensions, StyleSheet, Animated, TouchableOpacity, SafeAreaView } from 'react-native';
 import Svg, { Path } from 'react-native-svg'
 import { Avatar } from 'react-native-paper';
@@ -6,6 +6,10 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import IconMessage from 'react-native-vector-icons/Entypo'
 
 const components = (props, { navigation }) => {
+
+    let name = useRef(props.name.split(" ")).current
+    name = name[0].charAt(0).concat(name[1].charAt(0)).toUpperCase()
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.topNavigator} >
@@ -29,12 +33,12 @@ const components = (props, { navigation }) => {
                     </Svg>
                     <View style={styles.userInformation}>
                         <TouchableOpacity style={styles.msg}>
-                            <IconMessage name="message" size={33} color='white'/>
+                            <IconMessage name="message" size={33} color='white' />
                         </TouchableOpacity>
                         <View style={styles.usernameContainer}>
-                            <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">Matheus Alves Domingos</Text>
+                            <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">{props.name}</Text>
                         </View>
-                        <Avatar.Text size={74} label='MA' color='white' style={styles.avatar} />
+                        <Avatar.Text size={74} label={name} color='white' style={styles.avatar} />
                     </View>
                 </Animated.View>
             </Animated.View>
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderWidth: 2.2,
         borderColor: 'white',
-        color:'white',
+        color: 'white',
         backgroundColor: 'rgba(88,149,241,1)',
         right: 0,
     },

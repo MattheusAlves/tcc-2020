@@ -19,9 +19,13 @@ exports.userById = async (req, res, next, id) => {
 }
 
 exports.getProfile = async (req, res) => {
-  console.log(req.query)
   const teacher = await Teacher.findOne({ user: req.body.id || req.query.id })
-    .populate('classes')
+    .populate({
+      path: 'classes',
+      populate: {
+        path: 'discipline'
+      }
+    })
     .populate('user')
     .select({ hashed_password: 0, salt: 0 })
     .exec()
@@ -36,7 +40,7 @@ exports.getProfile = async (req, res) => {
     .exec((error, user) => {
       if (error || !user) {
         console.log(error)
-        return res.status(400).json({error:error})
+        return res.status(400).json({ error: error })
       }
       return res.status(200).json(user)
     })
