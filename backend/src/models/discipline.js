@@ -21,8 +21,7 @@ const disciplineSchema = new mongoose.Schema({
   //   trim: true
   // },
   related: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Discipline',
+    type: String,
     default: undefined
 
   }]

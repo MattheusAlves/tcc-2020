@@ -1,11 +1,10 @@
 import React from "react";
-import { View } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconFeather from 'react-native-vector-icons/Feather'
 
-import Main from "../pages/Main/";
+import Classes from "../pages/Classes";
 import Register from "../pages/Register/";
 import Settings from "../pages/Settings/";
 import MainTopics from "../pages/Topics/Main/";
@@ -16,7 +15,6 @@ import Topic from "../pages/Topics/Topic/"
 import TopicsByCategory from '../pages/Topics/TopicsByCategory'
 import Profile from '../pages/Profile/'
 
-import ConnectionError from '../components/ConnectionError'
 
 import { useCategory } from '../contexts/category'
 
@@ -99,7 +97,7 @@ const MainRoutes = () => (
       }
 
     })}>
-    <Tab.Screen name="Aulas" component={Main} default />
+    <Tab.Screen name="Aulas" component={Classes} default />
     <Tab.Screen name="Tópicos" component={MainTopics}/>
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Perfil" component={Profile} />
