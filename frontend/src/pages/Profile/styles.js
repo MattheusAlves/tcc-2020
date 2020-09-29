@@ -54,14 +54,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 5,
-        paddingHorizontal: 2
+        marginHorizontal: 6,
+        paddingHorizontal: 2,
+        paddingVertical:10,
+        borderWidth:1,
+        borderColor: 'lightgray',
+        borderRadius:6,
     },
     teacherBio: {
         width: WIDTH - 75,
         textAlign: "justify",
         fontSize: 16,
         color: 'black',
-        fontWeight: '500'
+        fontWeight: '500',
     },
     quoteLeft: {
         top: 0,

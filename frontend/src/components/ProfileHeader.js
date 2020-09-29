@@ -5,15 +5,18 @@ import { Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign'
 import IconMessage from 'react-native-vector-icons/Entypo'
 
-const components = (props, { navigation }) => {
+const components = (props) => {
 
     let name = useRef(props.name.split(" ")).current
-    name = name[0].charAt(0).concat(name[1].charAt(0)).toUpperCase()
-
+    if (name.length >= 2) {
+        name = name[0].charAt(0).concat(name[1].charAt(0)).toUpperCase()
+    } else {
+        name = name[0].charAt(0)
+    }
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.topNavigator} >
-                <TouchableOpacity style={styles.backButton}>
+                <TouchableOpacity style={styles.backButton} onPress={() => props.navigation.goBack()}>
                     <Icon size={45} name="leftcircle" color='white' />
                 </TouchableOpacity>
             </View>
