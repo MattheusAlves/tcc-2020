@@ -1,5 +1,6 @@
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const Classes = require('../models/classes');
+const Teacher = require('../models/teacher')
 
 
 exports.createClasses = async (req, res) => {
@@ -16,3 +17,8 @@ exports.createClasses = async (req, res) => {
     })
 
 }
+
+exports.classesByLocation = async (req, res) => {
+
+}
+// Pesquisar professores proximos -> Trazer Aula de professores próximos

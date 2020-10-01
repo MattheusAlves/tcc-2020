@@ -50,7 +50,7 @@ const Topic = ({ navigation }) => {
   }, [userDisciplines])
 
   async function getUserDisciplines() {
-    return api.get(`/user/disciplines/5e8ce51e78cbad20d0228d6f`).then((response) => {
+    return api.get(`/user/disciplines/5f732beb879d831ea4449235`).then((response) => {
       error === true ? setError(false) : ''
       const formatedUserDisciplines = response.data.disciplines.map((discipline) => {
         return { name: discipline.disciplineName, id: discipline._id }

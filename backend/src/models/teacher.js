@@ -15,7 +15,7 @@ const teacherSchema = new mongoose.Schema(
     rank: {
       type: Number,
       min: 0,
-      max: 10,
+      max: 5,
       default: undefined
     },
     bio: {
@@ -23,12 +23,20 @@ const teacherSchema = new mongoose.Schema(
       required: true,
       maxlength: 350
     },
+    academicFormation: {
+      type: String,
+      maxlength: 150
+    },
     classes: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Classes',
       required: true
+    }],
+    pupils: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: undefined
     }]
-
   },
   { timestamps: true }
 )
