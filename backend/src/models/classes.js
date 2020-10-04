@@ -11,7 +11,8 @@ const classesSchema = new mongoose.Schema({
         required: true,
         set: setPrice,
         get: getPrice
-    }
+    },
+    
 }, { timestamps: true })
 
 // Getter

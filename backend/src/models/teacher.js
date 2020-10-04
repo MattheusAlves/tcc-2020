@@ -1,5 +1,19 @@
 const mongoose = require('mongoose')
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: "Point",
+    required: true
+  },
+  coordinates: {
+    //<longitude>,<latitude>
+    type: [Number],
+    required: true
+  }
+})
+
 const teacherSchema = new mongoose.Schema(
   {
     cpf: {
@@ -26,6 +40,11 @@ const teacherSchema = new mongoose.Schema(
     academicFormation: {
       type: String,
       maxlength: 150
+    },
+    location: {
+      type: pointSchema,
+      index: '2dsphere',
+      required: true
     },
     classes: [{
       type: mongoose.Schema.Types.ObjectId,
