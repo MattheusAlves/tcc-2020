@@ -6,14 +6,13 @@ const User = require('../models/user')
 const Classes = require('../models/classes');
 
 exports.create = async (req, res) => {
-  const { cpf, rank, bio, classes,location } = req.body;
+  const { cpf, rank, bio, location } = req.body;
 
   const teacher = await new Teacher({
     cpf,
     rank,
     bio,
     location,
-    classes,
     user: req.profile._id,
   });
 

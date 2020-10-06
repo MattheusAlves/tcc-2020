@@ -12,7 +12,12 @@ const classesSchema = new mongoose.Schema({
         set: setPrice,
         get: getPrice
     },
-    
+    teacher: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Teacher',
+        required: true
+    }
+
 }, { timestamps: true })
 
 // Getter

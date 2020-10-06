@@ -46,11 +46,11 @@ const teacherSchema = new mongoose.Schema(
       index: '2dsphere',
       required: true
     },
-    classes: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Classes',
-      required: true
-    }],
+    // classes: [{
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'Classes',
+    //   required: true
+    // }],
     pupils: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
