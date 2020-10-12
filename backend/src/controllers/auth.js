@@ -23,7 +23,6 @@ exports.signup = async (req, res) => {
 exports.signin = (req, res) => {
   // find the user based on email
   const { email, password } = req.body
-  console.log(password)
   User.findOne({ email }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
@@ -58,6 +57,7 @@ exports.signout = async (req, res) => {
 }
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
+  algorithms: ['sha1', 'RS256', 'HS256'], // adicionado 09/10
   userProperty: 'auth'
 })
 exports.isAuth = async (req, res, next) => {

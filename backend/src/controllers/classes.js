@@ -1,9 +1,6 @@
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const Classes = require('../models/classes');
-const teacher = require("../models/teacher");
 const Teacher = require('../models/teacher');
-const User = require('../models/user')
-const { unsubscribe } = require("../routes/classes");
 
 
 exports.createClasses = async (req, res) => {
@@ -22,10 +19,10 @@ exports.createClasses = async (req, res) => {
 
 }
 
+
 exports.classesByLocation = async (req, res) => {
 
-    const { coordinates, limit, distance } = req.body
-
+    const { coordinates, limit, distance } = req.query.coordinates ? req.query : req.body
 
     let teachers = await Teacher.find({
         location: {
@@ -41,17 +38,69 @@ exports.classesByLocation = async (req, res) => {
         .limit(parseInt(limit, 10))
         .select('_id')
         .exec()
+    console.log(teachers)
 
     teachers = teachers.map((teacher) => teacher._id)
 
     await Classes.aggregate(
-        [{
-            $match: {
-                teacher: {
-                    $in: teachers
+        [
+           
+            {
+                $match: {
+                    teacher: {
+                        $in: teachers
+                    }
+                },
+            },
+            {
+                $lookup: {
+                    from: 'teachers',
+                    localField: 'teacher',
+                    foreignField: '_id',
+                    as: 'teacher'
+                }
+            },
+            {$unwind:"$teacher"},
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'teacher.user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {$unwind:"$user"},
+            {
+                $lookup: {
+                    from: "disciplines",
+                    localField: 'discipline',
+                    foreignField: '_id',
+                    as: 'discipline'
+                }
+            },
+            {$unwind:"$discipline"},
+            {
+                $project: {
+                    'teacher.updatedAt': 0,
+                    'teacher.__v': 0,
+                    'teacher.location': 0,
+                    'user.hashed_password': 0,
+                    'user.birthDate': 0,
+                    'user.updatedAt': 0,
+                    'user.createdAt': 0,
+                    'user.disciplines': 0,
+                    'user.salt': 0,
+                    'user.__v': 0,
+                    '__v': 0,
+                    'discipline.createdAt': 0,
+                    'discipline.updatedAt': 0,
+                    'discipline.relatedDisciplines': 0,
+                    'discipline.__v': 0
+
+
                 }
             }
-        }]
+        ]
     ).exec((error, result) => {
         if (error || !result) {
             if (error) {
@@ -63,40 +112,13 @@ exports.classesByLocation = async (req, res) => {
     })
 
 
-
-    //     .populate({
-    //         path: 'user',
-    //         select: {
-    //             'salt': 0,
-    //             'updatedAt': 0,
-    //             'github': 0,
-    //             'linkedin': 0,
-    //             'phone': 0,
-    //             'hashed_password': 0,
-    //             // 'createdAt': 0
-    //         }
-    //     })
-    //     .populate({
-    //         path: 'classes',
-    //         populate: {
-    //             path: 'discipline',
-    //         },
-    //     })
-    //     .limit(parseInt(limit, 10))
-    //     .select({ "bio": 0, 'updatedAt': 0 })
-    //     .exec((err, classe) => {
-    //         if (err || !classe) {
-    //             if (err) {
-    //                 console.log(err)
-    //                 return res.status(400).json({ error: err })
-    //             }
-    //             else {
-    //                 return res.status(404).json({ erorr: 'classes not found' })
-    //             }
-    //         }
-    //         return res.status(200).json(classe)
-
-    //     })
-
 }
 // Pesquisar professores proximos -> Trazer Aula de professores próximos
+
+exports.allClasses = async(req,res) => {
+
+    await Classes.find().exec((error,result) => {
+        return res.status(200).json(result)
+    })
+
+}

@@ -9,7 +9,7 @@ import {
   AsyncStorage,
   ImageBackground,
 } from "react-native";
-import { Icon, Avatar } from "react-native-elements";
+// import { Icon, Avatar } from "react-native-elements";
 import api from "../../services/api";
 import { useAuth } from "../../contexts/auth";
 import { styles } from "./style";

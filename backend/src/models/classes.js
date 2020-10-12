@@ -18,7 +18,11 @@ const classesSchema = new mongoose.Schema({
         required: true
     }
 
-}, { timestamps: true })
+}, {
+    timestamps: true,
+    toObject: { getters: true },
+    toJSON: { getters: true }
+})
 
 // Getter
 function getPrice(num) {
