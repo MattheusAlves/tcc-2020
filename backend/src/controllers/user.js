@@ -3,7 +3,6 @@ const _ = require('lodash')
 
 const User = require('../models/user')
 const Teacher = require('../models/teacher')
-const discipline = require('../models/discipline')
 
 exports.userById = async (req, res, next, id) => {
   await User.findById(id).exec((err, user) => {
@@ -100,29 +99,3 @@ exports.updateLocation = async (req, res) => {
   })
 }
 
-exports.disciplinesByUser = async (req, res) => {
-  User.findById(req.profile._id)
-    .select('disciplines')
-    .populate("disciplines")
-    .exec((error, user) => {
-      if (error) {
-        console.log(error)
-        return res.status(400).json(errorHandler(error))
-      }
-      console.log(user)
-      return res.status(200).json(user)
-    })
-  //   await User.findById(req.profile._id).exec(async (error, user) => {
-  //   if (error) {
-  //     return res.status(400).json({ error: errorHandler(error) })
-  //   }
-  //   console.log(req.profile._id)
-  //   await user.populate('disciplines').execPopulate().then((user) => {
-  //     console.log(user)
-  //   })
-  //   user.hashed_password = ''
-  //   user.salt = ''
-  //   // console.log(user.disciplines)
-  //   return res.status(200).json(user.disciplines)
-  // })
-}

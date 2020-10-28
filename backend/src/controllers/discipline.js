@@ -1,6 +1,7 @@
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 const Discipline = require("../models/discipline");
+const User = require('../models/user')
 
 exports.create = async (req, res) => {
   const discipline = new Discipline(req.body);
@@ -51,12 +52,15 @@ exports.remove = async (req, res) => {
       .json({ deletedDiscipline, message: "Discipline deleted succesfully" });
   });
 };
+
 //autocomplete INPUT
 exports.searchDisciplines = async (req, res) => {
-  console.log(req.query.value)
-  const query = req.query.value
+  const query = req.query.disciplineName
+  if (query.length < 3) {
+    return res.status(200).json([])
+  }
   await Discipline.find({ "disciplineName": new RegExp(query, 'i') })
-  .select('disciplineName')
+    .select('disciplineName')
     .limit(4)
     .exec((error, result) => {
       if (error) {
@@ -66,4 +70,18 @@ exports.searchDisciplines = async (req, res) => {
         return res.status(200).json(result)
       }
     })
+}
+
+exports.disciplinesByUser = async (req, res) => {
+  User.findById(req.profile._id)
+    .select('disciplines')
+    .populate("disciplines")
+    .exec((error, user) => {
+      if (error) {
+        console.log(error)
+        return res.status(400).json(errorHandler(error))
+      }
+      return res.status(200).json(user)
+    })
+
 }
