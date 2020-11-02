@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useReducer, useRef } from 'react';
-import { Text, View, SafeAreaView, StatusBar, ScrollView, TouchableOpacity, ActivityIndicator, Alert, Modal } from 'react-native';
-import * as Location from 'expo-location';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import RangeSlider, { Slider } from 'react-native-range-slider-expo';
+import React, { useEffect, useState, useReducer, useCallback } from 'react';
+import {
+  Text, View, SafeAreaView, StatusBar, ScrollView,
+  TouchableOpacity, ActivityIndicator, Alert, Dimensions, RefreshControl
+} from 'react-native';
+import Modal from 'react-native-modal';
+import Slider from '@ptomasroos/react-native-multi-slider'
 
 import styles from './style'
 import SearchHeader from '../../components/SearchHeader'
 import api from '../../services/api'
 import Avatar from '../../components/Avatar'
+import GetLocation from './utils/getLocation'
+import NotFoundError from '../../components/Error/NotFoundError'
 
 import { useLocation } from '../../contexts/location'
 
@@ -17,152 +21,209 @@ function reducer(state, action) {
       return { limit: state.limit + 1 }
     case 'decrementLimit':
       return { limit: state.limit - 1 }
-    case 'incrementDistance':
-      return { distance: state.distance + 2000 }
-    case 'decrementDistance':
-      return { distance: state.distance - 2000 }
     default:
       throw new Error()
   }
 }
 
 
-function Classes() {
-  const [classes, setClasses] = useState()
+function Classes({ navigation }) {
+  const [classes, setClasses] = useState(null)
   const [location, setLocation] = useState({ latitude: null, longitude: null })
-  const [state, dispatch] = useReducer(reducer, { limit: 10, distance: 2000 });
+  const [state, dispatch] = useReducer(reducer, { limit: 10 })
   const [locationError, setLocationError] = useState(false)
-  const [alertMessage, setAlertMessage] = useState('')
   const [modalVisibility, setModalVisibility] = useState(false)
-  const [distance, setDistance] = useState(0)
+  const [distance, setDistance] = useState(2000)
+  const [disciplineToSearch, setDisciplineToSearch] = useState(false)
+  const [classesNotFound, setClassesNotFound] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
-  const alertMessageDisableLocation = useRef('Por favor, ative o GPS em configurações').current
-  const alertMessageAllowLocation = useRef("Por favor, permita o acesso à sua localização").current
   const { storedLocation, storeLocation } = useLocation()
+  const TopicDashboardNavigation = () => navigation.navigate('TopicDashboard')
 
   useEffect(() => {
-    (async () => {
-      try {
-        const active = await Location.hasServicesEnabledAsync() // vm catch here
-        if (!active) {
-          setLocationError(true)
-          setAlertMessage(alertMessageDisableLocation)
-        }
-        let { status } = await Location.requestPermissionsAsync();
-        if (status !== 'granted') {
-          setLocationError(true)
-          setAlertMessage(alertMessageAllowLocation)
-        }
-        const locationCurrent = await Location.getCurrentPositionAsync({});
-        const { latitude, longitude } = locationCurrent.coords
-        if (latitude && longitude) {
-          setLocation({ latitude, longitude })
-          storeLocation({ latitude, longitude })
-        }
-      } catch (exception) {
-        getLastKnowLocation()
-      }
-    })();
-
+    resolvLocation()
   }, [])
 
-  useEffect(() => {
-    (async () => {
-      console.log(location)
-      if (location && location.longitude != null && location.latitude != null)
-        api.get('/classes/by/location', {
-          params: {
-            coordinates: [-70.95614061, 40.23197035],
-            //  [location.longitude, location.latitude],
-            limit: state.limit,
-            distance: state.distance
-          }
+  const resolvLocation = async () => {
+    return new Promise(async (resolve, reject) => {
+      GetLocation()
+        .then((result) => {
+          console.log("executou location")
+          setLocation({ latitude: result.latitude, longitude: result.longitude })
+          storeLocation({ latitude: result.latitude, longitude: result.longitude })
+          resolve()
         })
-          .then((result) => {
-            setClasses(result.data)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-    })()
-  }, [location])
-
-  const getLastKnowLocation = async () => {
-    try {
-      const locationLastKnown = await Location.getLastKnownPositionAsync()
-      const { latitude, longitude } = locationLastKnown.coords
-      if (latitude && longitude) {
-        setLocation({ latitude, longitude })
-      }
-    } catch (e) {
-      if (storedLocation.latitude && storedLocation.longitude) {
-        setLocation({ latitude: storedLocation.latitude, longitude: storedLocation.longitude })
-      } else
-        console.log('exception get last now location', e)
-    }
+        .catch((err) => {
+          getLastKnowLocation()
+            .then((location) => {
+              setLocation({ latitude: location.latitude, longitude: location.longitude })
+              resolve()
+            })
+            .catch((error) => {
+              console.log(err)
+              createButtonAlert(err)
+              setLocationError(true)
+              reject()
+            })
+        })
+    })
   }
 
-  const createButtonAlert = () =>
+
+  useEffect(() => {
+    if (location && location.longitude != null && location.latitude != null) {
+      api.get('/classes/by/location/5f90eede31c51923884aefac', {
+        params: {
+          //<[longitude],[latitude]>
+          coordinates: JSON.stringify(location),
+          limit: JSON.stringify(state.limit),
+          distance: JSON.stringify(distance),
+          disciplineToSearch: disciplineToSearch ? JSON.stringify(disciplineToSearch) : null
+        }
+      })
+        .then((result) => {
+          console.log('length:', result.data.length)
+          if (result.data.length === 0) {
+            setClassesNotFound(true)
+          } else {
+            setClasses(result.data)
+            classesNotFound ? setClassesNotFound(false) : ''
+            refreshing ? setRefreshing(false) : ''
+          }
+          console.log(result.data)
+          console.log("Setou classes")
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [location, distance, disciplineToSearch])
+
+
+  const getLastKnowLocation = () => {
+    return new Promise(async (resolve, reject) => {
+      if (storedLocation.latitude && storedLocation.longitude) {
+        resolve({ latitude: storedLocation.latitude, longitude: storedLocation.longitude })
+      }
+      reject()
+    })
+  }
+
+  const onRefresh = () => {
+    setRefreshing(true)
+    disciplineToSearch ? setDisciplineToSearch(false) : ''
+    resolvLocation()
+
+  }
+
+  const searchDisciplines = (discipline) => {
+    setClasses(null)
+    setDisciplineToSearch(new Array(discipline))
+  }
+  const createButtonAlert = (message) =>
     Alert.alert(
       "Localização",
-      alertMessage,
+      message,
       [
         { text: "OK", onPress: () => console.log("OK Pressed") }
       ],
       { cancelable: false }
     );
 
-  return !classes ?
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
-      <StatusBar barStyle='light-content' backgroundColor='white' />
-      <ActivityIndicator size={55} color='rgba(138,171,255,1)' />
-      {locationError == true && createButtonAlert()}
-    </View>
-    :
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <StatusBar barStyle='light-content' backgroundColor='rgba(138,171,255,1)' />
-      <SearchHeader setModalVisibility={setModalVisibility} />
+
+  function ModalComponent() {
+    return (
+
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisibility}
-        onRequestClose={() => {
-        }}
-      >
-        <View style={{ flex: 1, marginLeft: 10, marginRight: 10, alignItems: "stretch", justifyContent: "center", zIndex: 10 }}>
-       
+        isVisible={modalVisibility}
+        useNativeDriver={true}
+        onBackdropPress={() => setModalVisibility(false)}>
+        <View style={{ height: 100, padding: 20, alignItems: "center", justifyContent: 'center', borderRadius: 8 }}>
+          <Text style={styles.labelMaxDistance}>Distância Máxima<Text style={styles.meters}>(metros)</Text></Text>
+          <Slider
+            min={2000}
+            max={26000}
+            values={[distance]}
+            enabledTwo={false}
+            enableLabel={true}
+            step={2000}
+            onValuesChangeFinish={(e) => {
+              setDistance(e[0])
+              setModalVisibility(false)
+            }}
+            markerStyle={{ width: 26, height: 26, backgroundColor: 'rgb(89,126,255)' }}
+            markerContainerStyle={{ justifyContent: 'center', alignSelf: "center", marginTop: 2 }}
+            selectedStyle={{ backgroundColor: 'rgb(89,126,255)' }}
+            trackStyle={{ height: 6 }}
+          />
         </View>
       </Modal>
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          {classes.map((classe) => (
-            < View style={styles.class} key={classe._id}>
-              <View style={styles.content} >
-                <View style={styles.profile}>
-                  <Text style={styles.teacher}>Professor</Text>
-                  <TouchableOpacity>
-                    <Avatar size={65} name={classe.user.name} style={styles.avatar} color='white' />
-                    <Text style={styles.teacherName} numberOfLines={1}>{classe.user.name}</Text>
-                  </TouchableOpacity>
-                </View>
 
-                <View style={styles.classInformation}>
-                  <Text style={styles.discipline}>{classe.discipline.disciplineName}</Text>
-                  <Text style={styles.price}>{`Preço da hora Aula R$:${classe.hourClassPrice}`}</Text>
-                  <Text style={styles.distance}>Há 15 metros de você</Text>
-                </View>
-              </View>
-              <TouchableOpacity style={styles.classEnrollmentContainer}>
-                <Text style={styles.classEnrollment}>Matricular-se</Text>
-              </TouchableOpacity>
-            </View>
+    )
+  }
 
-          ))}
-        </ScrollView>
+
+  return <View style={{ flex: 1 }}>
+    <StatusBar barStyle='light-content' backgroundColor='rgba(138,171,255,1)' />
+    <SearchHeader setModalVisibility={setModalVisibility} search={searchDisciplines} />
+    <ModalComponent />
+    {!classes && !classesNotFound &&
+      (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+        <ActivityIndicator size={55} color='rgba(138,171,255,1)' />
       </View>
-    </SafeAreaView >
+      )}
 
+    {!classes && classesNotFound &&
+      <View style={{ height: Dimensions.get('screen').height - 135 }}>
+        < NotFoundError
+          buttonText="ver disciplinas"
+          message="Desculpe! Ainda não existe nenhum professor para estas disciplinas na redondezas"
+          press={TopicDashboardNavigation} />
+      </View>
+    }
+    {classes &&
+      < SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={styles.container}>
+          <ScrollView contentContainerStyle={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            {classes.map((classe) => (
+
+              <View style={styles.class} key={classe._id}>
+                <Text style={styles.disciplines}>{classe.discipline.disciplineName}</Text>
+                <View style={styles.content} >
+
+                  <View style={styles.profile}>
+                    <Text style={styles.teacher}>Professor</Text>
+                    <TouchableOpacity>
+                      <Avatar size={65} name={classe.user.name} style={styles.avatar} color='white' />
+                      <Text style={styles.teacherName} numberOfLines={1}>{classe.user.name}</Text>
+                    </TouchableOpacity>
+                  </View>
+                  {console.log(classe._id)}
+                  <View style={styles.classInformation}>
+                    <Text style={styles.price}>
+                      {`Preço da hora Aula R$:${(classe.hourClassPrice / 100).toFixed(2).replace(".", ",")}`}
+                    </Text>
+                    <Text style={styles.distance}>{`À ${classe.teacher.distance} metros de você`}</Text>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.classEnrollmentContainer}
+                  onPress={() => navigation.navigate("Enroll", { classe: classe })}>
+                  <Text style={styles.classEnrollment} >Matricular-se</Text>
+                </TouchableOpacity>
+              </View>
+
+            ))
+            }
+          </ScrollView>
+        </View>
+      </SafeAreaView >
+    }
+
+  </View>
 }
+
+
 export default Classes
 
 

@@ -14,6 +14,7 @@ import Users from '../pages/Chat/Users/'
 import Topic from "../pages/Topics/Topic/"
 import TopicsByCategory from '../pages/Topics/TopicsByCategory'
 import Profile from '../pages/Profile/'
+import Enroll from '../pages/Classes/enroll'
 
 
 import { useCategory } from '../contexts/category'
@@ -52,7 +53,7 @@ function getHeaderVisibility(route) {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
     : route.params?.screen || 'Mapa';
-  if(routeName == 'Perfil'){
+  if (routeName == 'Perfil') {
     // return true
   }
   return routeName === "Mapa" ? false : false
@@ -61,28 +62,28 @@ function getHeaderVisibility(route) {
 
 const MainRoutes = () => (
   <Tab.Navigator
-  t
+    t
     tabBarOptions={
-    {
-      keyboardHidesTabBar: true,
-      tabStyle:{
-        justifyContent:'center',
-        alignItems:'center',
-        paddingBottom:2,
-        paddingTop:3
-        
-      },
-      style: {
-        backgroundColor: 'rgba(69,68,68,1)',
-        borderWidth: 0,
-        borderTopColor: 'transparent',
-          
-      },
-      inactiveTintColor: 'rgba(255,255,255,.7 )',
-      activeTintColor: 'rgba(88,150,241,1)',
-      
+      {
+        keyboardHidesTabBar: true,
+        tabStyle: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingBottom: 2,
+          paddingTop: 3
 
-    }}
+        },
+        style: {
+          backgroundColor: 'rgba(69,68,68,1)',
+          borderWidth: 0,
+          borderTopColor: 'transparent',
+
+        },
+        inactiveTintColor: 'rgba(255,255,255,.7 )',
+        activeTintColor: 'rgba(88,150,241,1)',
+
+
+      }}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         if (route.name === 'Aulas') {
@@ -98,7 +99,7 @@ const MainRoutes = () => (
 
     })}>
     <Tab.Screen name="Aulas" component={Classes} default />
-    <Tab.Screen name="Tópicos" component={MainTopics}/>
+    <Tab.Screen name="Tópicos" component={MainTopics} />
     <Tab.Screen name="Chat" component={Chat} />
     <Tab.Screen name="Perfil" component={Profile} />
   </Tab.Navigator >
@@ -136,7 +137,9 @@ const AppRoutes = () => {
           headerTitleAlign: 'center',
           headerTitle: typeof (categoryName) === 'undefined' ? '' : categoryName
         })} />
+      <AppStack.Screen name="TopicDashboard" component={Dashboard} />
       <AppStack.Screen name="Response" component={Response} />
+      <AppStack.Screen name="Enroll" component={Enroll} />
     </AppStack.Navigator >
   )
 };

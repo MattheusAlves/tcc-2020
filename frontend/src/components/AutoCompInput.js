@@ -4,7 +4,6 @@ import { View, TouchableOpacity, Text, StyleSheet, Dimensions, TextInput } from 
 import Autocomplete from 'react-native-autocomplete-input'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import api from '../services/api'
-import { Divider } from 'react-native-paper'
 
 const AutoCompInput = (props) => {
     const [query, setQuery] = useState('')

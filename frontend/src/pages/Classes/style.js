@@ -14,17 +14,19 @@ const styles = StyleSheet.create({
         width: WIDTH,
         alignItems: 'center',
         backgroundColor: '#fff',
-        padding:4
+        padding: 4
     },
     class: {
         width: WIDTH - 40,
-        height: 240,
+        height: 260,
         backgroundColor: 'rgb(89,126,255)',
         marginTop: 15,
         borderRadius: 8,
         paddingHorizontal: 8,
         paddingVertical: 8,
-        
+        borderWidth:2,
+        borderColor:'black'
+
     },
     content: {
         flexDirection: "row",
@@ -63,18 +65,20 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         paddingLeft: 10
     },
-    discipline: {
-        fontSize: 20,
-        fontWeight: 'bold'
+    disciplines: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign:'center',
+        textTransform:'uppercase',
+        color:'white'
     },
     price: {
-        fontSize: 16,
-        fontWeight: '700',
+        fontSize: 18,
+        fontWeight: 'bold',
         flexWrap: 'wrap',
-        marginTop: 15,
     },
     distance: {
-        fontSize: 14,
+        fontSize: 16,
         marginTop: 20,
     },
     classEnrollmentContainer: {
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
         width: 134,
         borderWidth: 2,
         borderColor: 'black',
-        marginTop: 20,
+        marginTop: 10,
         borderRadius: 4,
         backgroundColor: 'white',
         // backgroundColor: '#FFA500'
@@ -94,6 +98,30 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '700',
         textTransform: 'uppercase'
+    },
+    customLabelSlider: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#ffff',
+        alignItems: "center",
+        justifyContent: 'center'
+
+    },
+    labelMaxDistance: {
+        fontSize: 20,
+        color: '#fff',
+        fontWeight:'bold',
+        marginBottom:35,
+        textDecorationColor:'#000',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: {width: 2, height: 1},
+        textShadowRadius: 10,
+        textDecorationStyle:"dashed",
+        textTransform:"uppercase"
+    },
+    meters:{
+        textTransform:'lowercase'
     }
 
 

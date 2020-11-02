@@ -24,6 +24,7 @@ const Chat = (props) => {
         console.log(err)
         return
       }
+      console.log(data)
       setChatMessages(oldMessages => [...oldMessages, data])
     })
 

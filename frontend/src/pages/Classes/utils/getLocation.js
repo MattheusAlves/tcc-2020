@@ -10,7 +10,7 @@ const alertMessageNetworkError = 'Sem conexão'
 async function getPermissions() {
     return new Promise(async (resolve, reject) => {
         try {
-            Geolocation.setRNConfiguration({ authorizationLevel: "whenInUse" })
+            Geolocation.setRNConfiguration({ authorizationLevel: "auto" })
             check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
                 .then((result) => {
                     switch (result) {
@@ -27,12 +27,16 @@ async function getPermissions() {
                                             console.log(response)
                                             getLocation()
                                                 .then((location) => resolve(location))
-                                                .catch((err) => reject(err ? err : alertMessageDisableLocation))
-                                        })
+                                                .catch((err) => {
+                                                    console.log(err)
+                                                    reject(alertMessageDisableLocation)
+                                                })
+
+                                        }).catch((err) => console.log(err))
                                     } else {
                                         reject(alertMessageAllowLocation)
                                     }
-                                })
+                                }).catch((err) => console.log(err))
                             break;
                         case RESULTS.GRANTED:
                             console.log('The permission is granted')
@@ -40,7 +44,10 @@ async function getPermissions() {
                                 console.log(response)
                                 getLocation()
                                     .then((location) => resolve(location))
-                                    .catch((err) => reject(err ? err : alertMessageDisableLocation))
+                                    .catch((err) => {
+                                        console.log(err)
+                                        reject(alertMessageLocationError)
+                                    })
                             })
                             break;
                         case RESULTS.BLOCKED:
