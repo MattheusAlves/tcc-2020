@@ -135,3 +135,15 @@ exports.teachersByLocation = async (req, res) => {
   })
 
 }
+
+exports.teacherById = async (req, res, next, id) => {
+  await Teacher.findById(id).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({ err: errorHandler(err) })
+    } else if (!result) {
+      return res.status(400).json({ err: "Teacher not found" })
+    }
+    req.teacher = result
+    next()
+  })
+}

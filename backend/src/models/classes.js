@@ -16,7 +16,7 @@ const classesSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Teacher',
         required: true
-    }
+    },
 
 }, {
     timestamps: true,

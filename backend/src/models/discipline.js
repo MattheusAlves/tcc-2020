@@ -26,6 +26,10 @@ const disciplineSchema = new mongoose.Schema({
 
   }]
 
-}, { timestamps: true })
+}, {
+  toObject: { getters: true },
+  toJSON: { getters: true },
+  timestamps: true
+})
 
 module.exports = mongoose.model('Discipline', disciplineSchema)

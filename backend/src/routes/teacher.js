@@ -19,6 +19,7 @@ router.post(
 
 
 router.get('/teacher/location/:userId', teachersByLocation)
+
 //buscar geolocation do usuario e trazer professores que estão perto
 
 router.param('userId', userById)

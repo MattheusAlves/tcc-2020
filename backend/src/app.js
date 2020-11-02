@@ -20,7 +20,7 @@ const teacherRoutes = require("./routes/teacher");
 const questionRoutes = require("./routes/question");
 const disciplineRoutes = require("./routes/discipline");
 const classesRoutes = require('./routes/classes')
-
+const enrollmentRoutes = require('./routes/enrollment')
 // database
 mongoose
   .connect(process.env.DATABASE /* dasebase name */, {
@@ -45,6 +45,7 @@ app.use("/api", teacherRoutes);
 app.use("/api", questionRoutes);
 app.use("/api", disciplineRoutes);
 app.use('/api', classesRoutes)
+app.use("/api", enrollmentRoutes)
 
 
 //socket.io methods || Chat

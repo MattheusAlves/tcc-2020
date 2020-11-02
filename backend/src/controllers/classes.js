@@ -47,7 +47,7 @@ exports.classesByLocation = async (req, res) => {
                 near: {
                     type: "Point",
                     //always <longitude>,<latitude>
-                    "coordinates": [coordinates.longitude, coordinates.latitude]
+                    coordinates: [parseFloat(coordinates.longitude), parseFloat(coordinates.latitude)]
                 },
                 maxDistance: distance,
                 spherical: true,
@@ -182,17 +182,19 @@ exports.classesByLocation = async (req, res) => {
 
 }
 
-exports.classById = async (req, res) => {
-    const { id } = req.query.id ? req.query : req.body
+exports.classById = async (req, res, next, id) => {
+    // const { id } = req.query.id ? req.query : req.body
     await Classes.findById(id)
         .populate('teacher')
         .exec((err, result) => {
-            if(err || !result){
-                return res.status(400).json({error:errorHandler(err)})
+            if (err || !result) {
+                return res.status(400).json({ error: errorHandler(err) })
             }
-            return res.status(200).json(resultF)
+            req.class = result
+            next()
         })
 }
+
 exports.allClasses = async (req, res) => {
 
     await Classes.find().exec((error, result) => {
