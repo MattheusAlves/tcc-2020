@@ -1,0 +1,82 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.frontend"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:4:5-67
+11-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:5:5-79
+12-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:5:22-76
+13    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+13-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:6:5-85
+13-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:6:22-82
+14
+15    <application
+15-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:7:5-26:19
+16        android:name="com.frontend.MainApplication"
+16-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:8:7-38
+17        android:allowBackup="false"
+17-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:12:7-34
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.1.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\639e914bfc1efa21e36199d3ff2c5eef\core-1.1.0\AndroidManifest.xml:24:18-86
+19        android:icon="@mipmap/ic_launcher"
+19-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:10:7-41
+20        android:label="@string/app_name"
+20-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:9:7-39
+21        android:roundIcon="@mipmap/ic_launcher_round"
+21-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:11:7-52
+22        android:theme="@style/AppTheme" >
+22-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:13:7-38
+23        <activity
+23-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:14:7-24:18
+24            android:name="com.frontend.MainActivity"
+24-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:15:9-37
+25            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+25-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:17:9-86
+26            android:label="@string/app_name"
+26-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:16:9-41
+27            android:launchMode="singleTask"
+27-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:18:9-40
+28            android:windowSoftInputMode="adjustResize" >
+28-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:19:9-51
+29            <intent-filter>
+29-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:20:9-23:25
+30                <action android:name="android.intent.action.MAIN" />
+30-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:21:13-65
+30-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:21:21-62
+31
+32                <category android:name="android.intent.category.LAUNCHER" />
+32-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:22:13-73
+32-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:22:23-70
+33            </intent-filter>
+34        </activity>
+35        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+35-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:25:7-84
+35-->C:\Users\Matheus\Documents\TCC\frontend\android\app\src\main\AndroidManifest.xml:25:17-81
+36        <activity
+36-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\fc8046cb9a5df9499609a5f7f8270b1b\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+37            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+37-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\fc8046cb9a5df9499609a5f7f8270b1b\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+38            android:exported="false"
+38-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\fc8046cb9a5df9499609a5f7f8270b1b\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+39            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+39-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\fc8046cb9a5df9499609a5f7f8270b1b\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+40
+41        <meta-data
+41-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\1e573a97a5416270e237676c70c63d2d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+42            android:name="com.google.android.gms.version"
+42-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\1e573a97a5416270e237676c70c63d2d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+43            android:value="@integer/google_play_services_version" />
+43-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Matheus\.gradle\caches\transforms-2\files-2.1\1e573a97a5416270e237676c70c63d2d\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+44    </application>
+45
+46</manifest>
