@@ -6,7 +6,8 @@ import {
   initializeSocket,
   disconnectSocket,
   subscribeToChat,
-  sendMessage
+  sendMessage,
+  getOnlineUsers
 } from './Socket'
 import styles from './style'
 
@@ -14,11 +15,19 @@ const Chat = (props) => {
   const rooms = ['A', 'B', 'C']
   const [chatMessage, setChatMessage] = useState('')
   const [chatMessages, setChatMessages] = useState([{ username: undefined, message: undefined }])
-  const [data, setData] = useState({ username: 'username', room: rooms[0] })
+  const [data, setData] = useState({ username: null, room: undefined })
 
   useEffect(() => {
-    if (data) initializeSocket(data)
+    //room = mensageiroId/destinatarioId
+    if (data.username) {
+      if (data) initializeSocket(data)
 
+      getOnlineUsers(null, (err, data) => {
+        console.log('Usuários online')
+        console.log(data)
+        return
+      })
+    }
     subscribeToChat((err, data) => {
       if (err) {
         console.log(err)
@@ -28,13 +37,15 @@ const Chat = (props) => {
       setChatMessages(oldMessages => [...oldMessages, data])
     })
 
-    return () => disconnectSocket()
+    return () => disconnectSocket(data)
 
   }, [data])
 
+
+
+
   async function submitMessage() {
-    console.log("chat messsages:", chatMessages)
-    sendMessage(data.room, chatMessage)
+    sendMessage(null, chatMessage)
     setChatMessage('')
   }
 
@@ -49,6 +60,7 @@ const Chat = (props) => {
           setChatMessage(message)
 
         }} />
+      <TextInput value={data.username} onChangeText={username => setData({ username: username })} style={{ borderWidth: 2 }}></TextInput>
       {chatMessages.map(data =>
         data.message != undefined && data.username != undefined &&
         <Text key={data.message}>{`${data.username}: ${data.message}`}</Text>

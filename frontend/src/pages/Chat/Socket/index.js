@@ -7,12 +7,13 @@ const socketURL = 'http://192.168.1.108:8000'
 export const initializeSocket = (data) => {
     socket = io(socketURL)
     console.log("Connecting socket...")
-    if (socket && data.room && data.username) socket.emit('join', data)
+    console.log(data)
+    socket.emit('join', data)
 }
 
-export const disconnectSocket = () => {
+export const disconnectSocket = (data) => {
     console.log('Disconnecting socket...')
-    if (socket) socket.disconnect()
+    if (socket) socket.disconnect(data)
 }
 
 export const subscribeToChat = (cb) => {
@@ -27,3 +28,12 @@ export const subscribeToChat = (cb) => {
 export const sendMessage = (room, message) => {
     if (socket) socket.emit('chat', { message, room })
 }
+export const getOnlineUsers = (room = undefined, cb) => {
+    socket.emit('onlineUsers', room)
+    socket.on('onlineUsers', data => {
+        console.log('Online users event received')
+        console.log(data)
+        return cb(null, data)
+    })
+}
+    
