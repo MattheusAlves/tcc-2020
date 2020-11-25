@@ -72,13 +72,21 @@ exports.updateLocation = async (req, res) => {
 
 exports.disciplinesByUser = async (req, res) => {
   console.log("teste")
-  await User.findById(req.profile._id).exec(async (error, user) => {
-    if (error) {
-      return res.status(400).json({ error: errorHandler(error) })
-    }
-    await user.populate('disciplines').execPopulate()
-    user.hashed_password = ''
-    user.salt = ''
-    return res.status(200).json(user.disciplines)
+  User.findById(req.profile._id).populate("disciplines").exec((err,user)=>{
+    console.log(user)
+    return res.status(200).json(user)
   })
+  //   await User.findById(req.profile._id).exec(async (error, user) => {
+  //   if (error) {
+  //     return res.status(400).json({ error: errorHandler(error) })
+  //   }
+  //   console.log(req.profile._id)
+  //   await user.populate('disciplines').execPopulate().then((user) => {
+  //     console.log(user)
+  //   })
+  //   user.hashed_password = ''
+  //   user.salt = ''
+  //   // console.log(user.disciplines)
+  //   return res.status(200).json(user.disciplines)
+  // })
 }

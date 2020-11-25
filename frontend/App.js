@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo'
 
+
 import { AuthProvider } from "./src/contexts/auth";
 import { LocationProvider } from './src/contexts/location'
 

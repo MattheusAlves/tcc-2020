@@ -7,7 +7,8 @@ const {
   disciplineById,
   create,
   list,
-  remove
+  remove,
+  searchDisciplines
 } = require('../controllers/discipline')
 
 router.post(
@@ -18,6 +19,7 @@ router.post(
 )
 router.get('/disciplines/list',  list)
 router.post('/disciplines/remove/:disciplineId', requireSignin, isAuth, remove)
+router.get('/search/disciplines',searchDisciplines)
 
 router.param('disciplineId', disciplineById)
 

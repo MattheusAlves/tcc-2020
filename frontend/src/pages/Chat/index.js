@@ -24,12 +24,11 @@ const Chat = (props) => {
         console.log(err)
         return
       }
-      console.log("data:", data)
       setChatMessages(oldMessages => [...oldMessages, data])
     })
 
     return () => disconnectSocket()
- 
+
   }, [data])
 
   async function submitMessage() {
@@ -50,7 +49,7 @@ const Chat = (props) => {
 
         }} />
       {chatMessages.map(data =>
-        data.message != undefined && data.username != undefined && 
+        data.message != undefined && data.username != undefined &&
         <Text key={data.message}>{`${data.username}: ${data.message}`}</Text>
       )}
     </View>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
  *
  */
 const disciplineSchema = new mongoose.Schema({
+  //Alterar para apenas name
   disciplineName: {
     type: String,
     min: 4,
@@ -13,7 +14,13 @@ const disciplineSchema = new mongoose.Schema({
     trim: true,
     unique: true
   },
-  relatedDisciplines: [{
+  // tags: {
+  //   type: String,
+  //   required: true,
+  //   uppercase: true,
+  //   trim: true
+  // },
+  related: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Discipline',
     default: undefined
