@@ -35,11 +35,12 @@ const teacherSchema = new mongoose.Schema(
     bio: {
       type: String,
       required: true,
-      maxlength: 350
+      maxlength: 200
     },
     academicFormation: {
       type: String,
-      maxlength: 150
+      maxlength: 130,
+      minlength:30
     },
     location: {
       type: pointSchema,

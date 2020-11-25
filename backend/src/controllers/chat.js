@@ -1,133 +1,136 @@
-
-
-// async function chat(io) {
-//     const socketMap = {}
-//     io.on("connection", socket => {
-//         console.log(`Connected: ${socket.id}`)
-
-const { list } = require("./question")
-
-//         socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`))
-
-//         socket.on('join', data => {
-//             const { username, room } = data
-//             console.log(`Socket ${socket.id} joining ${room} user ${username}`)
-//             if(room)
-//             socket.join(room)
-//             socketMap[socket.id] = username
-//             io.to(socket.id).emit('chat', `seu ID é  ${socket.id}`)
-//         })
-
-//         //when clint send a message to the socket server
-//         socket.on("chat", data => {
-//             const { message, room } = data
-//             console.log(`msg: ${message}, room: ${room}`)
-//             //send the  message to all clients in the room
-//             io.to(data.room).emit('chat', {
-//                 message: data.message,
-//                 username: socketMap[socket.id]
-//             })
-//         })
-//     })
-// }
-
-// module.exports = {
-//     chat: function (io) {
-
-//     },
-//     onlineUsers: function (io) {
-
-//     }
-
-// }
-
-
-
-
-
+const { list } = require("./question");
+const ModelChat = require("../models/Chat");
 class Chat {
+  constructor(io) {
+    this.io = io;
+    this.init();
+    this.socketMap = {};
+    this.userSocketIdMap = new Map();
+  }
 
-    constructor(io) {
-        this.io = io
-        this.init()
-        this.socketMap = {}
-        this.userSocketIdMap = new Map()
-    }
+  async init() {
+    this.io.on("connection", (socket) => {
+      console.log(`Connected: ${socket.id}`);
 
-    async init() {
-        this.io.on("connection", socket => {
-            console.log(`Connected: ${socket.id}`)
+      this.addOnlineUser(
+        socket.handshake.query["username"],
+        socket.handshake.query["userId"],
+        socket.id,
+        socket.handshake.query["teacher"]
+      );
+      console.log("user socket id map", this.userSocketIdMap);
 
-            socket.on('disconnect', (data) => {
-                const { username } = data
-                this.removeOnlineUser(username, socket.id)
-                console.log(`Disconnected: ${socket.id} username:${username}`)
-            })
+      socket.on("disconnect", (data) => {
+        const { username, userId } = data;
+        this.removeOnlineUser(userId, socket.id);
+        console.log(
+          `Disconnected: ${socket.id} username:${username} userId ${userId}`
+        );
+      });
 
-            socket.on('onlineUsers', (room) => {
-                console.log("Event online users")
-                console.log(this.userSocketIdMap)
-                console.log(JSON.stringify(this.strMapToObj(this.userSocketIdMap.entries())))
-                this.io.to(socket.id).emit('onlineUsers', Array.from(this.userSocketIdMap.entries()))
-                this.io.to(socket.id).emit('onlineUsers', 'ooi')
-            })
+      socket.on("onlineUsers", (room) => {
+        console.log(this.strMapToObj(this.userSocketIdMap.entries()));
+        this.io
+          .to(socket.id)
+          .emit(
+            "onlineUsers",
+            JSON.stringify(this.strMapToObj(this.userSocketIdMap.entries()))
+          );
+      });
 
-            socket.on('join', data => {
-                const { username, room } = data
-                console.log(`Socket ${socket.id} joining ${room} user ${username}`)
-                if (room) {
-                    socket.join(room)
-                }
-                this.addOnlineUser(username, socket.id)
-                this.io.to(socket.id).emit('chat', `seu ID é  ${socket.id}`)
-            })
-
-            //when clint send a message to the socket server
-            socket.on("chat", data => {
-                const { message, room } = data
-                console.log(`msg: ${message}, room: ${room},username: ${this.userSocketIdMap.get(socket.id)}`)
-                //send the  message to all clients in the room
-                this.io.to(data.room).emit('chat', {
-                    message: data.message,
-                    username: this.userSocketIdMap.get(socket.id)
-                })
-            })
-        })
-    }
-
-    strMapToObj(strMap) {
-        let obj = Object.create(null);
-        for (let [k, v] of strMap) {
-            // We don’t escape the key '__proto__'
-            // which can cause problems on older engines
-            let setValue = v.values()
-            obj[k] = [...setValue].toLocaleString()
-
-
+      socket.on("join", (data) => {
+        const { username, userId, teacher = false, room } = data;
+        console.log(
+          `Socket ${socket.id} joining ${room} user ${username} e userId ${userId} teacher ${teacher}`
+        );
+        if (room) {
+          socket.join(room);
         }
-        return obj;
-    }
+      });
 
-    async addOnlineUser(userName, socketId) {
-        if (!this.userSocketIdMap.has(userName)) {
-            this.userSocketIdMap.set(userName, new Set([socketId]))
-        } else {
-            //user had already joined from one client and now joining using another
-            //client
-            this.removeOnlineUser(userName, socketId)
-            this.userSocketIdMap.set(userName, new Set([socketId]))
-        }
-    }
+      //when clint send a message to the socket server
+      socket.on("chat", async (data) => {
+        const { message, room, userId } = data;
+        console.log(
+          `msg: ${message}, room: ${room},
+          username: ${this.userSocketIdMap.get(socket.id).username}`
+        );
 
-    removeOnlineUser(userName, socketId) {
-        if (this.userSocketIdMap.has(userName)) {
-            let userSocketIdSet = this.userSocketIdMap.get(userName)
-            userSocketIdSet.delete(socketId)
+        //  store message
+        await ModelChat.create({
+          content: message,
+          to: userId,
+          from: this.userSocketIdMap.get(socket.id).userId,
+        });
 
-            if (userSocketIdSet.size === 0) {
-                this.userSocketIdMap.delete(userName)
-            }
-        }
+        //send the  message to all clients in the room
+        this.io.to(data.room).emit("chat", {
+          message: data.message,
+          username: this.userSocketIdMap.get(socket.id).username,
+          socketId: socket.id,
+          userId: this.userSocketIdMap.get(socket.id).userId,
+        });
+      });
+    });
+  }
+
+  strMapToObj(strMap) {
+    let obj = new Array();
+    for (let [k, v] of strMap) {
+      obj.push({
+        username: v.username,
+        socketId: k,
+        userId: v.userId,
+        teacher: v.teacher,
+      });
     }
+    return obj;
+  }
+
+  async findUser(userId) {
+    for (let [k, v] of this.userSocketIdMap) {
+      if (v.userId === userId) {
+        return k;
+      }
+    }
+    return false;
+  }
+
+  async addOnlineUser(userName, userId, socketId, teacher) {
+    let check = await this.findUser(userId);
+    if (check) {
+      this.removeOnlineUser(check);
+    }
+    if (!this.userSocketIdMap.has(socketId)) {
+      this.userSocketIdMap.set(socketId, {
+        username: userName,
+        userId,
+        teacher,
+      });
+    } else {
+      //user had already joined from one client and now joining using another
+      //client
+      this.removeOnlineUser(userId, socketId);
+      this.userSocketIdMap.set(socketId, {
+        username: userName,
+        userId,
+        teacher,
+      });
+    }
+  }
+
+  removeOnlineUser(userId, socketId) {
+    if (this.userSocketIdMap.has(socketId)) {
+      let userSocketIdSet = this.userSocketIdMap.get(socketId);
+      console.log("user socket foremove", userSocketIdSet);
+      this.userSocketIdMap.delete(socketId);
+    } else {
+      let check = this.findUser(userId);
+      if (check) {
+        // this.userSocketIdMap.delete(check);
+      }
+    }
+    console.log("Atual: ", this.userSocketIdMap);
+  }
 }
-module.exports = Chat
+module.exports = Chat;

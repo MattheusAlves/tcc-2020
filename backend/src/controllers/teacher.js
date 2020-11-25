@@ -2,8 +2,8 @@ const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 
 const Teacher = require("../models/teacher");
-const User = require('../models/user')
-const Classes = require('../models/classes');
+const User = require("../models/user");
+const Classes = require("../models/classes");
 
 exports.create = async (req, res) => {
   const { cpf, rank, bio, location } = req.body;
@@ -20,19 +20,21 @@ exports.create = async (req, res) => {
     if (err || !teacher) {
       return res.status(400).json(errorHandler(err));
     }
-    User.findOneAndUpdate({ _id: req.profile._id }, { teacher: true }, {
-      new: true
-    }).then((error, updatedUser) => {
-      if (error || !updatedUser) {
-        return console.log(error)
+    User.findOneAndUpdate(
+      { _id: req.profile._id },
+      { teacher: true },
+      {
+        new: true,
       }
-      console.log(updatedUser)
-    })
+    ).then((error, updatedUser) => {
+      if (error || !updatedUser) {
+        return console.log(error);
+      }
+      console.log(updatedUser);
+    });
 
-    return res.status(200).json(teacher)
-
+    return res.status(200).json(teacher);
   });
-
 };
 
 /**
@@ -110,40 +112,77 @@ exports.update = async (req, res) => {
   });
 };
 
+exports.updateInformations = async (req, res) => {
+  console.log(req.teacher)
+  await Teacher.findById(req.teacher._id).exec((err, teacher) => {
+    if(err || !teacher) {
+      console.log(err)
+      if(err)
+      return res.status(400).json(errorHandler(err))
+      else
+      return res.status(404).json({error:'Teacher not found'})
+    }
+  
+    if(req.body.bio){
+      teacher.bio = req.body.bio
+    }else if(req.body.academicFormation){
+      teacher.academicFormation = req.body.academicFormation
+    }
+    teacher.save((err,result) => {
+      if(err){
+        console.log(err)
+        return res.status(400).json(errorHandler(err))
+      }
+      return res.status(200).json({message:'Teacher successfully updated'})
+    })
+  });
+};
 
 //mover para users by location
 exports.teachersByLocation = async (req, res) => {
-  const coordinates = [...req.profile.location.coordinates]
+  const coordinates = [...req.profile.location.coordinates];
   await User.findOne({
     location: {
       $near: {
         $maxDistance: 2000,
         $geometry: {
           type: "Point",
-          coordinates
-        }
-      }
-    }
-    , teacher: true, _id: { $ne: req.profile._id }
+          coordinates,
+        },
+      },
+    },
+    teacher: true,
+    _id: { $ne: req.profile._id },
   }).find((error, results) => {
     if (error) {
-      console.log(error)
-      return res.status(400).json(errorHandler(error))
+      console.log(error);
+      return res.status(400).json(errorHandler(error));
     }
-    console.log(results)
-    return res.status(200).json({ results })
-  })
-
-}
+    console.log(results);
+    return res.status(200).json({ results });
+  });
+};
 
 exports.teacherById = async (req, res, next, id) => {
   await Teacher.findById(id).exec((err, result) => {
     if (err) {
-      return res.status(400).json({ err: errorHandler(err) })
+      return res.status(400).json({ err: errorHandler(err) });
     } else if (!result) {
-      return res.status(400).json({ err: "Teacher not found" })
+      return res.status(400).json({ err: "Teacher not found" });
     }
-    req.teacher = result
+    req.teacher = result;
+    next();
+  });
+};
+
+exports.teacherByUserId = async(req,res,next,id) => {
+  await Teacher.findOne({user:id}).exec((err,teacher) => {
+    if(err){
+      console.log(err)
+      return res.status(400).json(errorHandler(err))
+    }
+    req.teacher = teacher
     next()
+
   })
 }

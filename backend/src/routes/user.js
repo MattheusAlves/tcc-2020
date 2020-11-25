@@ -1,28 +1,34 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const { requireSignin, isAuth } = require('../controllers/auth')
-const { disciplineById } = require('../controllers/discipline')
+const { requireSignin, isAuth } = require("../controllers/auth");
+const { disciplineById } = require("../controllers/discipline");
 
-const { userById, update, updateLocation, getProfile } = require('../controllers/user')
+const {
+  userById,
+  update,
+  updateLocation,
+  getProfile,
+  updateInformations,
+} = require("../controllers/user");
 
-router.get('/secret/:userId', requireSignin, isAuth, (req, res) => {
+router.get("/secret/:userId", requireSignin, isAuth, (req, res) => {
   res.json({
-    user: req.profile
-  })
-})
-router.get('/user/profile', getProfile)
+    user: req.profile,
+  });
+});
+router.get("/user/profile", getProfile);
 
 router.put(
-  '/update/disciplines/:userId',
+  "/update/disciplines/:userId",
   // requireSignin,
   // isAuth,
   update
-)
-router.put(
-  '/update/location/:userId', updateLocation
-)
-router.param('userId', userById)
-router.param('disciplineId', disciplineById)
+);
+router.put("/update/location/:userId", updateLocation);
+router.put('/update/informations/:userId', updateInformations);
 
-module.exports = router
+router.param("userId", userById);
+router.param("disciplineId", disciplineById);
+
+module.exports = router;
