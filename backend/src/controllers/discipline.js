@@ -1,6 +1,7 @@
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
 const Discipline = require("../models/discipline");
+const User = require('../models/user')
 
 exports.create = async (req, res) => {
   const discipline = new Discipline(req.body);
@@ -15,6 +16,7 @@ exports.create = async (req, res) => {
 };
 
 exports.disciplineById = (req, res, next, id) => {
+  console.log("chegou")
   Discipline.findById(id).exec((err, discipline) => {
     if (err || !discipline) {
       return res.status(400).json({
@@ -50,17 +52,36 @@ exports.remove = async (req, res) => {
       .json({ deletedDiscipline, message: "Discipline deleted succesfully" });
   });
 };
+
 //autocomplete INPUT
 exports.searchDisciplines = async (req, res) => {
-  console.log(req.query.value)
-  const query = req.query.value
+  const query = req.query.disciplineName
+  if (query.length < 3) {
+    return res.status(200).json([])
+  }
   await Discipline.find({ "disciplineName": new RegExp(query, 'i') })
+    .select('disciplineName')
+    .limit(4)
     .exec((error, result) => {
       if (error) {
         return res.status(400).json({ error: errorhandler(error) })
       } else {
-
+        console.log(result)
         return res.status(200).json(result)
       }
     })
+}
+
+exports.disciplinesByUser = async (req, res) => {
+  User.findById(req.profile._id)
+    .select('disciplines')
+    .populate("disciplines")
+    .exec((error, user) => {
+      if (error) {
+        console.log(error)
+        return res.status(400).json(errorHandler(error))
+      }
+      return res.status(200).json(user)
+    })
+
 }

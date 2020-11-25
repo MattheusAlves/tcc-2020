@@ -3,41 +3,36 @@ const _ = require("lodash");
 
 const Teacher = require("../models/teacher");
 const User = require('../models/user')
+const Classes = require('../models/classes');
 
 exports.create = async (req, res) => {
-  const { cpf, rank } = req.body;
-  // Transforma as disciplinas em um array, remove os espaços e capitaliza a primeira letra
-  const studyFields = await req.body.studyFields
-    .split(",")
-    .map((field) => field.trim());
+  const { cpf, rank, bio, location } = req.body;
 
-  try {
-    if (!studyFields) {
-      return res.status(400).json({ message: "Undefined fields for study" });
+  const teacher = await new Teacher({
+    cpf,
+    rank,
+    bio,
+    location,
+    user: req.profile._id,
+  });
+
+  await teacher.save((err, teacher) => {
+    if (err || !teacher) {
+      return res.status(400).json(errorHandler(err));
     }
-    console.log(studyFields)
-    const teacher = await new Teacher({
-      cpf,
-      rank,
-      ...studyFields,
-      user: req.profile._id,
-    });
-
-    await teacher.save((err, teacher) => {
-      if (err || !teacher) {
-        console.log("teste");
-        return res.status(400).json(errorHandler(err));
+    User.findOneAndUpdate({ _id: req.profile._id }, { teacher: true }, {
+      new: true
+    }).then((error, updatedUser) => {
+      if (error || !updatedUser) {
+        return console.log(error)
       }
-      User.findById(req.profile._id).update({ teacher: true })
-      Teacher.findById(teacher._id, (err, teacher) => {
+      console.log(updatedUser)
+    })
 
-        return res.status(200).json(teacher)
-      })
-      // res.status(200).json({ teacher });
-    });
-  } catch (err) {
-    return res.status(400).json({ message: "Teacher saving error" });
-  }
+    return res.status(200).json(teacher)
+
+  });
+
 };
 
 /**
@@ -115,6 +110,7 @@ exports.update = async (req, res) => {
   });
 };
 
+
 //mover para users by location
 exports.teachersByLocation = async (req, res) => {
   const coordinates = [...req.profile.location.coordinates]
@@ -138,4 +134,16 @@ exports.teachersByLocation = async (req, res) => {
     return res.status(200).json({ results })
   })
 
+}
+
+exports.teacherById = async (req, res, next, id) => {
+  await Teacher.findById(id).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({ err: errorHandler(err) })
+    } else if (!result) {
+      return res.status(400).json({ err: "Teacher not found" })
+    }
+    req.teacher = result
+    next()
+  })
 }

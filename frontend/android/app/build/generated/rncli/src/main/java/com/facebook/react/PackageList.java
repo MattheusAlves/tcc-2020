@@ -25,6 +25,8 @@ import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnabler
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+// react-native-linear-gradient
+import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-permissions
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 // react-native-safe-area-context
@@ -87,6 +89,7 @@ public class PackageList {
       new RNAndroidLocationEnablerPackage(),
       new RNFusedLocationPackage(),
       new RNGestureHandlerPackage(),
+      new LinearGradientPackage(),
       new RNPermissionsPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

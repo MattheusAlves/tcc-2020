@@ -21,12 +21,15 @@ const disciplineSchema = new mongoose.Schema({
   //   trim: true
   // },
   related: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Discipline',
+    type: String,
     default: undefined
 
   }]
 
-}, { timestamps: true })
+}, {
+  toObject: { getters: true },
+  toJSON: { getters: true },
+  timestamps: true
+})
 
 module.exports = mongoose.model('Discipline', disciplineSchema)

@@ -1,48 +1,40 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
-
-import { store } from '../services/location'
-
 const LocationContextData = {
-    latitude: 0.0,
-    longitude: 0.0,
-    latitudeDelta: 0.0,
-    longitudeDelta: 0.0,
+    storedLocation: {
+        latitude: 0.0,
+        longitude: 0.0
+    },
     storeLocation: () => { }
 }
 
 const LocationContext = createContext(LocationContextData)
 
 export const LocationProvider = ({ children }) => {
-    const [latitude, setLatitude] = useState(null)
-    const [longitude, setLongitude] = useState(null)
-    const [latitudeDelta] = useState(42.0000)
-    const [longitudeDelta] = useState(42.0000)
+    const [storedLocation, setStoredLocation] = useState({ latitude: null, longitude: null })
 
     useEffect(() => {
-        async function loadStorageData() {
+        (async () => {
             const storagedLatitude = await AsyncStorage.getItem('@SMSELocation:latitude')
             const storagedLongitude = await AsyncStorage.getItem('@SMSELocation:longitude')
 
             if (storagedLatitude && storagedLongitude) {
-                setLatitude(storagedLatitude)
-                setLongitude(storagedLongitude)
+                setStoredLocation({ latitude: storagedLatitude, longitude: storagedLongitude })
             }
-        }
-        loadStorageData()
+        })()
     }, [])
-    async function storeLocation(latitude, longitude) {
-        if (latitude && longitude) {
-            await AsyncStorage.setItem("@SMSELocation:latitude", latitude);
-            await AsyncStorage.setItem("@SMSELocation:longitude", longitude);
-        }
-        await store(latitude, longitude, '5ee8c2aa18626b0fb07061f5')
 
+    async function storeLocation(location) {
+        console.log("Location in the context", JSON.stringify(location))
+        if (location.latitude && location.longitude) {
+            await AsyncStorage.setItem("@SMSELocation:latitude", JSON.stringify(location.latitude));
+            await AsyncStorage.setItem("@SMSELocation:longitude", JSON.stringify(location.longitude));
+        }
     }
 
     return (
-        <LocationContext.Provider value={{ latitude, longitude, latitudeDelta, longitudeDelta, storeLocation }}>
+        <LocationContext.Provider value={{ storedLocation, storeLocation }}>
             {children}
         </LocationContext.Provider>
     )

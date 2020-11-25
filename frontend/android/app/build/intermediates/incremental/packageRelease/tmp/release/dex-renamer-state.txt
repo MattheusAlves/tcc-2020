@@ -1,4 +1,0 @@
-#Thu Nov 05 22:27:15 BRST 2020
-base.0=C\:\\Users\\Matheus\\Documents\\TCC\\frontend\\android\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\out\\classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

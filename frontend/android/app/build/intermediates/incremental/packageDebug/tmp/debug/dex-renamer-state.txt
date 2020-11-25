@@ -1,7 +1,7 @@
-#Mon Nov 02 18:05:40 BRST 2020
-base.1=C\:\\Users\\Matheus\\Documents\\TCC\\frontend\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes2.dex
+#Fri Nov 20 13:53:13 BRT 2020
+base.0=C\:\\Users\\mathe\\Documents\\tcc-2020\\frontend\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.1=classes2.dex
-base.0=C\:\\Users\\Matheus\\Documents\\TCC\\frontend\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 renamed.1=classes2.dex
-renamed.0=classes.dex
 path.0=classes.dex
+renamed.0=classes.dex
+base.1=C\:\\Users\\mathe\\Documents\\tcc-2020\\frontend\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes2.dex

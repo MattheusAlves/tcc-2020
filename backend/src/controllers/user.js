@@ -2,7 +2,7 @@ const { errorHandler } = require('../helpers/dbErrorHandler')
 const _ = require('lodash')
 
 const User = require('../models/user')
-const discipline = require('../models/discipline')
+const Teacher = require('../models/teacher')
 
 exports.userById = async (req, res, next, id) => {
   await User.findById(id).exec((err, user) => {
@@ -15,6 +15,35 @@ exports.userById = async (req, res, next, id) => {
     req.profile = user
     next()
   })
+}
+
+exports.getProfile = async (req, res) => {
+  const teacher = await Teacher.findOne({ user: req.body.id || req.query.id })
+    .populate({
+      path: 'classes',
+      populate: {
+        path: 'discipline'
+      }
+    })
+    .populate('user')
+    .select({ hashed_password: 0, salt: 0 })
+    .exec()
+
+  if (teacher) {
+    return res.status(200).json(teacher)
+  }
+
+  return await User.findById(req.body.id || req.query.id)
+    .populate('disciplines')
+    .select({ hashed_password: 0, salt: 0 })
+    .exec((error, user) => {
+      if (error || !user) {
+        console.log(error)
+        return res.status(400).json({ error: error })
+      }
+      return res.status(200).json(user)
+    })
+
 }
 
 
@@ -70,23 +99,3 @@ exports.updateLocation = async (req, res) => {
   })
 }
 
-exports.disciplinesByUser = async (req, res) => {
-  console.log("teste")
-  User.findById(req.profile._id).populate("disciplines").exec((err,user)=>{
-    console.log(user)
-    return res.status(200).json(user)
-  })
-  //   await User.findById(req.profile._id).exec(async (error, user) => {
-  //   if (error) {
-  //     return res.status(400).json({ error: errorHandler(error) })
-  //   }
-  //   console.log(req.profile._id)
-  //   await user.populate('disciplines').execPopulate().then((user) => {
-  //     console.log(user)
-  //   })
-  //   user.hashed_password = ''
-  //   user.salt = ''
-  //   // console.log(user.disciplines)
-  //   return res.status(200).json(user.disciplines)
-  // })
-}

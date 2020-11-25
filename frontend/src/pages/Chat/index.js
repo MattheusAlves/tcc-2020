@@ -1,59 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text } from 'react-native';
-import io from 'socket.io-client'
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
+import Avatar from '../../components/Avatar';
 import {
   initializeSocket,
   disconnectSocket,
+  getOnlineUsers,
   subscribeToChat,
-  sendMessage
-} from './Socket'
-import styles from './style'
+  joinRoom
+} from './Socket';
+import styles from './style';
 
-const Chat = (props) => {
-  const rooms = ['A', 'B', 'C']
-  const [chatMessage, setChatMessage] = useState('')
-  const [chatMessages, setChatMessages] = useState([{ username: undefined, message: undefined }])
-  const [data, setData] = useState({ username: 'username', room: rooms[0] })
+const Chat = ({navigation}) => {
+  const [data, setData] = useState({
+    username: 'Matheus',
+    teacher: true,
+    room: undefined,
+    userId: '5fadbd24d224723b64ad913f',
+  });
+  const [teste, setTeste] = useState('');
+  const [messageNotificatios, setMessageNotifications] = useState(new Map());
+  const [refreshing, setRefreshing] = useState(false);
+  const [users, setUsers] = useState([
+    // {username: 'Josias', teacher: false, socketId: 1, userId: '11'},
+    // {username: 'José', teache: false, socketId: 2, userId: '12'},
+    // {username: 'Lucas', teacher: false, socketId: 3, userId: '13'},
+    // {username: 'Caio', teacher: true, socketId: 4, userId: '14'},
+    // {username: 'Marcio', teacher: true, socketId: 5, userId: '15'},
+    // {username: 'André Pereira', teacher: false, socketId: 6, userId: '16'},
+  ]);
 
   useEffect(() => {
-    if (data) initializeSocket(data)
+    //room = mensageiroId/destinatarioId
+    if (data.username) {
+      if (data) initializeSocket(data);
+      getOnlineUsers(null, (err, result) => {
+        let onlineUsers = JSON.parse(result);
+        setUsers((users) => [...onlineUsers]);
+        return;
+      });
+    }
 
-    subscribeToChat((err, data) => {
+    subscribeToChat((err, message) => {
       if (err) {
-        console.log(err)
-        return
+        console.log(err);
+        return;
       }
-      setChatMessages(oldMessages => [...oldMessages, data])
-    })
+      console.log('recebeu aqui', message);
+      updateNotifications(message.userId, message.message);
+    });
 
-    return () => disconnectSocket()
+    return () => disconnectSocket(data);
+  }, [data]);
 
-  }, [data])
+  useEffect(() => {
+    console.log('usuários', users);
+    console.log(messageNotificatios);
+    console.log(teste);
+  }, [teste, messageNotificatios]);
 
-  async function submitMessage() {
-    console.log("chat messsages:", chatMessages)
-    sendMessage(data.room, chatMessage)
-    setChatMessage('')
-  }
+  const onRefresh = useCallback(() => {});
 
-  return (
+  const updateNotifications = async (k, v) => {
+    if (messageNotificatios.has(k)) {
+      // messageNotificatios.delete(k)
+    }
+    console.log(messageNotificatios);
+    setMessageNotifications((prev) => new Map([...prev, [k, v]]));
+  };
+ 
+  return users.length < 1 ? (
+    <ActivityIndicator size="large" />
+  ) : (
     <View style={styles.container}>
-      <TextInput
-        autoCorrect={false}
-        style={{ height: 40, borderWidth: 2, }}
-        value={chatMessage}
-        onSubmitEditing={() => submitMessage()}
-        onChangeText={message => {
-          setChatMessage(message)
-
-        }} />
-      {chatMessages.map(data =>
-        data.message != undefined && data.username != undefined &&
-        <Text key={data.message}>{`${data.username}: ${data.message}`}</Text>
-      )}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        {users.map((user) => (
+          <TouchableOpacity
+            style={styles.userWrapper}
+            key={user.userId}
+            onPress={() =>  navigation.navigate('Room', {
+              username: user.username,
+              socketId: user.socketId,
+              userId:user.userId
+            })}>
+            <Avatar style={styles.avatar} name={user.username} color="white" />
+            <View style={styles.usernameWrapper}>
+              <Text style={styles.userName}>{user.username}</Text>
+              {user.teacher && <Text style={styles.isTeacher}>Prof.</Text>}
+              {messageNotificatios.has(user.userId) && (
+                <Text style={styles.messageNotification}>
+                  {`${user.username}: ${messageNotificatios.get(user.userId)}`}{' '}
+                </Text>
+              )}
+            </View>
+            <View style={styles.statusOn} />
+            {/* <View style={styles.statusOff} /> */}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
-  )
-}
+  );
+};
 
 export default Chat;
