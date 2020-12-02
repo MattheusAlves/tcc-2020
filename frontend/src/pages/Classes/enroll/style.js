@@ -5,19 +5,26 @@ const WIDTH = Dimensions.get('screen').width
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#285BC8'
     },
     teacher: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderBottomWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 30
+        borderColor: 'white',
+        borderRadius: 4,
+        backgroundColor: 'white',
+        elevation:2,
+        marginHorizontal:4,
+        marginVertical:5
+    },
+    teacherSince:{
+        color:'black',
     },
     name: {
         fontSize: 18,
         fontWeight: 'bold',
-        paddingTop: 5
+        paddingTop: 5,
+        color:'black'
     },
     classe: {
         marginLeft: 20
@@ -29,14 +36,14 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
         alignSelf: 'center',
         elevation: 10,
-        color: 'black',
+        color: 'white',
         paddingTop: 20,
         paddingBottom: 10
     },
     pupils: {
         marginTop: 5,
         fontSize: 14,
-        color: 'gray',
+        color: 'white',
         fontWeight: 'bold',
         textTransform: 'uppercase'
     },
@@ -44,14 +51,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingVertical: 2,
         fontWeight: 'bold',
-        color: 'black',
+        color: 'white',
         textTransform: 'uppercase',
     },
     priceLabel: {
         fontSize: 14,
         paddingVertical: 5,
         fontWeight: 'bold',
-        color: 'gray',
+        color: 'white',
         textTransform: 'uppercase'
     },
     ratings: {
@@ -71,9 +78,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 2,
-        marginTop:20
+        marginTop:20,
     },
     rate: {
+        fontWeight:'bold'
     },
     form: {
         marginTop: 20,
@@ -92,7 +100,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 2,
+        elevation: 4,
         backgroundColor: '#ffff'
     },
     textarea: {
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: WIDTH - 75,
         borderRadius: 4,
-        backgroundColor: "#597EFF",
+        backgroundColor: "white",
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 15,
@@ -110,19 +118,18 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 60,
         borderWidth: 1,
-        borderColor: 'black',
         shadowColor: "#000",
         shadowOffset: {
             width: 10,
             height: 12,
         },
+        elevation:4,
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        // elevation: 5,
         zIndex: 0,
     },
     enrollText: {
-        color: '#FFFFFF',
+        color: '#285BC8',
         fontWeight: 'bold',
         fontSize: 14,
         textAlign: 'center'
@@ -137,15 +144,20 @@ const styles = StyleSheet.create({
     },
     date: {
         width: (WIDTH - 42) / 2,
+        // color:'gray',
+        // zIndex:10,
+        elevation:2,
+        
     },
 
     hour: {
         width: (WIDTH - 42) / 2,
         borderWidth: 1,
         borderColor: 'lightgray',
-        height: 43,
+        height: 44,
         borderRadius: 6,
-        paddingHorizontal: 14
+        paddingHorizontal: 14,
+        backgroundColor: 'white'
 
     }
 

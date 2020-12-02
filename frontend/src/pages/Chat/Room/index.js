@@ -50,8 +50,8 @@ const Room = ({navigation, route}) => {
         {chatMessages.length > 0 &&
           chatMessages.map((message) =>
             message.userId === '5fadbd24d224723b64ad913f' ? (
-              <View style={styles.messageWrapper} key={message.message}>
-                <Text style={styles.userName}>{message.username}</Text>
+              <View style={[styles.messageWrapper, styles.myMessageWrapper]} key={message.message}>
+                {/* <Text style={styles.userName}>Você</Text> */}
                 <Text style={[styles.message, styles.myMessage]}>
                   {message.message}
                 </Text>

@@ -9,7 +9,7 @@ export default {
   },
   label: {},
   button: {
-    backgroundColor: "#7D40E7",
+    backgroundColor: "#3D7AFD",
     width: "90%",
     height: 45,
     alignItems: "center",

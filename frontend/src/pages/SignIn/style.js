@@ -14,15 +14,16 @@ export const styles = StyleSheet.create({
     background: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center",
     },
     containerLogo: {
-        flex: 1,
+        top:'30%',
         justifyContent: "center",
     },
     container: {
         flex: 1,
+        marginTop: '25%',
         alignItems: "center",
+        justifyContent: "center",
         width: "90%",
     },
     input: {
@@ -64,9 +65,12 @@ export const styles = StyleSheet.create({
     icon: {
         padding: 0,
         margin: 5,
-        height: 25,
-        width: 32,
         // resizeMode: "stretch",
-        alignItems: "center",
+        alignSelf:"center"
     },
+    iconWrapper: {
+        alignItems:"center",
+        justifyContent:"center",
+        padding:10
+    }
 });

@@ -4,11 +4,13 @@ import IconMaterialCommunity from 'react-native-vector-icons/MaterialCommunityIc
 import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Modal from 'react-native-modal';
 import Textarea from 'react-native-textarea';
+import LinearGradient from 'react-native-linear-gradient';
 
 import Accordion from '../UserSettings/components/Accordion';
 import defaultStyles from '../UserSettings/styles';
 import api from '../../../services/api';
 import styles from './styles';
+import {useAuth} from '../../../contexts/auth'
 
 const TeacherSettings = (props) => {
   const [bio, setBio] = useState(props.data.bio);
@@ -16,10 +18,11 @@ const TeacherSettings = (props) => {
     props.data.academicFormation,
   );
   const [modalVisibility, setModalVisibility] = useState(false);
+  const {user} = useAuth()
 
   const update = async (param) => {
     await api
-      .put('/teacher/update/informations/5fb19371aad2dedd0c7a0e6e', {
+      .put(`/teacher/update/informations/${user._id}`, {
         bio: param.bio,
         academicFormation: param.academicFormation,
       })
@@ -35,13 +38,21 @@ const TeacherSettings = (props) => {
   };
   return (
     <View style={{flex: 1}}>
+                
       <TouchableOpacity
-        style={defaultStyles.settingOptionWrapper}
+        // style={defaultStyles.settingOptionWrapper}
         onPress={() => props.navigation.navigate('CreateClass')}>
+        <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                colors={['#3D7AFD', '#000000']}
+                style={[{flex: 1}, defaultStyles.settingOptionWrapper]}
+                onPress={() => props.navigation.navigate('CreateClass')}>
         <IconFontAwesome5 name="chalkboard-teacher" size={28} color="white" />
         <Text style={defaultStyles.settingOption}>
           Cadastrar/Atualizar Aulas
         </Text>
+        </LinearGradient>
       </TouchableOpacity>
       <TouchableOpacity
         style={defaultStyles.settingOptionWrapper}

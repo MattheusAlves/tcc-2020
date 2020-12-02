@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar, Searchbar } from 'react-native-paper'
+import {format} from 'date-fns'
 
 import api from '../../../services/api'
 import styles from './style'
@@ -42,7 +43,6 @@ const TopicsByCategory = ({ navigation }) => {
     const DEVICE_WIDTH = Dimensions.get('window').width
     const [decayAnim, setDecayAnim] = useState(new Animated.Value(175))
     const { categoryData } = useCategory()
-    const {setFullTopic} = useTopic()
 
     useEffect(() => {
         loadTopics()
@@ -95,7 +95,8 @@ const TopicsByCategory = ({ navigation }) => {
                     toValue: 0,
                     duration: 500,
                     velocity: -0.53,
-                    deceleration: 0.997
+                    deceleration: 0.997,
+                    useNativeDriver: true,
                 }
             ).start(() => setDecayAnim(new Animated.Value(175)))
         }
@@ -126,8 +127,7 @@ const TopicsByCategory = ({ navigation }) => {
         }
     }
     const handleNavigate = async (topic) => {
-        navigation.navigate('Topic')
-        setFullTopic(topic)
+        navigation.navigate('Topic',{topicId:topic._id})
     }
     return (
         <View style={styles.container}>
@@ -136,7 +136,7 @@ const TopicsByCategory = ({ navigation }) => {
                     <WaveHeader />
                 </View>
                 <View style={styles.contentTop}>
-                    <TouchableOpacity style={styles.buttonNew}>
+                    <TouchableOpacity style={styles.buttonNew} onPress={() => navigation.navigate('CreateTopic',{category:categoryData})}>
                         <Text style={styles.buttonText}>Novo</Text>
                     </TouchableOpacity>
                 </View>
@@ -161,7 +161,7 @@ const TopicsByCategory = ({ navigation }) => {
                                         {topic.description}
                                     </Text>
                                     <View style={styles.topicInformation}>
-                                        <Text style={styles.topicDate}>{topic.createdAt}</Text>
+                                        <Text style={styles.topicDate}>{format(new Date(topic.createdAt), 'dd/MM/yyyy hh:mm')}</Text>
                                         <View style={{ flexDirection: 'row' }}>
                                             <Text style={styles.info}>{topic.likes} <Icon name="thumbs-up" size={22} color='rgba(0, 153, 255,1)' /></Text>
                                             <Text style={styles.info}>{topic.response.length} <Icon name="comments" size={22} color='rgba(0, 153, 255,1)' /></Text>

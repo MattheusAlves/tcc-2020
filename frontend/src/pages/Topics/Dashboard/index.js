@@ -14,6 +14,7 @@ import {styles} from './style';
 import api from '../../../services/api';
 import Dialog from '../../../components/Dialog';
 import SearchHeader from '../../../components/AutoCompInput';
+import {useAuth} from '../../../contexts/auth';
 
 function getWave() {
   const svgPath = [
@@ -39,7 +40,7 @@ function WaveCard(props) {
       // key={props.data[i]._id + 2}
       style={styles.svg}
       viewBox="0 0 640 180">
-      <Path fill="#5000ca" fillOpacity="1" d={props.wave} />
+      <Path fill="#3D7AFD" fillOpacity="1" d={props.wave} />
     </Svg>
   );
   return svg;
@@ -81,7 +82,7 @@ function reducer(state, action) {
   }
 }
 
-const Dashboard = () => {
+const Dashboard = ({route, navigation}) => {
   const [opacity, setOpacity] = useState([]);
   const [wave, setWave] = useState([]);
   const [disciplines, setDisciplines] = useState([]);
@@ -94,7 +95,7 @@ const Dashboard = () => {
   const [refresh, setRefresh] = useState(false);
   const [state, dispatch] = useReducer(reducer, {limit: 26});
   const [disciplineToSearch, setDisciplineToSearch] = useState('');
-
+  const {user, updateUser} = useAuth();
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
 
@@ -111,7 +112,6 @@ const Dashboard = () => {
             const arrayLength = disciplinesArray.data.disciplines.length;
             console.log('array length', arrayLength);
             getWaveArray(arrayLength);
-            console.log(...disciplinesArray.data.disciplines);
             setDisciplines([...disciplinesArray.data.disciplines]);
           }
         })
@@ -130,8 +130,6 @@ const Dashboard = () => {
     }
 
     async function searchDiscipline() {
-      console.log('exeeeec');
-      console.log(disciplineToSearch.disciplineName);
       await api
         .get('/search/disciplines', {
           params: {
@@ -140,9 +138,7 @@ const Dashboard = () => {
           },
         })
         .then((result) => {
-          console.log(result.data);
           setDisciplines([...result.data]);
-          console.log('setou');
         })
         .catch((error) => console.log(error));
     }
@@ -172,7 +168,7 @@ const Dashboard = () => {
     console.log(selectDiscipline);
     if (selectDiscipline.length >= 1) {
       api
-        .put('/update/disciplines/5fadbd24d224723b64ad913f', {
+        .put(`/update/disciplines/${user._id}`, {
           disciplines: selectDiscipline,
         })
         .then((response) => {
@@ -183,7 +179,7 @@ const Dashboard = () => {
           _showDialog();
           setSelectDiscipline([]);
           setOpacity([]);
-          console.log('response:', response);
+          updateUser();
         })
         .catch((error) => {
           //status code 402 = User already has all these disciplines
@@ -267,8 +263,9 @@ const Dashboard = () => {
               mode="contained"
               dark
               loading={false}
+              style={{backgroundColor: '#285BC8'}}
               onPress={() => saveDisciplines()}>
-              Salvar
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>Salvar</Text>
             </Button>
           </View>
         </>

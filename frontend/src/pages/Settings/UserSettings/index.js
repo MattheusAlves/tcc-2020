@@ -19,6 +19,7 @@ import styles from './styles';
 import api from '../../../services/api';
 import TeacherSettings from '../TeacherSettings';
 import SettingSvg from './components/SettingSvg';
+import {useAuth} from '../../../contexts/auth';
 
 const Settings = ({navigation}) => {
   const [Name, setName] = useState('');
@@ -29,13 +30,15 @@ const Settings = ({navigation}) => {
   const [snackMessage, setSnackMessage] = useState('');
   const [teacher, setTeacher] = useState();
   const [data, setData] = useState();
+  const [refresh,setRefresh] = useState(false) 
+  const {user,signOut} = useAuth();
 
   useEffect(() => {
     async function loadData() {
       api
         .get('user/profile', {
           params: {
-            id: '5fb19371aad2dedd0c7a0e6e',
+            id: user._id,
           },
         })
         .then((result) => {
@@ -50,16 +53,16 @@ const Settings = ({navigation}) => {
           setGithub(data.github);
           setPhone(data.phone);
           setTeacher(data.teacher);
-          setData(result.data);
+          setData(data);
         })
         .catch((error) => console.log(error));
     }
     loadData();
-  }, []);
+  }, [user]);
 
   const update = (param) => {
     api
-      .put('/update/informations/5fb19371aad2dedd0c7a0e6e', {
+      .put(`/update/informations/${user._id}`, {
         name: param.Name,
         linkedin: param.Linkedin,
         github: param.Github,
@@ -101,46 +104,41 @@ const Settings = ({navigation}) => {
   };
 
   const onDismissSnackBar = () => setSnackVisibility(false);
-  return !Phone ? (
-    <ActivityIndicator size="large" color="deepskyblue" />
+  return !data ? (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <ActivityIndicator size="large" color="deepskyblue" />
+    </View>
   ) : (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Avatar
-              name={Name}
-              styles={{
-                backgroundColor: '#3D7AFD',
-                borderWidth: 2,
-                marginLeft: 10,
-                borderColor: 'white',
-                elevation: 4,
-              }}
-              size={80}
-            />
-            <SettingSvg style={{alignSelf: 'center', marginRight: 8}} />
-          </View>
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          colors={['#3D7AFD', '#285BC8', '#4F4F55']}
+          style={styles.header}>
+          <Avatar
+            name={Name}
+            styles={{
+              backgroundColor: '#3D7AFD',
+              borderWidth: 2,
+              marginLeft: 10,
+              borderColor: 'white',
+              elevation: 4,
+            }}
+            size={80}
+          />
           <Text style={styles.name}>{Name}</Text>
-        </View>
+          <TouchableOpacity style={styles.logoffWrapper} onPress={() => signOut()}>
+            <IconMaterialCommunity name="logout" size={30}color="white"/>
+            <Text style={styles.logoff}>Sair</Text>
+          </TouchableOpacity>
+        </LinearGradient>
         <ScrollView contentContainerStyle={{paddingBottom: 10}}>
           <StatusBar backgroundColor="rgba(69,68,68,1)" />
-          {/* <View style={styles.profile}>
-            <Avatar
-              name={Name}
-              styles={{
-                backgroundColor: '#3D7AFD',
-                borderWidth: 2,
-                marginLeft: 10,
-                borderColor: 'white',
-                elevation: 4,
-              }}
-              size={80}
-            />
-            <Text style={styles.name}>{Name}</Text>
-          </View> */}
+
           <Accordion
             title="Nome"
+            label="Atualize seu nome"
             setText={setName}
             submit={updateName}
             value={Name}
@@ -152,33 +150,38 @@ const Settings = ({navigation}) => {
               color="white"
               styles={styles.icon}
             />
-            <Text style={styles.settingOption}>Disciplnas de interesse</Text>
+            <Text style={styles.settingOption}>Disciplinas de interesse</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('TeacherRegistration')}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}
-              colors={['#3D7AFD', '#000000']}
-              style={[{flex: 1}, styles.settingOptionWrapper]}>
-              <IconMaterialCommunity name="teach" size={35} color="white" />
-              <Text style={styles.settingOption}>Dar aulas</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          {!teacher && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TeacherRegistration')}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                colors={['#3D7AFD', '#000000']}
+                style={[{flex: 1}, styles.settingOptionWrapper]}>
+                <IconMaterialCommunity name="teach" size={35} color="white" />
+                <Text style={styles.settingOption}>Dar aulas</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          )}
           <Accordion
             title="Linkedin"
+            label="Adicione seu linkedin"
             setText={setLinkedin}
             submit={updateLinkedin}
             value={Linkedin}
           />
           <Accordion
             title="Github"
+            label="Adicione seu Github"
             setText={setGithub}
             submit={updateGithub}
             value={Github}
           />
           <Accordion
             title="Telefone"
+            label="Adicione seu telefone"
             setText={setPhone}
             submit={updatePhone}
             value={Phone}

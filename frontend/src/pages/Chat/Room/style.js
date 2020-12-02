@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 5,
     borderColor: 'gray',
+    backgroundColor: 'white'
   },
   iconSend: {},
   iconWrapper: {
@@ -42,7 +43,10 @@ const styles = StyleSheet.create({
     color:'white'
   },
   myMessage: {
-      backgroundColor:'#1F0954'
+      backgroundColor:'#1F0954',
+  },
+  myMessageWrapper: {
+    alignSelf:'flex-end'
   }
 });
 

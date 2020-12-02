@@ -7,6 +7,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f5fcff',
     },
+    header:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+    },
+    newTopicWrapper: {
+        paddingVertical:10,
+        paddingHorizontal:10,
+        backgroundColor:'#285BC8',
+        borderRadius:4,
+        elevation:2,
+        marginVertical:4
+    },
+    newTopic: {
+        color:'white',
+        fontWeight:'bold'
+    },
     containerLoading:{
         flex:1,
         flexDirection:'row',
@@ -20,7 +37,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginTop:5,
         marginBottom:10,
-        
+        width:Dimensions.get('screen').width /2,
         justifyContent: 'center',
     },
     chip: {

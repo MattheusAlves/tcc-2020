@@ -48,6 +48,7 @@ const Accordion = (props) => {
         <TextInput
           style={styles.child}
           value={props.value}
+          placeholder={props.label}
           onChangeText={(text) => props.setText(text)}
           // onEndEditing={(e) => props.setText(e.nativeEvent.text)}
           onSubmitEditing={() => props.submit()}

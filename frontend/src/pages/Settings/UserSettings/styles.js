@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     paddingVertical:10
   },
   header:{
-    paddingVertical:10,
-    backgroundColor:'#3D7AFD',
+    paddingVertical:15,
+    backgroundColor:'#285BC8',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -23,18 +23,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 10,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginBottom:10,
   },
   name:{
     fontSize: 24,
     paddingHorizontal:10,
     fontWeight:'bold',
-    color:'white'
+    color:'white',
+    textTransform:'capitalize'
   },
   settingOptionWrapper: {
     marginTop: 3,
     height: 65,
     alignItems: 'center',
-    backgroundColor: '#3D7AFD',
+    backgroundColor: '#285BC8',
     marginHorizontal: 8,
     borderRadius: 4,
     paddingHorizontal: 8,
@@ -53,6 +57,25 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 30,
   },
+  logoffWrapper:{
+    paddingVertical:6,
+    paddingHorizontal:10,
+    borderRadius:6,
+    marginRight:10,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    alignSelf: 'flex-start',
+    position: 'absolute',
+    right:1,
+    top:12,
+  },
+  logoff:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    // color:'#285BC8'
+    color:'white'
+  }
 });
 
 export default styles;

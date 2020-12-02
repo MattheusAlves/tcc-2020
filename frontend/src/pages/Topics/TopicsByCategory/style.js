@@ -40,13 +40,15 @@ const styles = StyleSheet.create({
         paddingVertical:8,
         backgroundColor: 'white',
         borderRadius: 3,
+        elevation:4
         
     },
     buttonText:{
         fontSize:18,
-        fontWeight:"900",
+        fontWeight:"bold",
         textAlign:'center',
-        textAlignVertical:'center'
+        textAlignVertical:'center', 
+        color:"#285BC8"
     },
     body: {
         flex: 1,
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     topicContainer: {
         borderRadius: 8,
         borderWidth: .25,
-        borderColor: '#484848',
+        borderColor: '#3D7AFD',
         overflow: 'hidden',
         marginVertical:6
 
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     },
 
     userInformation: {
-        backgroundColor: 'rgba(0, 153, 255,.6)',
+        backgroundColor: '#3D7AFD',
         flexDirection: 'row',
         padding: 7,
         marginBottom: 2,
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginLeft: 10,
         textAlignVertical: "bottom",
-        color: '#484848'
+        color: 'white'
     },
     title: {
         marginLeft: 3,

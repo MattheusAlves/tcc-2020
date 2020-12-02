@@ -13,19 +13,19 @@ import {
   initializeSocket,
   disconnectSocket,
   getOnlineUsers,
+  requestOnlineUsers,
   subscribeToChat,
-  joinRoom
+  joinRoom,
 } from './Socket';
 import styles from './style';
 
 const Chat = ({navigation}) => {
   const [data, setData] = useState({
-    username: 'Matheus',
+    username: 'Matheus 1',
     teacher: true,
     room: undefined,
     userId: '5fadbd24d224723b64ad913f',
   });
-  const [teste, setTeste] = useState('');
   const [messageNotificatios, setMessageNotifications] = useState(new Map());
   const [refreshing, setRefreshing] = useState(false);
   const [users, setUsers] = useState([
@@ -41,9 +41,10 @@ const Chat = ({navigation}) => {
     //room = mensageiroId/destinatarioId
     if (data.username) {
       if (data) initializeSocket(data);
-      getOnlineUsers(null, (err, result) => {
+      getOnlineUsers((err, result) => {
         let onlineUsers = JSON.parse(result);
-        setUsers((users) => [...onlineUsers]);
+        console.log('online users', onlineUsers)
+        setUsers([...onlineUsers]);
         return;
       });
     }
@@ -60,13 +61,11 @@ const Chat = ({navigation}) => {
     return () => disconnectSocket(data);
   }, [data]);
 
-  useEffect(() => {
-    console.log('usuários', users);
-    console.log(messageNotificatios);
-    console.log(teste);
-  }, [teste, messageNotificatios]);
 
-  const onRefresh = useCallback(() => {});
+
+  const onRefresh = useCallback(() => {
+    requestOnlineUsers()
+  });
 
   const updateNotifications = async (k, v) => {
     if (messageNotificatios.has(k)) {
@@ -75,7 +74,7 @@ const Chat = ({navigation}) => {
     console.log(messageNotificatios);
     setMessageNotifications((prev) => new Map([...prev, [k, v]]));
   };
- 
+
   return users.length < 1 ? (
     <ActivityIndicator size="large" />
   ) : (
@@ -87,13 +86,15 @@ const Chat = ({navigation}) => {
         {users.map((user) => (
           <TouchableOpacity
             style={styles.userWrapper}
-            key={user.userId}
-            onPress={() =>  navigation.navigate('Room', {
-              username: user.username,
-              socketId: user.socketId,
-              userId:user.userId
-            })}>
-            <Avatar style={styles.avatar} name={user.username} color="white" />
+            key={user.socketId}
+            onPress={() =>
+              navigation.navigate('Room', {
+                username: user.username,
+                socketId: user.socketId,
+                userId: user.userId,
+              })
+            }>
+            <Avatar styles={styles.avatar} name={user.username} color="white" />
             <View style={styles.usernameWrapper}>
               <Text style={styles.userName}>{user.username}</Text>
               {user.teacher && <Text style={styles.isTeacher}>Prof.</Text>}

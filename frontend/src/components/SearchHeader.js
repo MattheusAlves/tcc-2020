@@ -96,7 +96,7 @@ export default SearchHeader;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgba(138,171,255,1)',
+        backgroundColor: '#3D7AFD',
         height: 87,
         alignItems: 'center',
         justifyContent: 'center',

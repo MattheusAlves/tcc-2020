@@ -22,6 +22,7 @@ export const disconnectSocket = (data) => {
 
 export const subscribeToChat = (cb) => {
   if (!socket) return true;
+  
 
   socket.on('chat', (data) => {
     console.log('Websocket event received!');
@@ -29,14 +30,16 @@ export const subscribeToChat = (cb) => {
   });
 };
 
-export const sendMessage = (room, message,userId) => {
-  if (socket) socket.emit('chat', {message, room,userId});
+export const sendMessage = (room, message, userId) => {
+  if (socket) socket.emit('chat', {message, room, userId});
 };
-export const getOnlineUsers = (room = undefined, cb) => {
-  socket.emit('onlineUsers', room);
+
+export const requestOnlineUsers = () => {
+  socket.emit('reqOnlineUsers');
+};
+export const getOnlineUsers = (cb) => {
   socket.on('onlineUsers', (data) => {
     console.log('Online users event received');
-    console.log(data);
     return cb(null, data);
   });
 };

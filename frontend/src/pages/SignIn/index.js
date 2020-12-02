@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -6,37 +6,41 @@ import {
   TouchableOpacity,
   Text,
   Animated,
-  AsyncStorage,
   ImageBackground,
-} from "react-native";
-// import { Icon, Avatar } from "react-native-elements";
-import api from "../../services/api";
-import { useAuth } from "../../contexts/auth";
-import { styles } from "./style";
-import DialogComponent from "../../components/Dialog";
+  StatusBar
+} from 'react-native';
 
-export default function Login({ navigation }) {
-  console.log('renderizou novamente')
-  const [offset] = useState(new Animated.ValueXY({ x: 0, y: 80 }));
+import {useAuth} from '../../contexts/auth';
+import {styles} from './style';
+import DialogComponent from '../../components/Dialog';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFontisto from 'react-native-vector-icons/Fontisto';
+import IconFeather from 'react-native-vector-icons/Feather';
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login({navigation}) {
+  const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [dialogState, setDialogState] = useState(false);
-  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogMessage, setDialogMessage] = useState('');
 
   const _showDialog = () => setDialogState(true);
   const _hideDialog = () => setDialogState(false);
 
-  const { sign } = useAuth();
+  const {sign,errorMessage} = useAuth();
 
   async function handleSubmit() {
-
     if (!email || !password) {
-      setDialogMessage("Digite usuário e senha");
+      setDialogMessage('Digite usuário e senha');
       setDialogState(true);
       return 0;
     }
     sign(email, password);
+    if(!!errorMessage && errorMessage != ''){
+      setDialogMessage(errorMessage);
+      setDialogState(true);
+    }
   }
 
   useEffect(() => {
@@ -44,39 +48,35 @@ export default function Login({ navigation }) {
       toValue: 0,
       speed: 4,
       bounciness: 25,
+      useNativeDriver: true,
     }).start();
   }, []);
 
   return (
     <ImageBackground
       style={styles.backgroundImage}
-      source={require("../../assets/images/studyBackground.jpeg")}
-    >
+      source={require('../../assets/images/studyBackground.jpeg')}>
+        <StatusBar backgroundColor="rgba(69,68,68,1)"/>
       <KeyboardAvoidingView style={styles.background}>
         <View style={styles.containerLogo}>
-          <Avatar
-            size="xlarge"
-            icon={{ name: "user", type: "font-awesome" }}
-            // overlayContainerStyle={{backgroundColor: 'blue'}}
-            activeOpacity={0.7}
-            containerStyle={{ flex: 1 }}
-          />
+          <IconFeather name="user" size={70} color="white" />
         </View>
         <Animated.View
           style={[
             styles.container,
             {
-              transform: [{ translateY: offset.y }],
+              transform: [{translateY: offset.y}],
             },
-          ]}
-        >
+          ]}>
           <View style={styles.section}>
-            <Icon
-              style={styles.icon}
-              name="at"
-              type="material-community"
-              color="black"
-            />
+            <View style={styles.iconWrapper}>
+              <Icon
+                style={styles.icon}
+                name="email"
+                color="#35383F"
+                size={27}
+              />
+            </View>
             <TextInput
               style={styles.input}
               placeholder="Seu melhor e-mail"
@@ -87,12 +87,14 @@ export default function Login({ navigation }) {
             />
           </View>
           <View style={styles.section}>
-            <Icon
-              style={styles.icon}
-              name="lock-question"
-              type="material-community"
-              color="black"
-            />
+            <View style={styles.iconWrapper}>
+              <IconFontisto
+                style={styles.icon}
+                name="locked"
+                color="#35383F"
+                size={28}
+              />
+            </View>
             <TextInput
               style={styles.input}
               placeholder="Senha"
@@ -108,9 +110,7 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnRegister}
-            onPress={() =>               
-             navigation.navigate("Register")}
-          >
+            onPress={() => navigation.navigate('Register')}>
             <Text style={styles.registerText}>Criar conta gratuita</Text>
           </TouchableOpacity>
         </Animated.View>

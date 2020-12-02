@@ -4,13 +4,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 
+import ClassesList from '../pages/Classes/List';
 import Classes from '../pages/Classes';
-import Register from '../pages/Register/';
+import ClassesManager from '../pages/Classes/ClassesManager';
 import Settings from '../pages/Settings/UserSettings';
 import MainTopics from '../pages/Topics/Main/';
 import TopicsByCategory from '../pages/Topics/TopicsByCategory';
 import Dashboard from '../pages/Topics/Dashboard';
 import Topic from '../pages/Topics/Topic/';
+import CreateTopic from '../pages/Topics/CreateTopic';
 import Users from '../pages/Chat/Users/';
 import Profile from '../pages/Profile/';
 import Enroll from '../pages/Classes/enroll';
@@ -110,14 +112,30 @@ const AppRoutes = () => {
           headerShown: getHeaderVisibility(route),
         })}
       />
-
-      <AppStack.Screen name="Topic" component={Topic} />
+      <AppStack.Screen
+        name="CreateTopic"
+        component={CreateTopic}
+        options={() => ({
+          headerTitle: 'Novo tópico',
+          headerStyle: {
+            backgroundColor: 'white',
+            height:48,
+          },
+        })}
+      />
+      <AppStack.Screen name="Topic" component={Topic}  options={() => ({
+        headerTintColor:'white',
+        headerTitle:'Tópico',
+        headerStyle: {
+          backgroundColor: '#285BC8',
+        }
+      })}/>
       <AppStack.Screen
         name="TopicsByCategory"
         component={TopicsByCategory}
         options={() => ({
           headerStyle: {
-            backgroundColor: '#0099ff',
+            backgroundColor: '#285BC8',
             borderWidth: 0,
             shadowRadius: 0,
             shadowColor: 'transparent',
@@ -138,6 +156,7 @@ const AppRoutes = () => {
           headerStyle: {
             backgroundColor: 'rgba(59,89,152,1)',
           },
+          headerTintColor: 'white',
           headerTitle: 'Disciplinas',
           headerTitleStyle: {
             color: 'white',
@@ -146,7 +165,17 @@ const AppRoutes = () => {
         })}
       />
       <AppStack.Screen name="Response" component={Response} />
-      <AppStack.Screen name="Enroll" component={Enroll} />
+      <AppStack.Screen
+        name="Enroll"
+        component={Enroll}
+        options={() => ({
+          headerTitle: 'Matricula',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#3D7AFD',
+          },
+        })}
+      />
       <AppStack.Screen name="Room" component={Room} />
       <AppStack.Screen
         name="TeacherRegistration"
@@ -156,10 +185,17 @@ const AppRoutes = () => {
         })}
       />
       <AppStack.Screen
+        name="ClassesList"
+        component={ClassesList}
+        options={({route}) => ({
+          headerShown: false,
+        })}
+      />
+      <AppStack.Screen
         name="CreateClass"
         component={CreateClass}
         options={() => ({
-          headerShown:false,
+          headerShown: false,
           headerTitle: 'Registro de Aulas',
           headerStyle: {
             backgroundColor: 'rgba(59,89,152,1)',
@@ -177,6 +213,13 @@ const AppRoutes = () => {
           },
           headerTintColor: 'white',
         })}
+      />
+      <AppStack.Screen
+      name="ClassesManager"
+      component={ClassesManager}
+      options={({route}) => ({
+        headerShown: false,
+      })}
       />
     </AppStack.Navigator>
   );

@@ -1,14 +1,13 @@
 import api from "./api";
-export function signIn(email, password) {
-  console.log("Email:", email, " Senha:", password);
 
+export function signIn(email, password) {
   const response = api.post("/signin", {
     email,
     password
   }).then(function (response) {
-    return response
+    return response.data
   }).catch(function (error) {
-    console.log('false')
-    return false
+    return error.response.status
   })
+  return response
 }

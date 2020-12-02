@@ -14,6 +14,7 @@ import api from '../../../services/api';
 import styles from './styles';
 import Svg from './components/Svg';
 import AutoCompInput from '../../../components/AutoCompInput';
+import {useAuth} from '../../../contexts/auth';
 
 const Create = () => {
   const [classes, setClasses] = useState(new Map());
@@ -22,11 +23,12 @@ const Create = () => {
   const [snackVisibility, setSnackVisibility] = useState(false);
   const [snackMessage, setSnackMessage] = useState('');
   const [refresh, setRefresh] = useState(false);
+  const {user} = useAuth();
 
   useEffect(() => {
     const loadClasses = () => {
       api
-        .get('/classes/by/teacher/5fadbf0dd3e8254a4cd71fe6')
+        .get(`/classes/by/teacher/${user._id}`)
         .then((result) => {
           result.data.forEach((classe) => {
             classes.set(classe._id, {
@@ -124,7 +126,7 @@ const Create = () => {
       if (discipline.saves && discipline.update) {
         api
           .put(
-            `/classes/update/5fadbd24d224723b64ad913f/5fadbf0dd3e8254a4cd71fe6`,
+            `/classes/update/${user._id}`,
             {
               classId: key, //classId
               hourClassPrice: `${priceReal.get(key)}.${priceCentavos.get(key)}`,
@@ -144,7 +146,7 @@ const Create = () => {
       ) {
         api
           .post(
-            `/classes/create/5fadbd24d224723b64ad913f/5fadbf0dd3e8254a4cd71fe6`,
+            `/classes/create/${user._id}`,
             {
               discipline: key, //<disciplineId
               hourClassPrice: `${priceReal.get(key)}.${priceCentavos.get(key)}`,

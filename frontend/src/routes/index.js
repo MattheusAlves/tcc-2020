@@ -18,7 +18,7 @@ import {TopicProvider} from '../contexts/topic'
         )
       }
 
-    return signed ? <AppRoutes/> : <TopicProvider><AppRoutes/></TopicProvider>
+    return signed ? <TopicProvider><AppRoutes/></TopicProvider> : <AuthRoutes/>
     
 }
 

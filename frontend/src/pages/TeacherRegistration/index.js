@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,6 +19,7 @@ import styles from './styles';
 import Book from './components/Book';
 import getLocation from '../../utils/getLocation';
 import api from '../../services/api';
+import {useAuth} from '../../contexts/auth';
 
 const TeacherRegistration = ({navigation}) => {
   const [cpf, setCpf] = useState();
@@ -35,8 +36,9 @@ const TeacherRegistration = ({navigation}) => {
   const [snackMessage, setSnackMessage] = useState(
     'Você foi cadastrado como professor na plataforma',
   );
+  const {user, updateUser} = useAuth();
+
   useEffect(() => {
-    console.log(location);
     if (location.latitude && location.longitude) {
       Geocoder.init(apiKey);
 
@@ -46,7 +48,6 @@ const TeacherRegistration = ({navigation}) => {
       })
         .then((json) => {
           var location = json.results[0].geometry.location;
-          console.log(json.results[0].address_components);
           setAddress(json.results[0].address_components[1].short_name);
           setCep(json.results[0].address_components[6].short_name);
         })
@@ -58,7 +59,6 @@ const TeacherRegistration = ({navigation}) => {
     async function getActualLocation() {
       await getLocation()
         .then((result) => {
-          console.log('executou location');
           setLocation({latitude: result.latitude, longitude: result.longitude});
         })
         .catch((err) => {
@@ -75,7 +75,6 @@ const TeacherRegistration = ({navigation}) => {
         });
     }
     getActualLocation();
-    
   }, []);
 
   const searchCep = () => {
@@ -96,23 +95,38 @@ const TeacherRegistration = ({navigation}) => {
   };
 
   const registerTeacher = async () => {
-    await api
-      .post('/teacher/create/5fb6b537af602b017d823b55', {
-        cpf,
-        bio,
-        academicFormation,
-        location: {
-          //always <longitude,latitude>
-          coordinates: [location.longitude, location.latitude],
-        },
-      })
-      .then((result) => {
-        console.log(result);
-        setSnackVisibility(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (
+      cpf &&
+      bio &&
+      academicFormation &&
+      location.longitude &&
+      location.latitude
+    ) {
+      await api
+        .post(`/teacher/create/${user._id}`, {
+          cpf,
+          bio,
+          academicFormation,
+          location: {
+            //always <longitude,latitude>
+            coordinates: [location.longitude, location.latitude],
+          },
+        })
+        .then(() => {
+          setSnackVisibility(true);
+        })
+        .then(() => {
+          updateUser();
+          navigation.goBack();
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(err.response.message);
+        });
+    } else {
+      setSnackMessage('Preencha todos os campos');
+      setSnackVisibility(true);
+    }
   };
   return (
     <View style={styles.container}>
