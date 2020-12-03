@@ -79,6 +79,7 @@ class Chat {
         this.io.to(data.room).emit("chat", {
           message: data.message,
           username: this.userSocketIdMap.get(socket.id).username,
+          to:userId,
           socketId: socket.id,
           userId: this.userSocketIdMap.get(socket.id).userId,
         });
@@ -144,28 +145,47 @@ class Chat {
 }
 
 async function loadMessages(req, res) {
-  const id = await mongoose.Types.ObjectId(req.body.recipient)
+  const id = await mongoose.Types.ObjectId(req.query.recipient);
 
-  req.body.recipient = await mongoose.Types.ObjectId(req.body.recipient)
   ModelChat.find({
     $or: [
-      {$and:[{to: req.profile._id}, {from:id}]},
-      {$and:[{ to:id}, {from: req.profile._id }]},
+      { $and: [{ to: req.profile._id }, { from: id }] },
+      { $and: [{ to: id }, { from: req.profile._id }] },
     ],
   })
-  .sort({ createdAt: 1 })
-  .exec((err, messages) => {
-    if(err){
-      console.log(err)
-      return res.status(400).json(err)
-    }else{
-      console.log(messages)
-      return res.status(200).json(messages)
-    }
-  });
-};
+    .sort({ createdAt: 1 })
+    .exec((err, messages) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json(err);
+      } else {
+        return res.status(200).json(messages);
+      }
+    });
+}
+async function loadLastMessage(req, res) {
+  ModelChat.find({
+    $or: [
+      { $and: [{ to: req.profile._id }] },
+      { $and: [{ from: req.profile._id }] },
+    ],
+  })
+    .sort({ createdAt: -1 })
+    .populate("to", 'name teacher')
+    .populate("from",'name teacher')
+    .limit(1)
+    .exec((err, message) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json(err);
+      } else {
+        return res.status(200).json(message);
+      }
+    });
+}
 
 module.exports = {
-  chat:Chat,
+  chat: Chat,
   loadMessages: loadMessages,
-}
+  loadLastMessage: loadLastMessage,
+};
