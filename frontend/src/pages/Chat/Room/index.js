@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import styles from './style';
 
 import {sendMessage, subscribeToChat, joinRoom} from '../Socket/';
+import {useAuth} from '../../../contexts/auth' 
 
 const Room = ({navigation, route}) => {
   const [data, setData] = useState({
@@ -21,11 +22,15 @@ const Room = ({navigation, route}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const {user} = useAuth()
 
   const onRefresh = useCallback(() => {});
 
   useEffect(() => {
     function loadRoom() {
+      navigation.setOptions({
+        title:`Sala com ${data.username}`
+      })
       joinRoom({room: data.room, username: data.username});
       subscribeToChat((err, message) => {
         if (err) {
@@ -48,10 +53,10 @@ const Room = ({navigation, route}) => {
     <View style={styles.container}>
       <ScrollView>
         {chatMessages.length > 0 &&
-          chatMessages.map((message) =>
-            message.userId === '5fadbd24d224723b64ad913f' ? (
-              <View style={[styles.messageWrapper, styles.myMessageWrapper]} key={message.message}>
-                {/* <Text style={styles.userName}>Você</Text> */}
+          chatMessages.map((message,index) =>
+            message.userId === user._id ? (
+              <View style={[styles.messageWrapper, styles.myMessageWrapper]} key={index}>
+                <Text style={styles.userName}>Eu</Text>
                 <Text style={[styles.message, styles.myMessage]}>
                   {message.message}
                 </Text>

@@ -176,7 +176,9 @@ const AppRoutes = () => {
           },
         })}
       />
-      <AppStack.Screen name="Room" component={Room} />
+      <AppStack.Screen name="Room" component={Room} options={() =>({
+        // headerTitle:'Sala'
+      }) }/>
       <AppStack.Screen
         name="TeacherRegistration"
         component={TeacherRegistration}

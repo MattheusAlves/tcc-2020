@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5fcff',
+    // backgroundColor: '#3D7AFD',
   },
   userWrapper: {
     flexDirection: 'row',
