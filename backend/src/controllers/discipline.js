@@ -103,6 +103,10 @@ exports.disciplinesByUser = async (req, res) => {
         console.log(error);
         return res.status(400).json(errorHandler(error));
       }
+      else if(user.disciplines.length === 0){
+        console.log(user)
+        return res.status(404).json({message:'not found'})
+      }
       return res.status(200).json(user);
     });
 };

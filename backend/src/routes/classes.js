@@ -12,15 +12,15 @@ const {
 } = require("../controllers/classes");
 const { userById } = require("../controllers/user");
 const { requireSignin, isAuth } = require("../controllers/auth");
-const { teacherById } = require("../controllers/teacher");
+const { teacherById,teacherByUserId } = require("../controllers/teacher");
 
-router.post("/classes/create/:userId/:teacherId", createClasses);
+router.post("/classes/create/:teacherByUserId", createClasses);
 
 router.get("/classes/by/location/:userId", classesByLocation);
 router.get("/classes/all", allClasses);
-router.get("/classes/by/teacher/:teacherId", classesByTeacher);
+router.get("/classes/by/teacher/:teacherByUserId", classesByTeacher);
 
-router.put("/classes/update/:userId/:teacherId", updateClass);
+router.put("/classes/update/:teacherByUserId", updateClass);
 
 router.delete("/class/delete/:classId", deleteClass);
 
@@ -28,5 +28,5 @@ router.delete("/class/delete/:classId", deleteClass);
 router.param("userId", userById);
 router.param("teacherId", teacherById);
 router.param("classId", classById);
-
+router.param('teacherByUserId',teacherByUserId);
 module.exports = router;

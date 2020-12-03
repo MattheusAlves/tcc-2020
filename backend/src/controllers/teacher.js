@@ -18,6 +18,7 @@ exports.create = async (req, res) => {
 
   await teacher.save((err, teacher) => {
     if (err || !teacher) {
+      console.log(err)
       return res.status(400).json(errorHandler(err));
     }
     User.findOneAndUpdate(

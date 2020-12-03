@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema(
       type: Date,
       min: '1900-01-01',
       max: `'${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}'`,
-      required: true
+      required: false
     },
     disciplines: [
       {

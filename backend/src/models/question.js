@@ -21,7 +21,8 @@ const questionSchema = new mongoose.Schema({
      */
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Discipline'
+        ref: 'Discipline',
+        required: true
     },
     //se a caregoria não existir na base disciplinas
     categoryOther: {
@@ -39,7 +40,6 @@ const questionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-
     },
     rate: [{
         type: mongoose.Schema.Types.ObjectId,

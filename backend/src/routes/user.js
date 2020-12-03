@@ -10,6 +10,7 @@ const {
   updateLocation,
   getProfile,
   updateInformations,
+  getUser,
 } = require("../controllers/user");
 
 router.get("/secret/:userId", requireSignin, isAuth, (req, res) => {
@@ -18,6 +19,7 @@ router.get("/secret/:userId", requireSignin, isAuth, (req, res) => {
   });
 });
 router.get("/user/profile", getProfile);
+router.get('/user/get/:userId',getUser)
 
 router.put(
   "/update/disciplines/:userId",

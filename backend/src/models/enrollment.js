@@ -20,8 +20,7 @@ const Enrollment = new mongoose.Schema({
     },
     days: [{
         type: String,
-        required: true,
-        enum: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo"]
+        enum: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado", "Domingo"],
     }],
     hour: [{
         type: String,
@@ -33,6 +32,10 @@ const Enrollment = new mongoose.Schema({
         set: setPrice,
         get: getPrice
     },
+    approved:{
+        type:Boolean,
+        default:false
+    }
 
 }, { timestamps: true })
 

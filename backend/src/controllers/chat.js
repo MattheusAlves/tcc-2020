@@ -1,5 +1,7 @@
 const { list } = require("./question");
 const ModelChat = require("../models/Chat");
+const { Model } = require("mongoose");
+const mongoose = require("mongoose");
 class Chat {
   constructor(io) {
     this.io = io;
@@ -11,6 +13,11 @@ class Chat {
   async init() {
     this.io.on("connection", (socket) => {
       console.log(`Connected: ${socket.id}`);
+      //send to all clients the online users
+      this.io.sockets.emit(
+        "onlineUsers",
+        JSON.stringify(this.strMapToObj(this.userSocketIdMap.entries()))
+      );
 
       this.addOnlineUser(
         socket.handshake.query["username"],
@@ -23,12 +30,17 @@ class Chat {
       socket.on("disconnect", (data) => {
         const { username, userId } = data;
         this.removeOnlineUser(userId, socket.id);
+        this.io.sockets.emit(
+          "onlineUsers",
+          JSON.stringify(this.strMapToObj(this.userSocketIdMap.entries()))
+        );
+
         console.log(
           `Disconnected: ${socket.id} username:${username} userId ${userId}`
         );
       });
 
-      socket.on("onlineUsers", (room) => {
+      socket.on("reqOnlineUsers", () => {
         console.log(this.strMapToObj(this.userSocketIdMap.entries()));
         this.io
           .to(socket.id)
@@ -99,7 +111,7 @@ class Chat {
   async addOnlineUser(userName, userId, socketId, teacher) {
     let check = await this.findUser(userId);
     if (check) {
-      this.removeOnlineUser(check);
+      this.removeOnlineUser(userId, check);
     }
     if (!this.userSocketIdMap.has(socketId)) {
       this.userSocketIdMap.set(socketId, {
@@ -121,16 +133,39 @@ class Chat {
 
   removeOnlineUser(userId, socketId) {
     if (this.userSocketIdMap.has(socketId)) {
-      let userSocketIdSet = this.userSocketIdMap.get(socketId);
-      console.log("user socket foremove", userSocketIdSet);
       this.userSocketIdMap.delete(socketId);
     } else {
       let check = this.findUser(userId);
       if (check) {
-        // this.userSocketIdMap.delete(check);
+        this.userSocketIdMap.delete(check);
       }
     }
-    console.log("Atual: ", this.userSocketIdMap);
   }
 }
-module.exports = Chat;
+
+async function loadMessages(req, res) {
+  const id = await mongoose.Types.ObjectId(req.body.recipient)
+
+  req.body.recipient = await mongoose.Types.ObjectId(req.body.recipient)
+  ModelChat.find({
+    $or: [
+      {$and:[{to: req.profile._id}, {from:id}]},
+      {$and:[{ to:id}, {from: req.profile._id }]},
+    ],
+  })
+  .sort({ createdAt: 1 })
+  .exec((err, messages) => {
+    if(err){
+      console.log(err)
+      return res.status(400).json(err)
+    }else{
+      console.log(messages)
+      return res.status(200).json(messages)
+    }
+  });
+};
+
+module.exports = {
+  chat:Chat,
+  loadMessages: loadMessages,
+}

@@ -24,14 +24,15 @@ exports.getProfile = async (req, res) => {
         path: "discipline",
       },
     })
-    .populate({path:'user',select:{hashed_password:0,salt:0}})
+    .populate({ path: "user", select: { hashed_password: 0, salt: 0 } })
     .exec();
 
-  if (teacher) {
+  if (teacher != null) {
+    console.log("entrou");
     return res.status(200).json(teacher);
   }
 
-  return await User.findById(req.body.id || req.query.id)
+  await User.findById(req.query.id)
     .populate("disciplines")
     .select({ hashed_password: 0, salt: 0 })
     .exec((error, user) => {
@@ -122,4 +123,21 @@ exports.updateLocation = async (req, res) => {
     user.save();
     return res.status(200).json(user);
   });
+};
+exports.getUser = async (req, res) => {
+  await User.findById(req.profile._id).select({
+    hashed_password: 0,
+    salt: 0,
+    github: 0,
+    linkedin: 0,
+    birthDate: 0,
+    phone: 0,
+    disciplines: 0,
+    updatedAt:0
+  }).exec((err,user) => {
+    if(err || !user){
+      return res.status(400).json(errorHandler(err))
+    }
+    return res.status(200).json(user)
+  })
 };

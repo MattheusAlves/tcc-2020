@@ -12,6 +12,7 @@ exports.create = async (req, res) => {
 
     await question.save((err, question) => {
         if (err || !question) {
+            console.log(err)
             return res.status(400).json({
                 error: errorHandler(err)
             })
