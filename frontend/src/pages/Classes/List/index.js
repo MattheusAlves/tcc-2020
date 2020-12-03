@@ -256,12 +256,13 @@ function Classes({navigation}) {
                   <View style={styles.content}>
                     <View style={styles.profile}>
                       <Text style={styles.teacher}>Professor</Text>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={() => navigation.navigate('Profile',{id:classe.user._id})}>
                         <Avatar
                           size={65}
                           name={classe.user.name}
                           styles={styles.avatar}
                           color="white"
+                          
                         />
                         <Text style={styles.teacherName} numberOfLines={1}>
                           {classe.user.name}

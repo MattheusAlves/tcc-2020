@@ -8,6 +8,7 @@ const WIDTH = Dimensions.get('screen').width
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        // backgroundColor: '#3D7AFD'
     },
     userInformation: {
         marginHorizontal: 6,
@@ -60,6 +61,8 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderColor: 'lightgray',
         borderRadius:6,
+        alignItems:'center',
+        justifyContent: 'center',
     },
     teacherBio: {
         width: WIDTH - 75,
@@ -67,14 +70,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'black',
         fontWeight: '500',
+        textAlign: 'center',
     },
     quoteLeft: {
-        top: 0,
-        alignSelf: 'flex-start',
+        // top: 0,
+        // alignSelf: 'flex-start',
         paddingHorizontal: 2
     },
     quoteRight: {
-        alignSelf: 'flex-end',
+        // alignSelf: 'flex-end',
     },
     classes: {
         marginHorizontal: 6,
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 4,
-        backgroundColor: '#0099FF',
+        backgroundColor: '#285BC8',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

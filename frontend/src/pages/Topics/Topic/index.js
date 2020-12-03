@@ -39,7 +39,7 @@ function reducer(state, action) {
   }
 }
 
-const Topic = ({route}) => {
+const Topic = ({navigation,route}) => {
   const [topic, setTopic] = useState();
   const [userInitials, setUserInitials] = useState('');
   const [topicResponses, setTopicResponses] = useState([]);
@@ -160,7 +160,7 @@ const Topic = ({route}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <View style={styles.userInformation}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile',{id:topic.user._id})}>
             <Avatar.Text
               size={65}
               label={userInitials}
@@ -168,7 +168,7 @@ const Topic = ({route}) => {
               backgroundColor="#285BC8"
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile',{id:topic.user._id})}>
             <Headline style={styles.name}>{topic.user.name}</Headline>
           </TouchableOpacity>
           <Svg
@@ -222,14 +222,14 @@ const Topic = ({route}) => {
           <View style={styles.responses}>
             {topicResponses.map((item) => (
               <View style={styles.response} key={item._id}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile',{id:item.user._id})}>
                   <Avatar.Text
                     size={30}
                     label={item.initials}
                     style={styles.responseIcon}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile',{id:item.user._id})}>
                   <Headline style={styles.responseName}>
                     {item.user.name}
                   </Headline>

@@ -32,7 +32,7 @@ const components = (props) => {
             ]}>
                 <Animated.View style={styles.header}>
                     <Svg height="101" fill="none" xmlns="http://www.w3.org/2000/svg" style={styles.svg}>
-                        <Path fill-rule="evenodd" clip-rule="evenodd" d="M0 45.0163L17 46.8537C34 48.6911 69 52.3659 103 45.0163C137 37.6667 171 19.2927 206 24.8049C240 30.3171 274 60.6341 308 60.6341C343 60.6341 377 30.3171 394 14.6992L411 0V113H394C377 113 343 113 308 113C274 113 240 113 206 113C171 113 137 113 103 113C69 113 34 113 17 113H0V45.0163Z" fill="#5895F1" stroke="white" strokeWidth="2.2" />
+                        <Path fill-rule="evenodd" clip-rule="evenodd" d="M0 45.0163L17 46.8537C34 48.6911 69 52.3659 103 45.0163C137 37.6667 171 19.2927 206 24.8049C240 30.3171 274 60.6341 308 60.6341C343 60.6341 377 30.3171 394 14.6992L411 0V113H394C377 113 343 113 308 113C274 113 240 113 206 113C171 113 137 113 103 113C69 113 34 113 17 113H0V45.0163Z" fill="#285BC8" stroke="white" strokeWidth="2.2" />
                     </Svg>
                     <View style={styles.userInformation}>
                         <TouchableOpacity style={styles.msg}>
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
         borderWidth: 2.2,
         borderColor: 'white',
         color: 'white',
-        backgroundColor: 'rgba(88,149,241,1)',
+        backgroundColor: '#3D7AFD',
         right: 0,
     },
     header: {
         justifyContent: 'center',
         position: 'absolute',
-        backgroundColor: 'rgba(0,52,130,.56)',
+        backgroundColor: 'rgba(69,68,68,1)',
         paddingTop: 30
     },
     backButton: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         borderWidth: 2.2,
-        backgroundColor: 'rgba(88,149,241,1)',
+        backgroundColor: '#3D7AFD',
         borderColor: 'white',
         padding: 6,
         borderRadius: 20,

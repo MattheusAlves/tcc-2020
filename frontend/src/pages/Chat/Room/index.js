@@ -12,6 +12,7 @@ import styles from './style';
 
 import {sendMessage, subscribeToChat, joinRoom} from '../Socket/';
 import {useAuth} from '../../../contexts/auth' 
+import api from '../../../services/api'
 
 const Room = ({navigation, route}) => {
   const [data, setData] = useState({
@@ -27,7 +28,7 @@ const Room = ({navigation, route}) => {
   const onRefresh = useCallback(() => {});
 
   useEffect(() => {
-    function loadRoom() {
+   async function loadRoom() {
       navigation.setOptions({
         title:`Sala com ${data.username}`
       })
@@ -41,9 +42,21 @@ const Room = ({navigation, route}) => {
         setChatMessages((oldMessages) => [...oldMessages, message]);
       });
     }
+
     loadRoom();
   }, []);
 
+  useEffect(() => {
+      api.get(`/chat/load/messages/${user._id}`,{
+        params:{
+          recipient:data.userId
+        }
+      }).then((result) => {
+        console.log(result.data[0])
+        setChatMessages(result.data);
+      })
+  },[])
+ 
   async function submitMessage() {
     sendMessage(data.room, inputMessage, data.userId);
     setInputMessage('');
@@ -54,17 +67,17 @@ const Room = ({navigation, route}) => {
       <ScrollView>
         {chatMessages.length > 0 &&
           chatMessages.map((message,index) =>
-            message.userId === user._id ? (
+            message.userId === user._id || message.from === user._id ? (
               <View style={[styles.messageWrapper, styles.myMessageWrapper]} key={index}>
                 <Text style={styles.userName}>Eu</Text>
                 <Text style={[styles.message, styles.myMessage]}>
-                  {message.message}
+                  {message.message ? message.message : message.content}
                 </Text>
               </View>
             ) : (
               <View style={styles.messageWrapper}>
                 <Text style={styles.userName}>{message.username}</Text>
-                <Text style={styles.message}>{message.message}</Text>
+                <Text style={styles.message}>{message.message ? message.message : message.content}</Text>
               </View>
             ),
           )}

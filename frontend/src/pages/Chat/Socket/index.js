@@ -8,7 +8,7 @@ export const initializeSocket = (data) => {
     query: `username=${data.username}&userId=${data.userId}&teacher=${data.teacher}`,
   });
   console.log('Connecting socket...');
-  console.log(data);
+  // console.log(data);
 };
 
 export const joinRoom = (data) => {
@@ -39,7 +39,7 @@ export const requestOnlineUsers = () => {
 };
 export const getOnlineUsers = (cb) => {
   socket.on('onlineUsers', (data) => {
-    console.log('Online users event received');
+    // console.log('Online users event received');
     return cb(null, data);
   });
 };

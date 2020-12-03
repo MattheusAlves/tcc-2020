@@ -223,6 +223,10 @@ const AppRoutes = () => {
         headerShown: false,
       })}
       />
+      <AppStack.Screen
+      name="Profile"
+      component={Profile}
+      />
     </AppStack.Navigator>
   );
 };

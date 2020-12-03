@@ -26,7 +26,7 @@ const Classes = ({navigation}) => {
     </View>
     </View>
   ) : (
-    navigation.navigate('ClassesList')
+    <ClassesList navigation={navigation}/>
   );
 };
 export default Classes;
