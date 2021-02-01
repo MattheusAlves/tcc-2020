@@ -126,7 +126,7 @@ const ClassesManager = ({navigation}) => {
                       style={[styles.button, styles.buttonApproved]}
                       onPress={() => approveEnrollment(request._id)}>
                       <Text style={styles.textButton}>
-                        Aprovar e falar com o aluno
+                        Aprovar matrícula
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -175,7 +175,10 @@ const ClassesManager = ({navigation}) => {
                         .toFixed(2)
                         .replace('.', ',')}`}</Text>
                     </View>
-                    <TouchableOpacity style={[styles.button, styles.buttonApproved]}>
+                    <TouchableOpacity style={[styles.button, styles.buttonApproved]} onPress={() => navigation.navigate('Room',{
+                        username: classe.user.name,
+                        room: undefined,
+                        userId: classe.user._id,})}>
                       <Text style={styles.textButton}>Falar com aluno</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

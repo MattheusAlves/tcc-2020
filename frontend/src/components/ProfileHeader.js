@@ -35,9 +35,9 @@ const components = (props) => {
                         <Path fill-rule="evenodd" clip-rule="evenodd" d="M0 45.0163L17 46.8537C34 48.6911 69 52.3659 103 45.0163C137 37.6667 171 19.2927 206 24.8049C240 30.3171 274 60.6341 308 60.6341C343 60.6341 377 30.3171 394 14.6992L411 0V113H394C377 113 343 113 308 113C274 113 240 113 206 113C171 113 137 113 103 113C69 113 34 113 17 113H0V45.0163Z" fill="#285BC8" stroke="white" strokeWidth="2.2" />
                     </Svg>
                     <View style={styles.userInformation}>
-                        <TouchableOpacity style={styles.msg}>
+                        {/* <TouchableOpacity style={styles.msg}>
                             <IconMessage name="message" size={33} color='white' />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <View style={styles.usernameContainer}>
                             <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">{props.name}</Text>
                         </View>

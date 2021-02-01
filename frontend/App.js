@@ -3,6 +3,9 @@ import { StatusBar } from "react-native";
 import 'react-native-gesture-handler';
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 import { AuthProvider } from "./src/contexts/auth";

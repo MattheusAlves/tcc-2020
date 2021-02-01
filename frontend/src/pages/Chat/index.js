@@ -43,8 +43,6 @@ const Chat = ({navigation}) => {
         })
         .catch((err) => console.log(err));
     };
-
-    loadChats();
     loadData();
   }, []);
 
@@ -56,37 +54,37 @@ const Chat = ({navigation}) => {
         setUsers(new Map());
         let onlineUsers = JSON.parse(result);
         onlineUsers.forEach((user) => {
-            users.set(user.userId, {
-              socketId: user.socketId,
-              username: user.username,
-            });
+          users.set(user.userId, {
+            socketId: user.socketId,
+            username: user.username,
+          });
         });
         setUsers(new Map(users));
         loadChats();
         return;
       });
     }
+  }, [data]);
+
+  useEffect(() => {
     subscribeToChat((err, message) => {
       if (err) {
         console.log(err);
         return;
       }
-      console.log('chegou',message)
       message.from === user._id
         ? updateNotifications(message.to, message.message)
-        : updateNotifications(message.userId, message.message);
+        : updateNotifications(message.userId, {
+            message: message.message,
+            username: message.username,
+          });
     });
 
     return () => disconnectSocket(data);
-  }, [data]);
-
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
+  }, []);
 
   const loadChats = async () => {
-    console.log('nsdjn');
-    api
+    await api
       .get(`/chat/load/last/message/${user._id}`)
       .then((messages) => {
         console.log(messages.data);
@@ -142,7 +140,7 @@ const Chat = ({navigation}) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {Array.from(users).length > 1 &&
+        {Array.from(users).length >= 1 &&
           Array.from(users).map(
             ([index, user]) =>
               index != data.userId && (
@@ -168,7 +166,9 @@ const Chat = ({navigation}) => {
                     )}
                     {messageNotificatios.has(index) && (
                       <Text style={styles.messageNotification}>
-                        {`${messageNotificatios.get(index).username}: ${messageNotificatios.get(index).message}`}
+                        {`${messageNotificatios.get(index).username}: ${
+                          messageNotificatios.get(index).message
+                        }`}
                       </Text>
                     )}
                   </View>
@@ -180,8 +180,8 @@ const Chat = ({navigation}) => {
                 </TouchableOpacity>
               ),
           )}
-        {!users ||
-          (users.length <= 1 && (
+        {
+          Array.from(messageNotificatios).length < 1 && (
             <View
               style={{
                 flex: 1,
@@ -195,7 +195,7 @@ const Chat = ({navigation}) => {
                 Nenhum usuário online no momento
               </Text>
             </View>
-          ))}
+          )}
       </ScrollView>
     </View>
   );

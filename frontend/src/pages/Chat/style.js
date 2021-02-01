@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     borderColor: 'lightgray',
   },
   userName: {
-    textAlign: 'center',
     fontSize: 24,
   },
   avatar: {

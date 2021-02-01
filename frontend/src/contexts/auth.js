@@ -47,6 +47,7 @@ export const AuthProvider = ({children}) => {
         JSON.stringify(response.user),
       );
       await AsyncStorage.setItem('@SMSEAuth:token', response.token);
+      setErrorMessage('')
     } else {
       if (response === 404) {
         setErrorMessage('E-mail incorreto');

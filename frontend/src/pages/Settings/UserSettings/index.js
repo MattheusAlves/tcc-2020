@@ -143,7 +143,7 @@ const Settings = ({navigation}) => {
             submit={updateName}
             value={Name}
           />
-          <TouchableOpacity style={styles.settingOptionWrapper}>
+          <TouchableOpacity style={styles.settingOptionWrapper} onPress={() => navigation.navigate('TopicDashboard')}>
             <IconMaterial
               name="class"
               size={35}

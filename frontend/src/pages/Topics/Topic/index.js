@@ -183,7 +183,7 @@ const Topic = ({navigation,route}) => {
               new Date(topic.createdAt),
               'dd/MM/yyyy hh:mm',
             )}`}</Text>
-            <View style={styles.rateWrapper}>
+            {/* <View style={styles.rateWrapper}>
               <View style={styles.likeWrapper}>
                 <Text style={styles.rateLength}>0</Text>
                 <TouchableOpacity>
@@ -196,7 +196,7 @@ const Topic = ({navigation,route}) => {
                   <Icon name="thumbs-down" size={20} />
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
         <View style={styles.containerResponse}>

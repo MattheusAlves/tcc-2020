@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -20,12 +20,10 @@ const Room = ({navigation, route}) => {
     room: route.params.socketId,
     userId: route.params.userId,
   });
-  const [refreshing, setRefreshing] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const {user} = useAuth()
-
-  const onRefresh = useCallback(() => {});
+  const scrollView = useRef(null)
 
   useEffect(() => {
    async function loadRoom() {
@@ -57,27 +55,31 @@ const Room = ({navigation, route}) => {
       })
   },[])
  
-  async function submitMessage() {
+  function submitMessage() {
     sendMessage(data.room, inputMessage, data.userId);
     setInputMessage('');
+    setChatMessages((oldMessages) => [...oldMessages, {message:inputMessage, userId:user._id}]);
   }
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {chatMessages.length > 0 &&
+      <ScrollView 
+      ref={scrollView}
+      onContentSizeChange={() => scrollView.current.scrollToEnd({animated: false})}
+      >
+        {data && chatMessages.length > 0 &&
           chatMessages.map((message,index) =>
             message.userId === user._id || message.from === user._id ? (
               <View style={[styles.messageWrapper, styles.myMessageWrapper]} key={index}>
-                <Text style={styles.userName}>Eu</Text>
+                {/* <Text style={styles.userName}>Eu</Text> */}
                 <Text style={[styles.message, styles.myMessage]}>
                   {message.message ? message.message : message.content}
                 </Text>
               </View>
             ) : (
-              <View style={styles.messageWrapper}>
-                <Text style={styles.userName}>{message.username}</Text>
-                <Text style={styles.message}>{message.message ? message.message : message.content}</Text>
+              <View style={styles.messageWrapper} key={index}>
+                <Text style={styles.userName}>{data.username}</Text>
+                <Text style={[styles.message,styles.otherMessage]}>{message.message ? message.message : message.content}</Text>
               </View>
             ),
           )}

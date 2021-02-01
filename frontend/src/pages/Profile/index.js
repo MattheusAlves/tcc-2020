@@ -63,12 +63,12 @@ const Profile = ({navigation, route}) => {
         },
       })
       .then((profile) => {
-        console.log(profile.data)
+        console.log(profile.data);
         if (profile.data.user && profile.data.user.teacher) {
           setTeacher(true);
           setProfile(profile.data);
-        }else{
-          setProfile({user:profile.data});
+        } else {
+          setProfile({user: profile.data});
         }
       })
       .catch((error) => {
@@ -110,67 +110,69 @@ const Profile = ({navigation, route}) => {
             )}
             contentContainerStyle={{paddingBottom: 50, zIndex: 0}}
             style={{zIndex: 0}}>
-
-
-
             <View style={styles.container}>
-                  <View style={styles.userInformation}>
-                    {profile.user.github && (
-                      <View style={styles.socialMedia}>
-                        <TouchableOpacity style={styles.buttonSocialMedia}>
-                          <Icon name="github" size={55} />
-                          <Text style={styles.linkSocialMedia}>{`github.com/${profile.user.github}`}</Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                    {profile.user.phone && (
-                      <View style={styles.socialMedia}>
-                        <TouchableOpacity
-                          style={styles.buttonSocialMedia}
-                          onPress={() =>
-                            Linking.canOpenURL(
-                              'whatsapp://send?text=Olá!',
-                            ).then((supported) => {
-                              if (supported) {
-                                return Linking.openURL(
-                                  `whatsapp://send?phone=${profile.user.phone}&text=Olá!`,
-                                );
-                              } else {
-                                return Linking.openURL(
-                                  `https://api.whatsapp.com/send?phone=55${profile.user.phone}&text=Olá!`,
-                                );
-                              }
-                            })
-                          }>
-                          <Icon name="whatsapp" size={55} color="#25d366" />
-                          <Text
-                            style={
-                              styles.linkSocialMedia
-                            }>{`+55 ${profile.user.phone}`}</Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                    {profile.user.linkedin && (
-                      <View style={styles.socialMedia}>
-                        <TouchableOpacity style={styles.buttonSocialMedia}>
-                          <Icon
-                            name="linkedin-square"
-                            size={55}
-                            color="#2867b2"
-                          />
-                          <Text
-                            style={
-                              styles.linkSocialMedia
-                            }>{`br.linkedin.com/in/${profile.user.linkedin}`}</Text>
-                        </TouchableOpacity>
-                      </View>
-                    )}
+              <View style={styles.userInformation}>
+                {profile.user.github && (
+                  <View style={styles.socialMedia}>
+                    <TouchableOpacity style={styles.buttonSocialMedia}>
+                      <Icon name="github" size={55} />
+                      <Text
+                        style={
+                          styles.linkSocialMedia
+                        }>{`github.com/${profile.user.github}`}</Text>
+                    </TouchableOpacity>
                   </View>
+                )}
+                {profile.user.phone && (
+                  <View style={styles.socialMedia}>
+                    <TouchableOpacity
+                      style={styles.buttonSocialMedia}
+                      onPress={() =>
+                        Linking.canOpenURL('whatsapp://send?text=Olá!').then(
+                          (supported) => {
+                            if (supported) {
+                              return Linking.openURL(
+                                `whatsapp://send?phone=${profile.user.phone}&text=Olá!`,
+                              );
+                            } else {
+                              return Linking.openURL(
+                                `https://api.whatsapp.com/send?phone=55${profile.user.phone}&text=Olá!`,
+                              );
+                            }
+                          },
+                        )
+                      }>
+                      <Icon name="whatsapp" size={55} color="#25d366" />
+                      <Text
+                        style={
+                          styles.linkSocialMedia
+                        }>{`+55 ${profile.user.phone}`}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                {profile.user.linkedin && (
+                  <View style={styles.socialMedia}>
+                    <TouchableOpacity style={styles.buttonSocialMedia}>
+                      <Icon name="linkedin-square" size={55} color="#2867b2" />
+                      <Text
+                        style={
+                          styles.linkSocialMedia
+                        }>{`br.linkedin.com/in/${profile.user.linkedin}`}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
               {teacher == true ? (
                 <>
                   <TouchableOpacity
                     style={styles.teacherChat}
-                    onPress={() => navigation.navigate('Chat')}>
+                    onPress={() =>
+                      navigation.navigate('Room', {
+                        username: profile.user.name,
+                        room: undefined,
+                        userId: profile.user._id,
+                      })
+                    }>
                     <Text style={styles.teacherChatTxt}>
                       Envie uma mensagem para este professor
                     </Text>

@@ -33,20 +33,24 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 20,
-    width: Dimensions.get('screen').width / 2 - 10,
+    // width: Dimensions.get('screen').width / 2 - 10,
     marginTop: 6,
     borderRadius: 7,
     paddingHorizontal: 10,
-    paddingTop: 4,
-    paddingBottom: 2,
+    paddingVertical: 4,
     backgroundColor: '#3D7AFD',
-    color:'white'
+    color:'white',
+    paddingRight: 18,
+    textAlign:'center'
   },
   myMessage: {
       backgroundColor:'#1F0954',
   },
   myMessageWrapper: {
     alignSelf:'flex-end'
+  },
+  otherMessage: {
+    alignSelf:'flex-start'
   }
 });
 

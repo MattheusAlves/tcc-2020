@@ -118,11 +118,11 @@ const enrollment = ({route, navigation}) => {
                   .toFixed(2)
                   .replace('.', ',')}`}</Text>
               </Text>
-              <View style={styles.ratings}>
+              {/* <View style={styles.ratings}>
                 <Text style={styles.rate}>12 Avaliaram como ÓTIMO</Text>
                 <Text style={styles.rate}>05 Avaliaram como BOM</Text>
                 <Text style={styles.rate}>05 Avaliaram como RUIM</Text>
-              </View>
+              </View> */}
             </View>
             <View style={styles.form}>
               <Textarea
@@ -225,7 +225,7 @@ const enrollment = ({route, navigation}) => {
               style={styles.enroll}
               onPress={() => submitForm()}>
               <Text style={styles.enrollText}>
-                REGISTRAR MATRICULA E FALAR COM O PROFESSOR
+                REGISTRAR MATRICULA
               </Text>
             </TouchableOpacity>
           </ScrollView>

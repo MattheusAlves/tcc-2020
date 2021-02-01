@@ -14,8 +14,9 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         backgroundColor: 'white',
         elevation:2,
-        marginHorizontal:4,
-        marginVertical:5
+        marginHorizontal:20,
+        marginVertical:5,
+        marginTop:40
     },
     teacherSince:{
         color:'black',
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'lightgray',
         width: WIDTH - 40,
-        borderRadius: 6,
+        borderRadius: 4,
         justifyContent: 'center',
         paddingHorizontal: 8,
         backgroundColor: '#fff',
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderWidth: 1,
         borderColor: 'lightgray',
-        borderRadius: 6,
+        borderRadius: 4,
         shadowColor: "#000",
         shadowOffset: {
             width: 10,
@@ -108,13 +109,13 @@ const styles = StyleSheet.create({
     },
     enroll: {
         alignSelf: 'center',
-        width: WIDTH - 75,
+        width: '60%',
+        paddingVertical:20,
         borderRadius: 4,
         backgroundColor: "white",
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 15,
-        paddingVertical: 6,
         marginTop: 40,
         marginBottom: 60,
         borderWidth: 1,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     enrollText: {
         color: '#285BC8',
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: 16,
         textAlign: 'center'
     },
     dateHourContainer: {

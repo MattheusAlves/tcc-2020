@@ -55,9 +55,9 @@ class Chat {
         console.log(
           `Socket ${socket.id} joining ${room} user ${username} e userId ${userId} teacher ${teacher}`
         );
-        if (room) {
-          socket.join(room);
-        }
+        // if (room) {
+        //   socket.join(room);
+        // }
       });
 
       //when clint send a message to the socket server
@@ -74,12 +74,18 @@ class Chat {
           to: userId,
           from: this.userSocketIdMap.get(socket.id).userId,
         });
-
+        if (!room) {
+          for (let [key, value] of this.userSocketIdMap.entries()) {
+            if (value.userId === userId) {
+              data.room = key;
+            }
+          }
+        }
         //send the  message to all clients in the room
         this.io.to(data.room).emit("chat", {
           message: data.message,
           username: this.userSocketIdMap.get(socket.id).username,
-          to:userId,
+          to: userId,
           socketId: socket.id,
           userId: this.userSocketIdMap.get(socket.id).userId,
         });
@@ -171,8 +177,8 @@ async function loadLastMessage(req, res) {
     ],
   })
     .sort({ createdAt: -1 })
-    .populate("to", 'name teacher')
-    .populate("from",'name teacher')
+    .populate("to", "name teacher")
+    .populate("from", "name teacher")
     .limit(1)
     .exec((err, message) => {
       if (err) {
