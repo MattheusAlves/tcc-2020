@@ -1,4 +1,5 @@
 # TCC - Ciência da Computação - 2020
+
 ## Aplicativo Mobile de Suporte Estudantil
 
 #### Aplicação desenvolvida com React Native e Node.js
@@ -7,8 +8,8 @@
 
 ### ScreenShots
 
-![signin](./screenshots/login.png =250x515)
-![signup](/screenshots//signup.png =250x515)
-![disciplines](./screenshots/signup.png =250x515)
-![classes](./screenshots/classes.png =250x515)
-![classes](./screenshots/classes2.png =250x515)
+<img src="./screenshots/login.png" width="250" height="515" alt="signin">
+<img src="./screenshots/signup.png" width="250" height="515" alt="signup">
+<img src="./screenshots/disciplines.png" width="250" height="515" alt="disciplines">
+<img src="./screenshots/classes.png" width="250" height="515" alt="classes">
+<img src="./screenshots/classes2.png" width="250" height="515" alt="classes2">
