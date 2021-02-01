@@ -7,8 +7,8 @@
 
 ### ScreenShots
 
-![signin](./screenshots/login.png)
-![signup](/screenshots//signup.png)
-![disciplines](./screenshots/signup.png)
-![classes](./screenshots/classes.png)
-![classes](./screenshots/classes2.png)
+![signin](./screenshots/login.png =250x515)
+![signup](/screenshots//signup.png =250x515)
+![disciplines](./screenshots/signup.png =250x515)
+![classes](./screenshots/classes.png =250x515)
+![classes](./screenshots/classes2.png =250x515)
